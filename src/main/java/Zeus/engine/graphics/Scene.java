@@ -2,8 +2,9 @@ package Zeus.engine.graphics;
 
 import Zeus.engine.RenderObj;
 import Zeus.engine.graphics.light.SceneLight;
+import Zeus.game.MapRegion;
+import Zeus.game.RegionManager;
 import Zeus.game.objects.SkyBox;
-import Zeus.game.objects.WorldChunk;
 import org.joml.Vector3i;
 
 import java.util.ArrayList;
@@ -13,36 +14,21 @@ import java.util.Map;
 
 public class Scene {
     private Map<Mesh, List<RenderObj>> meshMap;
-    private Map<Vector3i, WorldChunk> worldChunkMap;
     private SkyBox skyBox;
     private SceneLight sceneLight;
+    public RegionManager regionManager;
 
     public Scene() {
         meshMap = new HashMap<>();
-        worldChunkMap = new HashMap<>();
+        regionManager = new RegionManager();
     }
 
-    public Map<Vector3i, WorldChunk> getWorldChunks() {
-        return worldChunkMap;
+    public Map<Vector3i, MapRegion> getWorldRegions() {
+        return regionManager.getWorldRegions();
     }
 
     public Map<Mesh, List<RenderObj>> getGameMeshes() {
         return meshMap;
-    }
-
-    public void addWorldChunk(Vector3i pos, WorldChunk chunk) {
-        if (worldChunkMap.containsKey(pos)) {
-            System.out.println("Chunk already exists at " + pos.toString());
-            return;
-        }
-        worldChunkMap.put(pos, chunk);
-    }
-
-    public WorldChunk getWorldChunk(Vector3i pos) {
-        if (!worldChunkMap.containsKey(pos)) {
-            return null;
-        }
-        return worldChunkMap.get(pos);
     }
 
     public void setRenderObjects(RenderObj[] objs) {

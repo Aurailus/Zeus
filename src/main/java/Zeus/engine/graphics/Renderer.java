@@ -8,14 +8,12 @@ import Zeus.engine.graphics.light.DirectionalLight;
 import Zeus.engine.graphics.light.PointLight;
 import Zeus.engine.graphics.light.SceneLight;
 import Zeus.engine.graphics.light.SpotLight;
+import Zeus.game.MapRegion;
 import Zeus.game.objects.SkyBox;
-import Zeus.game.objects.WorldChunk;
+import Zeus.game.objects.MapChunk;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -151,13 +149,15 @@ public class Renderer {
         sceneShaderProgram.setUniform("texture_sampler", 0);
         //Render each object by mesh
 
-        var worldChunks = scene.getWorldChunks();
-        for (WorldChunk chunk : worldChunks.values()) {
-            var mesh = chunk.getMesh();
-            Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk, viewMatrix);
-            sceneShaderProgram.setUniform("material", mesh.getMaterial());
-            sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-            mesh.render();
+        var mapRegions = scene.getWorldRegions();
+        for (MapRegion region : mapRegions.values()) {
+            for (MapChunk chunk : region.getVisibleChunks()) {
+                var mesh = chunk.getMesh();
+                Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk, viewMatrix);
+                sceneShaderProgram.setUniform("material", mesh.getMaterial());
+                sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+                mesh.render();
+            }
         }
 
         var mapMeshes = scene.getGameMeshes();
