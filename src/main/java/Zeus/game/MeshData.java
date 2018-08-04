@@ -36,7 +36,7 @@ public class MeshData {
             normalsList.add(face.normal[1]);
             normalsList.add(face.normal[2]);
         }
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 16; i++) {
             texCoordsList.add(face.texCoords[i]);
         }
         for (var i = 0; i < 6; i++) {
@@ -164,10 +164,10 @@ public class MeshData {
                     1, 1, 1,
             },
             new float[] {
-                    0.0f, 0.0f,
-                    0.0f, 0.5f,
-                    0.5f, 0.5f,
-                    0.5f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
             },
             new float[] {
                     0f, 0f, 1f
@@ -185,10 +185,10 @@ public class MeshData {
                     1, 1, 0,
             },
             new float[] {
-                    0.0f, 0.0f,
-                    0.0f, 0.5f,
-                    0.5f, 0.5f,
-                    0.5f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
             },
             new float[] {
                     0f, 0f, -1f
@@ -206,10 +206,10 @@ public class MeshData {
                     1, 1, 1,
             },
             new float[] {
-                    0.0f, 0.5f,
-                    0.0f, 1.0f,
-                    0.5f, 1.0f,
-                    0.5f, 0.5f,
+                    0.0f, 0.5f, 0.0f, 0.0f,
+                    0.0f, 0.5f, 0.0f, 1.0f,
+                    0.0f, 0.5f, 1.0f, 1.0f,
+                    0.0f, 0.5f, 1.0f, 0.0f,
             },
             new float[] {
                     0f, 1f, 0f
@@ -227,10 +227,10 @@ public class MeshData {
                     1, 0, 1,
             },
             new float[] {
-                    0.5f, 0.0f,
-                    0.5f, 0.5f,
-                    1.0f, 0.5f,
-                    1.0f, 0.0f,
+                    0.5f, 0.0f, 0.0f, 0.0f,
+                    0.5f, 0.0f, 0.0f, 1.0f,
+                    0.5f, 0.0f, 1.0f, 1.0f,
+                    0.5f, 0.0f, 1.0f, 0.0f,
             },
             new float[] {
                     0f, -1f, 0f
@@ -248,10 +248,10 @@ public class MeshData {
                     1, 1, 1,
             },
             new float[] {
-                    0.0f, 0.0f,
-                    0.0f, 0.5f,
-                    0.5f, 0.5f,
-                    0.5f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
             },
             new float[] {
                     1f, 0f, 0f
@@ -269,10 +269,10 @@ public class MeshData {
                     0, 1, 1,
             },
             new float[] {
-                    0.0f, 0.0f,
-                    0.0f, 0.5f,
-                    0.5f, 0.5f,
-                    0.5f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
             },
             new float[] {
                     -1f, 0f, 0f

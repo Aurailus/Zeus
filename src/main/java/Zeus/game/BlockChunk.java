@@ -6,9 +6,8 @@ import org.joml.Vector3i;
 public class BlockChunk {
     public static final int CHUNK_SIZE = MeshManager.CHUNK_SIZE;
 
-    private static final int NOISE_HORIZONTAL_PRECISION = 30;
-    private static final int NOISE_VERTICAL_PRECISION = 30;
-    private static final float NOISE_Y_MOD = 0.1f;
+    private static final int NOISE_HORIZONTAL_PRECISION = 300;
+    private static final int NOISE_VERTICAL_PRECISION = 200;
 
     private BlockManager blockManager;
     private int[] blocks;
@@ -32,9 +31,9 @@ public class BlockChunk {
                     int fill = 0;
 
                     double noiseVal = SimplexNoise.noise(((float)i + position.x * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION,
-                            ((float)j + position.y * CHUNK_SIZE) / NOISE_VERTICAL_PRECISION - 300,
                             ((float)k + position.z * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION);
-                    if (noiseVal - NOISE_Y_MOD * (j + (position.y-1) * CHUNK_SIZE) > 0) fill = 1;
+                    noiseVal = 1-(noiseVal*NOISE_VERTICAL_PRECISION + (position.y * CHUNK_SIZE + j));
+                    fill = (int)Math.min(Math.max(Math.round(noiseVal),0),1);
 
                     setBlock(fill, i, j, k);
                 }

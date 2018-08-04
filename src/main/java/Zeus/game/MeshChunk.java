@@ -1,19 +1,24 @@
 package Zeus.game;
 
 import Zeus.engine.RenderObj;
-import Zeus.engine.graphics.Mesh;
+import Zeus.engine.graphics.ChunkMesh;
+import org.joml.Vector3f;
 import org.joml.Vector3i;
 
 import static Zeus.game.MeshManager.REGION_SIZE;
 
 public class MeshChunk extends RenderObj {
     public static final int CHUNK_SIZE = MeshManager.CHUNK_SIZE;
+    public static final float LOD_STEP = CHUNK_SIZE * 7;
 
     private boolean[] adjacentBlockChunks = {false, false, false, false, false, false};
 
     private MeshManager meshManager;
     private Vector3i pos;
+    private int resolution;
     BlockChunk blockChunk;
+
+    private ChunkMesh chunkMesh;
 
     private boolean dirty = true;
 
@@ -25,6 +30,15 @@ public class MeshChunk extends RenderObj {
         this.meshManager = meshManager;
         this.pos = new Vector3i(regionPos.x * REGION_SIZE + chunkPos.x, regionPos.y * REGION_SIZE + chunkPos.y, regionPos.z * REGION_SIZE + chunkPos.z);
         this.setPosition(pos.x * CHUNK_SIZE, pos.y * CHUNK_SIZE, pos.z * CHUNK_SIZE);
+
+        Vector3f playerPos = meshManager.game.player.getPosition();
+
+        int distFromPlayer = (int)Math.round(Math.sqrt(
+                Math.pow(Math.abs(pos.x * CHUNK_SIZE - playerPos.x), 2) +
+                Math.pow(Math.abs(pos.y * CHUNK_SIZE - 0), 2) + //TODO: Correct this to actual player coords
+                Math.pow(Math.abs(pos.z * CHUNK_SIZE - playerPos.z), 2)));
+
+        resolution = (int)Math.min(distFromPlayer / LOD_STEP, 3);
     }
 
     public void init() {
@@ -88,25 +102,31 @@ public class MeshChunk extends RenderObj {
         blockChunk = meshManager.blockManager.getChunk(pos);
         dirty = false;
 
-        long start = System.nanoTime();
-
-        var mesh = getMesh();
+        var mesh = getChunkMesh();
         if (mesh != null) {
             this.meshManager.removeVisibleChunk(this);
             mesh.cleanup();
         }
-        MeshData m = new MeshData(this, 0);
+
+        MeshData m = new MeshData(this, getResolution());
+
         if (m.verts.length != 0) {
-            mesh = new Mesh(m.verts, m.texCoords, m.normals, m.indices);
+            mesh = new ChunkMesh(m.verts, m.texCoords, m.normals, m.indices);
             mesh.setMaterial(meshManager.worldMaterial);
-            setMesh(mesh);
+            chunkMesh = mesh;
             this.meshManager.addVisibleChunk(this);
         }
         else {
             setMesh(null);
         }
+    }
 
-//        System.out.println("Chunk gen took " + (System.nanoTime() - start));
+    public ChunkMesh getChunkMesh() {
+        return chunkMesh;
+    }
+
+    public int getResolution() {
+        return resolution;
     }
 
 //        public int getBlock(Vector3i pos) {

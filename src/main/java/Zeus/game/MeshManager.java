@@ -13,14 +13,16 @@ public class MeshManager {
     static final int REGION_SIZE = BlockManager.REGION_SIZE;
     static final int CHUNK_SIZE = BlockManager.CHUNK_SIZE;
 
-    Material worldMaterial;
+    Material worldMaterial;;
+    ZeusGame game;
 
     BlockManager blockManager;
     private List<MeshChunk> visibleChunks;
 
     final Map<Vector3i, MeshRegion> regions;
 
-    public MeshManager(BlockManager blockManager) {
+    public MeshManager(ZeusGame game, BlockManager blockManager) {
+        this.game = game;
         this.blockManager = blockManager;
         this.visibleChunks = new ArrayList<>();
         regions = new HashMap<>();

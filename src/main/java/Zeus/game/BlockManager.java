@@ -11,10 +11,12 @@ import java.util.Vector;
 public class BlockManager {
     static final int REGION_SIZE = 16;
     static final int CHUNK_SIZE = 16;
+    ZeusGame game;
 
     private final Map<Vector3i, BlockRegion> regions;
 
-    public BlockManager() {
+    public BlockManager(ZeusGame game) {
+        this.game = game;
         regions = new HashMap<>();
     }
 

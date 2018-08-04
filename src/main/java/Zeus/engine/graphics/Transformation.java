@@ -1,6 +1,7 @@
 package Zeus.engine.graphics;
 
 import Zeus.engine.RenderObj;
+import Zeus.game.MeshChunk;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 

@@ -13,7 +13,7 @@ public class ZeusGame implements GameLogic {
     private final Renderer renderer;
     public Scene scene;
     private Hud hud;
-    private Player player;
+    Player player;
     private BlockManager blockMan;
     private MeshManager meshMan;
 
@@ -30,15 +30,15 @@ public class ZeusGame implements GameLogic {
     public void init(Window window) throws Exception {
         renderer.init(window);
         scene = new Scene();
-        player = new Player(0, 60, 0);
+        player = new Player(0, 0, 1);
 
-        float skyBoxScale = 20000f;
-        SkyBox skyBox = new SkyBox("/models/skybox.obj", "/textures/skybox.png");
-        skyBox.setScale(skyBoxScale);
-        scene.setSkyBox(skyBox);
+//        float skyBoxScale = 20000f;
+//        SkyBox skyBox = new SkyBox("/models/skybox.obj", "/textures/skybox.png");
+//        skyBox.setScale(skyBoxScale);
+//        scene.setSkyBox(skyBox);
 
-        blockMan = new BlockManager();
-        meshMan = new MeshManager(blockMan);
+        blockMan = new BlockManager(this);
+        meshMan = new MeshManager(this, blockMan);
 
         final int SIZE = 1;
         for (var i = -SIZE; i < SIZE; i++) {
@@ -59,8 +59,6 @@ public class ZeusGame implements GameLogic {
         mesh.setMaterial(new Material(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f), 1f));
         RenderObj bunny = new RenderObj(mesh);
         scene.setRenderObjects(new RenderObj[] {bunny});
-
-
 
         setupLights();
     }
