@@ -8,9 +8,8 @@ import Zeus.engine.graphics.light.DirectionalLight;
 import Zeus.engine.graphics.light.PointLight;
 import Zeus.engine.graphics.light.SceneLight;
 import Zeus.engine.graphics.light.SpotLight;
-import Zeus.game.MapRegion;
+import Zeus.game.MeshChunk;
 import Zeus.game.objects.SkyBox;
-import Zeus.game.objects.MapChunk;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -147,27 +146,24 @@ public class Renderer {
         renderLights(viewMatrix, sceneLight);
 
         sceneShaderProgram.setUniform("texture_sampler", 0);
-        //Render each object by mesh
 
-        var mapRegions = scene.getWorldRegions();
-        for (MapRegion region : mapRegions.values()) {
-            for (MapChunk chunk : region.getVisibleChunks()) {
+        var chunks = scene.getVisibleChunks();
+            for (MeshChunk chunk : chunks) {
                 var mesh = chunk.getMesh();
                 Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk, viewMatrix);
                 sceneShaderProgram.setUniform("material", mesh.getMaterial());
                 sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
                 mesh.render();
             }
-        }
 
-        var mapMeshes = scene.getGameMeshes();
-        for (Mesh mesh : mapMeshes.keySet()) {
-            sceneShaderProgram.setUniform("material", mesh.getMaterial());
-            mesh.renderList(mapMeshes.get(mesh), (RenderObj renderObj) -> {
-                Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(renderObj, viewMatrix);
-                sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-            });
-        }
+//        var mapMeshes = scene.getGameMeshes();
+//        for (Mesh mesh : mapMeshes.keySet()) {
+//            sceneShaderProgram.setUniform("material", mesh.getMaterial());
+//            mesh.renderList(mapMeshes.get(mesh), (RenderObj renderObj) -> {
+//                Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(renderObj, viewMatrix);
+//                sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+//            });
+//        }
 
         sceneShaderProgram.unbind();
     }

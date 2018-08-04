@@ -13,7 +13,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 public class Player {
     private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float CAMERA_POS_STEP = 0.2f;
-    private static final float CAMERA_DRAG = 0.2f;
+    private static final float CAMERA_DRAG = 3f;
+    private static final float CAMERA_SPEED = 1f;
 
     final Camera camera;
 
@@ -38,23 +39,23 @@ public class Player {
     }
 
     public void update(float interval, MouseInput mouseInput) {
-        if (keysDown[2] && velocity.z < 1) velocity.z = Math.min(velocity.z + CAMERA_DRAG, 1);
-        else if (!keysDown[2] && velocity.z > 0) velocity.z = Math.max(velocity.z - CAMERA_DRAG, 0);
+        if (keysDown[2] && velocity.z < 1) velocity.z = Math.min(velocity.z + CAMERA_DRAG * CAMERA_SPEED, CAMERA_SPEED);
+        else if (!keysDown[2] && velocity.z > 0) velocity.z = Math.max(velocity.z - CAMERA_DRAG * CAMERA_SPEED, 0);
 
-        if (keysDown[0] && velocity.z > -1) velocity.z = Math.max(velocity.z - CAMERA_DRAG, -1);
-        else if (!keysDown[0] && velocity.z < 0) velocity.z = Math.min(velocity.z + CAMERA_DRAG, 0);
+        if (keysDown[0] && velocity.z > -1) velocity.z = Math.max(velocity.z - CAMERA_DRAG * CAMERA_SPEED, -CAMERA_SPEED);
+        else if (!keysDown[0] && velocity.z < 0) velocity.z = Math.min(velocity.z + CAMERA_DRAG * CAMERA_SPEED, 0);
 
-        if (keysDown[1] && velocity.x < 1) velocity.x = Math.min(velocity.x + CAMERA_DRAG, 1);
-        else if (!keysDown[1] && velocity.x > 0) velocity.x = Math.max(velocity.x - CAMERA_DRAG, 0);
+        if (keysDown[1] && velocity.x < 1) velocity.x = Math.min(velocity.x + CAMERA_DRAG * CAMERA_SPEED, CAMERA_SPEED);
+        else if (!keysDown[1] && velocity.x > 0) velocity.x = Math.max(velocity.x - CAMERA_DRAG * CAMERA_SPEED, 0);
 
-        if (keysDown[3] && velocity.x > -1) velocity.x = Math.max(velocity.x - CAMERA_DRAG, -1);
-        else if (!keysDown[3] && velocity.x < 0) velocity.x = Math.min(velocity.x + CAMERA_DRAG, 0);
+        if (keysDown[3] && velocity.x > -1) velocity.x = Math.max(velocity.x - CAMERA_DRAG * CAMERA_SPEED, -CAMERA_SPEED);
+        else if (!keysDown[3] && velocity.x < 0) velocity.x = Math.min(velocity.x + CAMERA_DRAG * CAMERA_SPEED, 0);
 
-        if (keysDown[4] && velocity.y < 1) velocity.y = Math.min(velocity.y + CAMERA_DRAG, 1);
-        else if (!keysDown[4] && velocity.y > 0) velocity.y = Math.max(velocity.y - CAMERA_DRAG, 0);
+        if (keysDown[4] && velocity.y < 1) velocity.y = Math.min(velocity.y + CAMERA_DRAG * CAMERA_SPEED, CAMERA_SPEED);
+        else if (!keysDown[4] && velocity.y > 0) velocity.y = Math.max(velocity.y - CAMERA_DRAG * CAMERA_SPEED, 0);
 
-        if (keysDown[5] && velocity.y > -1) velocity.y = Math.max(velocity.y - CAMERA_DRAG, -1);
-        else if (!keysDown[5] && velocity.y < 0) velocity.y = Math.min(velocity.y + CAMERA_DRAG, 0);
+        if (keysDown[5] && velocity.y > -1) velocity.y = Math.max(velocity.y - CAMERA_DRAG * CAMERA_SPEED, -CAMERA_SPEED);
+        else if (!keysDown[5] && velocity.y < 0) velocity.y = Math.min(velocity.y + CAMERA_DRAG * CAMERA_SPEED, 0);
 
         camera.movePosition(velocity.x * CAMERA_POS_STEP, velocity.y * CAMERA_POS_STEP, velocity.z * CAMERA_POS_STEP);
 

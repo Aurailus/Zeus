@@ -1,6 +1,5 @@
 package Zeus.game;
 
-import Zeus.game.objects.MapChunk;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class MeshData {
     private List<Float> normalsList;
     private List<Integer> indicesList;
 
-    private MapChunk chunk;
+    private MeshChunk chunk;
 
     private int resolution;
     private int[][][] blocks;
@@ -51,11 +50,11 @@ public class MeshData {
 
     private int getBlock(int x, int y, int z) {
         if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length)
-            return chunk.getBlockInWorld(Math.round(x / resolutionScales[resolution]), Math.round(y / resolutionScales[resolution]), Math.round(z / resolutionScales[resolution]));
+            return chunk.blockChunk.getExternalRelativeBlock(Math.round(x / resolutionScales[resolution]), Math.round(y / resolutionScales[resolution]), Math.round(z / resolutionScales[resolution]));
         return blocks[x][y][z];
     }
 
-    public MeshData(MapChunk chunk, int resolution) {
+    public MeshData(MeshChunk chunk, int resolution) {
         vertsList = new ArrayList<>();
         texCoordsList = new ArrayList<>();
         normalsList = new ArrayList<>();
@@ -64,14 +63,14 @@ public class MeshData {
         this.chunk = chunk;
         this.resolution = resolution;
 
-        final int ARRAY_SIZE = Math.round(MapChunk.CHUNK_SIZE * resolutionScales[resolution]);
+        final int ARRAY_SIZE = Math.round(MeshChunk.CHUNK_SIZE * resolutionScales[resolution]);
 
         blocks = new int[ARRAY_SIZE][ARRAY_SIZE][ARRAY_SIZE];
 
         for (var i = 0; i < ARRAY_SIZE; i++) {
             for (var j = 0; j < ARRAY_SIZE; j++) {
                 for (var k = 0; k < ARRAY_SIZE; k++) {
-                    blocks[i][j][k] = chunk.getBlock(Math.round(i / resolutionScales[resolution]), Math.round(j / resolutionScales[resolution]), Math.round(k / resolutionScales[resolution]));
+                    blocks[i][j][k] = chunk.blockChunk.getBlock(Math.round(i / resolutionScales[resolution]), Math.round(j / resolutionScales[resolution]), Math.round(k / resolutionScales[resolution]));
                 }
             }
         }

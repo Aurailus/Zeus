@@ -15,7 +15,9 @@ public class ZeusGame implements GameLogic {
     private Hud hud;
     private Player player;
     private BlockManager blockMan;
-    private RegionManager regMan;
+    private MeshManager meshMan;
+
+    private double interval;
 
     private float lightAngle;
 
@@ -34,6 +36,22 @@ public class ZeusGame implements GameLogic {
         SkyBox skyBox = new SkyBox("/models/skybox.obj", "/textures/skybox.png");
         skyBox.setScale(skyBoxScale);
         scene.setSkyBox(skyBox);
+
+        blockMan = new BlockManager();
+        meshMan = new MeshManager(blockMan);
+
+        final int SIZE = 1;
+        for (var i = -SIZE; i < SIZE; i++) {
+            System.out.println((i + SIZE + 1) + "/" + (SIZE * 2));
+            for (var k = -1; k < 1; k++) {
+                for (var j = -SIZE; j < SIZE; j++) {
+                    blockMan.createRegion(new Vector3i(i, k, j));
+                    meshMan.createRegion(new Vector3i(i, k, j));
+                }
+            }
+        }
+
+        scene.setVisibleChunks(meshMan.getVisibleChunks());
 
         hud = new Hud("DEMO");
 
@@ -68,6 +86,8 @@ public class ZeusGame implements GameLogic {
 
     @Override
     public void update(float interval, MouseInput mouseInput) {
+        this.interval = interval;
+
         player.update(interval, mouseInput);
 
         hud.rotateCompass(player.getCamera().getRotation().y);
@@ -104,6 +124,7 @@ public class ZeusGame implements GameLogic {
     public void render(Window window) {
         hud.updateSize(window);
         renderer.render(window, player.getCamera(), scene, hud);
+        window.updateTitle("Zeus - " + interval + " FPS");
     }
 
     @Override

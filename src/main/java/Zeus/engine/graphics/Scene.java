@@ -2,10 +2,8 @@ package Zeus.engine.graphics;
 
 import Zeus.engine.RenderObj;
 import Zeus.engine.graphics.light.SceneLight;
-import Zeus.game.MapRegion;
-import Zeus.game.RegionManager;
+import Zeus.game.MeshChunk;
 import Zeus.game.objects.SkyBox;
-import org.joml.Vector3i;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,15 +14,10 @@ public class Scene {
     private Map<Mesh, List<RenderObj>> meshMap;
     private SkyBox skyBox;
     private SceneLight sceneLight;
-    public RegionManager regionManager;
+    private List<MeshChunk> visibleChunks;
 
     public Scene() {
         meshMap = new HashMap<>();
-        regionManager = new RegionManager();
-    }
-
-    public Map<Vector3i, MapRegion> getWorldRegions() {
-        return regionManager.getWorldRegions();
     }
 
     public Map<Mesh, List<RenderObj>> getGameMeshes() {
@@ -61,5 +54,13 @@ public class Scene {
 
     public void setSceneLight(SceneLight sceneLight) {
         this.sceneLight = sceneLight;
+    }
+
+    public void setVisibleChunks(List<MeshChunk> visibleChunks) {
+        this.visibleChunks = visibleChunks;
+    }
+
+    public List<MeshChunk> getVisibleChunks() {
+        return visibleChunks;
     }
 }

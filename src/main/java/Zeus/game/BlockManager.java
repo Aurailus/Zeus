@@ -1,23 +1,36 @@
 package Zeus.game;
 
+import org.joml.SimplexNoise;
 import org.joml.Vector3i;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 
 public class BlockManager {
-    final int REGION_SIZE = 16;
-    final int CHUNK_SIZE = 16;
+    static final int REGION_SIZE = 16;
+    static final int CHUNK_SIZE = 16;
 
-    final Map<Vector3i, BlockRegion> regions;
+    private final Map<Vector3i, BlockRegion> regions;
 
     public BlockManager() {
         regions = new HashMap<>();
     }
 
+    public void createRegion(Vector3i pos) {
+        if (regionExists(pos)) {
+            System.out.println("Region already exists at " + pos + "!");
+            return;
+        }
+
+        var region = new BlockRegion(this, pos);
+        setRegion(region, pos);
+        region.populate();
+    }
+
     //
-    // Helper functions
+    // Helper Functions
     //
 
     //Perform operations on coordinates if negative to translate them into 0 indexed array (it's black magic)
@@ -39,11 +52,11 @@ public class BlockManager {
     // cZ = 5
 
 
-    public int chunkCoordToLocal(int num) {
+    static private int chunkCoordToLocal(int num) {
         return (num >= 0) ? (num % REGION_SIZE) : ((REGION_SIZE - 1) - Math.abs(num + 1) % REGION_SIZE);
     }
 
-    public int blockCoordToLocal(int num) {
+    static private int blockCoordToLocal(int num) {
         return (num >= 0) ? (num % CHUNK_SIZE) : ((CHUNK_SIZE - 1) - Math.abs(num + 1) % CHUNK_SIZE);
     }
 
@@ -102,7 +115,7 @@ public class BlockManager {
         var regionPos = new Vector3i((int)Math.floor((float)pos.x / REGION_SIZE), (int)Math.floor((float)pos.y / REGION_SIZE), (int)Math.floor((float)pos.z / REGION_SIZE));
 
         var region = getRegion(regionPos);
-        if (region == null) region = setRegion(new BlockRegion(), regionPos);
+        if (region == null) region = setRegion(new BlockRegion(this, regionPos), regionPos);
 
         var chunkPos  = new Vector3i(chunkCoordToLocal(pos.x), chunkCoordToLocal(pos.y), chunkCoordToLocal(pos.z));
         region.setChunk(chunk, chunkPos);
@@ -167,9 +180,29 @@ public class BlockManager {
 
     class BlockRegion {
         private BlockChunk[] chunks;
+        public final Vector3i position;
+        private BlockManager blockManager;
 
-        public BlockRegion() {
+        public BlockRegion(BlockManager blockManager, int x, int y, int z) {
+            this(blockManager, new Vector3i(x, y, z));
+        }
+
+        public BlockRegion(BlockManager blockManager, Vector3i pos) {
+            this.position = pos;
+            this.blockManager = blockManager;
             chunks = new BlockChunk[(int)Math.pow(REGION_SIZE, 3)];
+        }
+
+        public void populate() {
+            for (var i = 0; i < REGION_SIZE; i++) {
+                for (var j = 0; j < REGION_SIZE; j++) {
+                    for (var k = 0; k < REGION_SIZE; k++) {
+                        var chunk = new BlockChunk(blockManager, position, i, j, k);
+                        chunk.generate();
+                        setChunk(chunk, i, j, k);
+                    }
+                }
+            }
         }
 
         public BlockChunk getChunk(Vector3i pos) {
@@ -187,32 +220,6 @@ public class BlockManager {
         public BlockChunk setChunk(BlockChunk chunk, int x, int y, int z) {
             chunks[x + REGION_SIZE * (y + REGION_SIZE * z)] = chunk;
             return chunk;
-        }
-    }
-
-    class BlockChunk {
-        private int[] blocks;
-
-        public BlockChunk() {
-            blocks = new int[(int)Math.pow(CHUNK_SIZE, 3)];
-            for (var i = 0; i < blocks.length; i++) blocks[i] = 0;
-        }
-
-        public int getBlock(Vector3i pos) {
-            return getBlock(pos.x, pos.y, pos.z);
-        }
-
-        public int getBlock(int x, int y, int z) {
-            return blocks[x + CHUNK_SIZE * (y + CHUNK_SIZE * z)];
-        }
-
-        public int setBlock(int block, Vector3i pos) {
-            return setBlock(block, pos.x, pos.y, pos.z);
-        }
-
-        public int setBlock(int block, int x, int y, int z) {
-            blocks[x + CHUNK_SIZE * (y + CHUNK_SIZE * z)] = block;
-            return block;
         }
     }
 }

@@ -50,6 +50,7 @@ public class Window {
         }
 
         window = glfwCreateWindow(width, height, title, NULL, NULL);
+
         if (window == NULL) {
             throw new RuntimeException("Failed to create the GLFW window.");
         }
@@ -140,5 +141,9 @@ public class Window {
     public void update() {
         glfwSwapBuffers(window);
         glfwPollEvents();
+    }
+
+    public void updateTitle(String title) {
+        glfwSetWindowTitle(window, title);
     }
 }
