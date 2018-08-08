@@ -3,13 +3,17 @@ package Zeus.game;
 import org.joml.SimplexNoise;
 import org.joml.Vector3i;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+
 public class BlockChunk {
     public static final int CHUNK_SIZE = MeshManager.CHUNK_SIZE;
 
-    private static final int NOISE_HORIZONTAL_PRECISION = 300;
-    private static final int NOISE_VERTICAL_PRECISION = 200;
+    private static final int NOISE_HORIZONTAL_PRECISION = 80;
+    private static final int NOISE_VERTICAL_PRECISION = 10;
 
-    private BlockManager blockManager;
+    BlockManager blockManager;
     private int[] blocks;
     public final Vector3i position;
 
@@ -58,7 +62,68 @@ public class BlockChunk {
         return block;
     }
 
-    public int getExternalRelativeBlock(int x, int y, int z) {
-        return blockManager.getBlock(position.x * CHUNK_SIZE + x, position.y * CHUNK_SIZE + y, position.z * CHUNK_SIZE + z);
+    public int getMainBlock(Vector3i pos, int size) {
+        return getMainBlock(pos.x, pos.y, pos.z, size);
+    }
+
+    public int getMainBlock(int x, int y, int z, int size) {
+        Map<Integer, Integer> counts = new HashMap<>();
+        for (var i = x; i < x + size; i++) {
+            for (var j = y; j < y + size; j++) {
+                for (var k = z; k < z + size; k++) {
+                    var block = getBlock(i, j, k);
+                    counts.put(block, (counts.computeIfAbsent(block, (vv -> 0))) + 1);
+                }
+            }
+        }
+        int largest = 0;
+        int largestCount = -1;
+        for (Integer i : counts.keySet()) {
+            if (i != 0 && counts.get(i) > largestCount) {
+                largest = i;
+                largestCount = counts.get(i);
+            }
+        }
+        return largest;
+    }
+
+    public boolean emptyInRange(Vector3i pos, int size) {
+        return emptyInRange(pos.x, pos.y, pos.z, size);
+    }
+
+    public boolean emptyInRange(int x, int y, int z, int size) {
+        for (var i = x; i < x + size; i++) {
+            for (var j = y; j < y + size; j++) {
+                for (var k = z; k < z + size; k++) {
+                    var block = getBlock(i, j, k);
+                    if (block != 0) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean blocksInRange(Vector3i pos, int size) {
+        return blocksInRange(pos.x, pos.y, pos.z, size);
+    }
+
+    public boolean blocksInRange(int x, int y, int z, int size) {
+        for (var i = x; i < x + size; i++) {
+            for (var j = y; j < y + size; j++) {
+                for (var k = z; k < z + size; k++) {
+                    var block = getBlock(i, j, k);
+                    if (block != 0) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Vector3i getExternalRelativeCoordinates(int x, int y, int z) {
+        return getExternalRelativeCoordinates(new Vector3i(x, y, z));
+    }
+
+    public Vector3i getExternalRelativeCoordinates(Vector3i pos) {
+        return new Vector3i(position.x * CHUNK_SIZE + pos.x, position.y * CHUNK_SIZE + pos.y, position.z * CHUNK_SIZE + pos.z);
     }
 }

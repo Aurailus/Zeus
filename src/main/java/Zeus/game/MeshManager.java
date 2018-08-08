@@ -4,27 +4,28 @@ import Zeus.engine.graphics.Material;
 import Zeus.engine.graphics.Texture;
 import org.joml.Vector3i;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MeshManager {
     static final int REGION_SIZE = BlockManager.REGION_SIZE;
     static final int CHUNK_SIZE = BlockManager.CHUNK_SIZE;
+    static final boolean MULTITHREADING_ENABLED = ZeusGame.MULTITHREADING_ENABLED;
 
-    Material worldMaterial;;
+    Material worldMaterial;
     ZeusGame game;
 
     BlockManager blockManager;
     private List<MeshChunk> visibleChunks;
+    private List<MeshChunk> dirtyChunks;
 
     final Map<Vector3i, MeshRegion> regions;
 
     public MeshManager(ZeusGame game, BlockManager blockManager) {
         this.game = game;
+
         this.blockManager = blockManager;
         this.visibleChunks = new ArrayList<>();
+        this.dirtyChunks = new ArrayList<>();
         regions = new HashMap<>();
 
         try {
@@ -32,6 +33,22 @@ public class MeshManager {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateDirtyMeshes() {
+        updateDirtyMeshes(-1);
+    }
+
+    public void updateDirtyMeshes(int maxTime) {
+        long start = System.currentTimeMillis();
+        Iterator iterator = dirtyChunks.iterator();
+        while (iterator.hasNext() && (maxTime < 0 || System.currentTimeMillis() - start < maxTime)) {
+            MeshChunk chunk = (MeshChunk)iterator.next();
+            if (chunk.meshData != null && chunk.dirty) {
+                chunk.updateMesh();
+                iterator.remove();
+            }
         }
     }
 
@@ -133,6 +150,30 @@ public class MeshManager {
         public final Vector3i position;
         private MeshManager meshManager;
 
+        class MeshThread extends Thread implements Runnable {
+            int yLayer;
+            MeshRegion region;
+
+            private MeshThread(int yLayer, MeshRegion region) {
+                this.yLayer = yLayer;
+                this.region = region;
+            }
+
+            @Override
+            public void run() {
+                for (var i = 0; i < REGION_SIZE; i++) {
+                    for (var k = 0; k < REGION_SIZE; k++) {
+//                        long start = System.nanoTime();
+                        var chunk = new MeshChunk(meshManager, position, i, yLayer, k);
+                        chunk.init();
+                        setChunk(chunk, i, yLayer, k);
+//                        System.out.println(" - - BlockChunk took " + ((System.nanoTime() - start)/1_000_000f) + "ms");
+                    }
+                }
+            }
+        }
+
+
         public MeshRegion(MeshManager meshManager, int x, int y, int z) {
             this(meshManager, new Vector3i(x, y, z));
         }
@@ -144,15 +185,36 @@ public class MeshManager {
         }
 
         public void populate() {
-            for (var i = 0; i < REGION_SIZE; i++) {
-                for (var j = 0; j < REGION_SIZE; j++) {
-                    for (var k = 0; k < REGION_SIZE; k++) {
-                        var chunk = new MeshChunk(meshManager, position, i, j, k);
-                        chunk.init();
-                        setChunk(chunk, i, j, k);
+            if (MULTITHREADING_ENABLED) {
+                Thread[] threads = new Thread[REGION_SIZE];
+                for (var i = 0; i < threads.length; i++) {
+                    threads[i] = new MeshThread(i, this);
+                    threads[i].start();
+                }
+
+                try {
+                    for (var i = 0; i < threads.length; i++) {
+                        threads[i].join();
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                for (var i = 0; i < REGION_SIZE; i++) {
+                    for (var j = 0; j < REGION_SIZE; j++) {
+                        for (var k = 0; k < REGION_SIZE; k++) {
+                            long start = System.nanoTime();
+                            var chunk = new MeshChunk(meshManager, position, i, j, k);
+                            chunk.init();
+                            setChunk(chunk, i, j, k);
+//                        System.out.println(" - - MeshChunk took " + ((System.nanoTime() - start)/1_000_000f) + "ms");
+                        }
                     }
                 }
             }
+            meshManager.dirtyChunks.addAll(Arrays.asList(chunks));
         }
 
         public MeshChunk getChunk(Vector3i pos) {

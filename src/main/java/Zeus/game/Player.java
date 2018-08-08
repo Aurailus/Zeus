@@ -12,8 +12,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class Player {
     private static final float MOUSE_SENSITIVITY = 0.2f;
-    private static final float CAMERA_SPEED = 1f;
-    private static final float CAMERA_POS_STEP = 3f;
+    private static final float CAMERA_SPEED = 0.5f;
+    private static final float CAMERA_POS_STEP = 0.1f;
     private static final float CAMERA_DRAG = 0.2f;
 
     final Camera camera;

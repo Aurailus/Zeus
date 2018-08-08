@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeshData {
-    private static float[] resolutionScales = {1, 0.5f, 0.25f, 0.125f, 0.0625f};
+    private static float[] resScale = {1, 0.5f, 0.25f, 0.125f, 0.0625f};
 
     public float[] verts;
     public float[] texCoords;
@@ -25,7 +25,7 @@ public class MeshData {
 
 
     private void addFace(Face face, Vector3f offset, int faceNum) {
-        float scale = 1 / resolutionScales[resolution];
+        float scale = 1 / resScale[resolution];
         for (var i = 0; i < 4; i++) {
             vertsList.add(face.pos[i*3]   * scale + offset.x * scale);
             vertsList.add(face.pos[i*3+1] * scale + offset.y * scale);
@@ -45,12 +45,21 @@ public class MeshData {
     }
 
     private boolean faceShouldRender(int x, int y, int z) {
+        if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length)
+            return !chunk.blockChunk.blockManager.blocksInRange(
+                    chunk.blockChunk.getExternalRelativeCoordinates(
+                            Math.round(x / resScale[resolution]), Math.round(y / resScale[resolution]), Math.round(z / resScale[resolution])),
+                    (int)(1/ resScale[resolution]));
+
         return getBlock(x, y, z) == 0;
     }
 
     private int getBlock(int x, int y, int z) {
         if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length)
-            return chunk.blockChunk.getExternalRelativeBlock(Math.round(x / resolutionScales[resolution]), Math.round(y / resolutionScales[resolution]), Math.round(z / resolutionScales[resolution]));
+            return chunk.blockChunk.blockManager.getBlock(
+                    chunk.blockChunk.getExternalRelativeCoordinates(
+                            Math.round(x / resScale[resolution]), Math.round(y / resScale[resolution]), Math.round(z / resScale[resolution])));
+
         return blocks[x][y][z];
     }
 
@@ -63,14 +72,14 @@ public class MeshData {
         this.chunk = chunk;
         this.resolution = resolution;
 
-        final int ARRAY_SIZE = Math.round(MeshChunk.CHUNK_SIZE * resolutionScales[resolution]);
+        final int ARRAY_SIZE = Math.round(MeshChunk.CHUNK_SIZE * resScale[resolution]);
 
         blocks = new int[ARRAY_SIZE][ARRAY_SIZE][ARRAY_SIZE];
 
         for (var i = 0; i < ARRAY_SIZE; i++) {
             for (var j = 0; j < ARRAY_SIZE; j++) {
                 for (var k = 0; k < ARRAY_SIZE; k++) {
-                    blocks[i][j][k] = chunk.blockChunk.getBlock(Math.round(i / resolutionScales[resolution]), Math.round(j / resolutionScales[resolution]), Math.round(k / resolutionScales[resolution]));
+                    blocks[i][j][k] = chunk.blockChunk.getMainBlock(Math.round(i / resScale[resolution]), Math.round(j / resScale[resolution]), Math.round(k / resScale[resolution]), (int)(1/resScale[resolution]));
                 }
             }
         }

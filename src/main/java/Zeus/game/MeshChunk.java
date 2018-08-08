@@ -20,7 +20,8 @@ public class MeshChunk extends RenderObj {
 
     private ChunkMesh chunkMesh;
 
-    private boolean dirty = true;
+    public boolean dirty = true;
+    public MeshData meshData = null;
 
     public MeshChunk(MeshManager meshManager, Vector3i regionPos, int cX, int cY, int cZ) {
         this(meshManager, regionPos, new Vector3i(cX, cY, cZ));
@@ -100,18 +101,17 @@ public class MeshChunk extends RenderObj {
 
     public void generateMesh() {
         blockChunk = meshManager.blockManager.getChunk(pos);
-        dirty = false;
+        meshData = new MeshData(this, getResolution());
+    }
 
+    public void updateMesh() {
         var mesh = getChunkMesh();
         if (mesh != null) {
             this.meshManager.removeVisibleChunk(this);
             mesh.cleanup();
         }
-
-        MeshData m = new MeshData(this, getResolution());
-
-        if (m.verts.length != 0) {
-            mesh = new ChunkMesh(m.verts, m.texCoords, m.normals, m.indices);
+        if (meshData.verts.length != 0) {
+            mesh = new ChunkMesh(meshData.verts, meshData.texCoords, meshData.normals, meshData.indices);
             mesh.setMaterial(meshManager.worldMaterial);
             chunkMesh = mesh;
             this.meshManager.addVisibleChunk(this);
@@ -119,6 +119,8 @@ public class MeshChunk extends RenderObj {
         else {
             setMesh(null);
         }
+        dirty = false;
+        meshData = null;
     }
 
     public ChunkMesh getChunkMesh() {

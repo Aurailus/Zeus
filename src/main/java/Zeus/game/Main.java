@@ -10,8 +10,7 @@ public class Main {
             GameLogic gameLogic = new ZeusGame();
             GameEngine gameEngine = new GameEngine("Zeus", 1366, 768, vSync, gameLogic);
             gameEngine.start();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
         }

@@ -11,6 +11,7 @@ import java.util.Vector;
 public class BlockManager {
     static final int REGION_SIZE = 16;
     static final int CHUNK_SIZE = 16;
+    static final boolean MULTITHREADING_ENABLED = ZeusGame.MULTITHREADING_ENABLED;
     ZeusGame game;
 
     private final Map<Vector3i, BlockRegion> regions;
@@ -154,6 +155,50 @@ public class BlockManager {
         return chunk.getBlock(blockPos);
     }
 
+    public boolean emptyInRange(Vector3i pos, int size) {
+        var regionPos = new Vector3i(
+                (int)Math.floor((float)pos.x / REGION_SIZE / CHUNK_SIZE),
+                (int)Math.floor((float)pos.y / REGION_SIZE / CHUNK_SIZE),
+                (int)Math.floor((float)pos.z / REGION_SIZE / CHUNK_SIZE));
+
+        var region = getRegion(regionPos);
+        if (region == null) return true;
+
+        var chunkPos  = new Vector3i(
+                chunkCoordToLocal((int)Math.floor((float)pos.x / REGION_SIZE)),
+                chunkCoordToLocal((int)Math.floor((float)pos.y / REGION_SIZE)),
+                chunkCoordToLocal((int)Math.floor((float)pos.z / REGION_SIZE)));
+
+        var chunk = region.getChunk(chunkPos);
+        if (chunk == null) return true;
+
+        var blockPos = new Vector3i(blockCoordToLocal(pos.x), blockCoordToLocal(pos.y), blockCoordToLocal(pos.z));
+
+        return chunk.emptyInRange(blockPos, size);
+    }
+
+    public boolean blocksInRange(Vector3i pos, int size) {
+        var regionPos = new Vector3i(
+                (int)Math.floor((float)pos.x / REGION_SIZE / CHUNK_SIZE),
+                (int)Math.floor((float)pos.y / REGION_SIZE / CHUNK_SIZE),
+                (int)Math.floor((float)pos.z / REGION_SIZE / CHUNK_SIZE));
+
+        var region = getRegion(regionPos);
+        if (region == null) return false;
+
+        var chunkPos  = new Vector3i(
+                chunkCoordToLocal((int)Math.floor((float)pos.x / REGION_SIZE)),
+                chunkCoordToLocal((int)Math.floor((float)pos.y / REGION_SIZE)),
+                chunkCoordToLocal((int)Math.floor((float)pos.z / REGION_SIZE)));
+
+        var chunk = region.getChunk(chunkPos);
+        if (chunk == null) return false;
+
+        var blockPos = new Vector3i(blockCoordToLocal(pos.x), blockCoordToLocal(pos.y), blockCoordToLocal(pos.z));
+
+        return chunk.blocksInRange(blockPos, size);
+    }
+
     public int setBlock(int block, int x, int y, int z) {
         return setBlock(block, new Vector3i(x, y, z));
     }
@@ -185,6 +230,29 @@ public class BlockManager {
         public final Vector3i position;
         private BlockManager blockManager;
 
+        class BlockThread extends Thread implements Runnable {
+            int yLayer;
+            BlockRegion region;
+
+            private BlockThread(int yLayer, BlockRegion region) {
+                this.yLayer = yLayer;
+                this.region = region;
+            }
+
+            @Override
+            public void run() {
+                for (var i = 0; i < REGION_SIZE; i++) {
+                    for (var k = 0; k < REGION_SIZE; k++) {
+//                        long start = System.nanoTime();
+                        var chunk = new BlockChunk(blockManager, position, i, yLayer, k);
+                        chunk.generate();
+                        setChunk(chunk, i, yLayer, k);
+//                        System.out.println(" - - BlockChunk took " + ((System.nanoTime() - start)/1_000_000f) + "ms");
+                    }
+                }
+            }
+        }
+
         public BlockRegion(BlockManager blockManager, int x, int y, int z) {
             this(blockManager, new Vector3i(x, y, z));
         }
@@ -196,12 +264,32 @@ public class BlockManager {
         }
 
         public void populate() {
-            for (var i = 0; i < REGION_SIZE; i++) {
-                for (var j = 0; j < REGION_SIZE; j++) {
-                    for (var k = 0; k < REGION_SIZE; k++) {
-                        var chunk = new BlockChunk(blockManager, position, i, j, k);
-                        chunk.generate();
-                        setChunk(chunk, i, j, k);
+            if (MULTITHREADING_ENABLED) {
+                Thread[] threads = new Thread[REGION_SIZE];
+                for (var i = 0; i < threads.length; i++) {
+                    threads[i] = new BlockThread(i, this);
+                    threads[i].start();
+                }
+
+                try {
+                    for (var i = 0; i < threads.length; i++) {
+                        threads[i].join();
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                for (var i = 0; i < REGION_SIZE; i++) {
+                    for (var j = 0; j < REGION_SIZE; j++) {
+                        for (var k = 0; k < REGION_SIZE; k++) {
+                            long start = System.nanoTime();
+                            var chunk = new BlockChunk(blockManager, position, i, j, k);
+                            chunk.generate();
+                            setChunk(chunk, i, j, k);
+//                        System.out.println(" - - MeshChunk took " + ((System.nanoTime() - start)/1_000_000f) + "ms");
+                        }
                     }
                 }
             }

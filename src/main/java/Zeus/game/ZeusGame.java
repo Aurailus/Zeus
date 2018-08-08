@@ -4,18 +4,19 @@ import Zeus.engine.*;
 import Zeus.engine.graphics.*;
 import Zeus.engine.graphics.light.DirectionalLight;
 import Zeus.engine.graphics.light.SceneLight;
-import Zeus.game.objects.SkyBox;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 import org.joml.Vector4f;
 
 public class ZeusGame implements GameLogic {
+    static final boolean MULTITHREADING_ENABLED = true;
+
     private final Renderer renderer;
     public Scene scene;
     private Hud hud;
     Player player;
-    private BlockManager blockMan;
-    private MeshManager meshMan;
+    private RegionManager worldRegions;
+
 
     private double interval;
 
@@ -32,26 +33,9 @@ public class ZeusGame implements GameLogic {
         scene = new Scene();
         player = new Player(0, 0, 1);
 
-//        float skyBoxScale = 20000f;
-//        SkyBox skyBox = new SkyBox("/models/skybox.obj", "/textures/skybox.png");
-//        skyBox.setScale(skyBoxScale);
-//        scene.setSkyBox(skyBox);
 
-        blockMan = new BlockManager(this);
-        meshMan = new MeshManager(this, blockMan);
 
-        final int SIZE = 1;
-        for (var i = -SIZE; i < SIZE; i++) {
-            System.out.println((i + SIZE + 1) + "/" + (SIZE * 2));
-            for (var k = -1; k < 1; k++) {
-                for (var j = -SIZE; j < SIZE; j++) {
-                    blockMan.createRegion(new Vector3i(i, k, j));
-                    meshMan.createRegion(new Vector3i(i, k, j));
-                }
-            }
-        }
-
-        scene.setVisibleChunks(meshMan.getVisibleChunks());
+        scene.setVisibleChunks(worldRegions.visibleChunks());
 
         hud = new Hud("DEMO");
 
