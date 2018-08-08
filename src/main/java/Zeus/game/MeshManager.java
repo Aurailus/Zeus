@@ -7,9 +7,9 @@ import org.joml.Vector3i;
 import java.util.*;
 
 public class MeshManager {
-    static final int REGION_SIZE = BlockManager.REGION_SIZE;
+    static final int REGION_SIZE = 16;
     static final int CHUNK_SIZE = BlockManager.CHUNK_SIZE;
-    static final boolean MULTITHREADING_ENABLED = ZeusGame.MULTITHREADING_ENABLED;
+    private static final boolean MULTITHREADING_ENABLED = ZeusGame.MULTITHREADING_ENABLED;
 
     Material worldMaterial;
     ZeusGame game;
@@ -41,6 +41,7 @@ public class MeshManager {
     }
 
     public void updateDirtyMeshes(int maxTime) {
+        System.out.println("There are " + dirtyChunks.size() + " dirty meshes.");
         long start = System.currentTimeMillis();
         Iterator iterator = dirtyChunks.iterator();
         while (iterator.hasNext() && (maxTime < 0 || System.currentTimeMillis() - start < maxTime)) {
@@ -59,8 +60,8 @@ public class MeshManager {
         }
 
         var region = new MeshRegion(this, pos);
-        setRegion(region, pos);
         region.populate();
+        setRegion(region, pos);
     }
 
     static private int chunkCoordToLocal(int num) {
@@ -202,14 +203,23 @@ public class MeshManager {
                 }
             }
             else {
+
+//                region.setChunk(new MeshChunk(this, pos, new Vector3i(0, 0, 0)), new Vector3i(0, 0, 0));
+//                region.getChunk(new Vector3i(0, 0, 0)).generateMesh();
+//                this.dirtyChunks.add(region.getChunk(new Vector3i(0, 0, 0)));
+
+                var ind = 0;
                 for (var i = 0; i < REGION_SIZE; i++) {
                     for (var j = 0; j < REGION_SIZE; j++) {
                         for (var k = 0; k < REGION_SIZE; k++) {
-                            long start = System.nanoTime();
+
+//                            long start = System.nanoTime();
                             var chunk = new MeshChunk(meshManager, position, i, j, k);
-                            chunk.init();
+                            chunk.generateMesh();
                             setChunk(chunk, i, j, k);
-//                        System.out.println(" - - MeshChunk took " + ((System.nanoTime() - start)/1_000_000f) + "ms");
+                            System.out.println(ind++);
+//                            System.out.println(" - - MeshChunk took " + ((System.nanoTime() - start)/1_000_000f) + "ms");
+
                         }
                     }
                 }

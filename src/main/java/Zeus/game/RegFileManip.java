@@ -10,11 +10,11 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class RegFileManip {
-    private static int SECTOR_SIZE = 512;
-    private static int CHUNKS_WIDE = 16;
-    private static int CHUNKS_TOTAL = (int)Math.pow(CHUNKS_WIDE, 3);
-    private static int CHUNK_DATA_START = CHUNKS_TOTAL * 3;
-    private static int LOOKUP_ENTRY_SIZE = 2 + 1; //Short + Byte
+    private final static int SECTOR_SIZE = 512;
+    private final static int CHUNKS_WIDE = 16;
+    private final static int CHUNKS_TOTAL = (int)Math.pow(CHUNKS_WIDE, 3);
+    private final static int CHUNK_DATA_START = CHUNKS_TOTAL * 3;
+    private final static int LOOKUP_ENTRY_SIZE = 2 + 1; //Short + Byte
 
     //Chunk Format
     // SECTOR size == 4096

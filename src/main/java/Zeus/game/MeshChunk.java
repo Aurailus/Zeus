@@ -16,7 +16,6 @@ public class MeshChunk extends RenderObj {
     private MeshManager meshManager;
     private Vector3i pos;
     private int resolution;
-    BlockChunk blockChunk;
 
     private ChunkMesh chunkMesh;
 
@@ -43,38 +42,39 @@ public class MeshChunk extends RenderObj {
     }
 
     public void init() {
-        var bm = meshManager;
-        MeshChunk adjacent;
-        adjacent = bm.getChunk(new Vector3i(pos.x - 1, pos.y, pos.z));
-        if (adjacent != null) {
-            adjacent.setAdjacentState(0, true);
-            this.setAdjacentState(1, true);
-        }
-        adjacent = bm.getChunk(new Vector3i(pos.x + 1, pos.y, pos.z));
-        if (adjacent != null) {
-            adjacent.setAdjacentState(1, true);
-            this.setAdjacentState(0, true);
-        }
-        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y, pos.z - 1));
-        if (adjacent != null) {
-            adjacent.setAdjacentState(2, true);
-            this.setAdjacentState(3, true);
-        }
-        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y, pos.z + 1));
-        if (adjacent != null) {
-            adjacent.setAdjacentState(3, true);
-            this.setAdjacentState(2, true);
-        }
-        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y - 1, pos.z));
-        if (adjacent != null) {
-            adjacent.setAdjacentState(4, true);
-            this.setAdjacentState(5, true);
-        }
-        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y + 1, pos.z));
-        if (adjacent != null) {
-            adjacent.setAdjacentState(5, true);
-            this.setAdjacentState(4, true);
-        }
+//        var bm = meshManager;
+//        MeshChunk adjacent;
+//        adjacent = bm.getChunk(new Vector3i(pos.x - 1, pos.y, pos.z));
+//        if (adjacent != null) {
+//            adjacent.setAdjacentState(0, true);
+//            this.setAdjacentState(1, true);
+//        }
+//        adjacent = bm.getChunk(new Vector3i(pos.x + 1, pos.y, pos.z));
+//        if (adjacent != null) {
+//            adjacent.setAdjacentState(1, true);
+//            this.setAdjacentState(0, true);
+//        }
+//        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y, pos.z - 1));
+//        if (adjacent != null) {
+//            adjacent.setAdjacentState(2, true);
+//            this.setAdjacentState(3, true);
+//        }
+//        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y, pos.z + 1));
+//        if (adjacent != null) {
+//            adjacent.setAdjacentState(3, true);
+//            this.setAdjacentState(2, true);
+//        }
+//        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y - 1, pos.z));
+//        if (adjacent != null) {
+//            adjacent.setAdjacentState(4, true);
+//            this.setAdjacentState(5, true);
+//        }
+//        adjacent = bm.getChunk(new Vector3i(pos.x, pos.y + 1, pos.z));
+//        if (adjacent != null) {
+//            adjacent.setAdjacentState(5, true);
+//            this.setAdjacentState(4, true);
+//        }
+        generateMesh();
     }
 
     //0: X+
@@ -100,8 +100,9 @@ public class MeshChunk extends RenderObj {
     }
 
     public void generateMesh() {
-        blockChunk = meshManager.blockManager.getChunk(pos);
-        meshData = new MeshData(this, getResolution());
+        BlockChunk blockChunk = meshManager.blockManager.getChunk(pos);
+        System.out.println("Generating");
+        meshData = new MeshData(this, blockChunk, 0);
     }
 
     public void updateMesh() {
@@ -110,6 +111,7 @@ public class MeshChunk extends RenderObj {
             this.meshManager.removeVisibleChunk(this);
             mesh.cleanup();
         }
+        System.out.println(meshData.verts.length);
         if (meshData.verts.length != 0) {
             mesh = new ChunkMesh(meshData.verts, meshData.texCoords, meshData.normals, meshData.indices);
             mesh.setMaterial(meshManager.worldMaterial);

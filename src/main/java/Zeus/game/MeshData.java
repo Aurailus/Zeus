@@ -45,25 +45,26 @@ public class MeshData {
     }
 
     private boolean faceShouldRender(int x, int y, int z) {
-        if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length)
-            return !chunk.blockChunk.blockManager.blocksInRange(
-                    chunk.blockChunk.getExternalRelativeCoordinates(
-                            Math.round(x / resScale[resolution]), Math.round(y / resScale[resolution]), Math.round(z / resScale[resolution])),
-                    (int)(1/ resScale[resolution]));
+//        if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length)
+//            return 0;
+//            return chunk.blockChunk.blockManager.getBlock(
+//                    chunk.blockChunk.getWorldCoords(
+//                    Math.round(x / resScale[resolution]), Math.round(y / resScale[resolution]), Math.round(z / resScale[resolution]))) == 0;
 
         return getBlock(x, y, z) == 0;
     }
 
     private int getBlock(int x, int y, int z) {
         if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length)
-            return chunk.blockChunk.blockManager.getBlock(
-                    chunk.blockChunk.getExternalRelativeCoordinates(
-                            Math.round(x / resScale[resolution]), Math.round(y / resScale[resolution]), Math.round(z / resScale[resolution])));
+            return 0;
+//            return chunk.blockChunk.blockManager.getBlock(
+//                    chunk.blockChunk.getWorldCoords(
+//                            Math.round(x / resScale[resolution]), Math.round(y / resScale[resolution]), Math.round(z / resScale[resolution])));
 
         return blocks[x][y][z];
     }
 
-    public MeshData(MeshChunk chunk, int resolution) {
+    public MeshData(MeshChunk chunk, BlockChunk b, int resolution) {
         vertsList = new ArrayList<>();
         texCoordsList = new ArrayList<>();
         normalsList = new ArrayList<>();
@@ -79,7 +80,7 @@ public class MeshData {
         for (var i = 0; i < ARRAY_SIZE; i++) {
             for (var j = 0; j < ARRAY_SIZE; j++) {
                 for (var k = 0; k < ARRAY_SIZE; k++) {
-                    blocks[i][j][k] = chunk.blockChunk.getMainBlock(Math.round(i / resScale[resolution]), Math.round(j / resScale[resolution]), Math.round(k / resScale[resolution]), (int)(1/resScale[resolution]));
+                    blocks[i][j][k] = b.getBlock(Math.round(i / resScale[resolution]), Math.round(j / resScale[resolution]), Math.round(k / resScale[resolution]));
                 }
             }
         }

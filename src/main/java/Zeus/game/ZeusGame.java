@@ -9,7 +9,7 @@ import org.joml.Vector3i;
 import org.joml.Vector4f;
 
 public class ZeusGame implements GameLogic {
-    static final boolean MULTITHREADING_ENABLED = true;
+    static final boolean MULTITHREADING_ENABLED = false;
 
     private final Renderer renderer;
     public Scene scene;
@@ -33,9 +33,10 @@ public class ZeusGame implements GameLogic {
         scene = new Scene();
         player = new Player(0, 0, 1);
 
+        worldRegions = new RegionManager(this);
+        worldRegions.init();
 
-
-        scene.setVisibleChunks(worldRegions.visibleChunks());
+        scene.setVisibleChunks(worldRegions.getVisibleChunks());
 
         hud = new Hud("DEMO");
 
