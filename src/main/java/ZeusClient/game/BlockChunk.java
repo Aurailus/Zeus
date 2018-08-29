@@ -86,6 +86,10 @@ public class BlockChunk {
         return blocks;
     }
 
+    public void setBlocks(short[] blocks) {
+        this.blocks = blocks;
+    }
+
     public Vector3i getPosition() {
         return position;
     }

@@ -16,7 +16,8 @@ public class Scene {
     private SceneLight sceneLight;
     private List<MeshChunk> visibleChunks;
 
-    public Scene() {
+    public Scene(List<MeshChunk> visibleChunks) {
+        this.visibleChunks = visibleChunks;
         meshMap = new HashMap<>();
     }
 
@@ -54,10 +55,6 @@ public class Scene {
 
     public void setSceneLight(SceneLight sceneLight) {
         this.sceneLight = sceneLight;
-    }
-
-    public void setVisibleChunks(List<MeshChunk> visibleChunks) {
-        this.visibleChunks = visibleChunks;
     }
 
     public List<MeshChunk> getVisibleChunks() {

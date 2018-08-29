@@ -5,16 +5,11 @@ import ZeusClient.engine.graphics.*;
 import ZeusClient.engine.graphics.light.DirectionalLight;
 import ZeusClient.engine.graphics.light.SceneLight;
 import ZeusClient.game.network.ConnMan;
-import ZeusClient.game.network.PacketType;
-import ZeusClient.game.network.Pacman;
-import ZeusClient.game.network.PacketData;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 import org.joml.Vector4f;
 
-import java.net.Socket;
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 public class ZeusGame implements GameLogic {
 
@@ -23,7 +18,7 @@ public class ZeusGame implements GameLogic {
     private Hud hud;
     Player player;
     private RegionManager worldRegions;
-    private ConnMan connman;
+    private ConnMan connMan;
 
     private float lightAngle;
 
@@ -36,19 +31,15 @@ public class ZeusGame implements GameLogic {
     public void init(Window window) throws Exception {
 
         renderer.init(window);
-        scene = new Scene();
-        player = new Player(0, 64, 0);
+        player = new Player(0, 5, 0);
 
-        connman = new ConnMan("localhost", 30005);
+        connMan = new ConnMan("localhost", 30005);
 
-        connman.requestChunk(new Vector3i(0, 0, 0), (short[] chunk) -> {
-            System.out.println(Arrays.toString(chunk));
-        });
-
-        worldRegions = new RegionManager(this);
+        worldRegions = new RegionManager(this, connMan);
         worldRegions.init();
-//
-        scene.setVisibleChunks(worldRegions.getVisibleChunks());
+
+        worldRegions.loadChunks(player);
+        scene = new Scene(worldRegions.getVisibleChunks());
 
         hud = new Hud("DEMO");
 
@@ -81,13 +72,12 @@ public class ZeusGame implements GameLogic {
 
     @Override
     public void update(float interval, MouseInput mouseInput) {
-        connman.update();
+        connMan.update();
 
-//        worldRegions.update();
-//
-//        player.update(interval, mouseInput);
-//
-//        hud.rotateCompass(player.getCamera().getRotation().y);
+        worldRegions.update();
+        player.update(interval, mouseInput);
+
+        hud.rotateCompass(player.getCamera().getRotation().y);
 
         // Update directional light direction, intensity and colour
 //        SceneLight sceneLight = scene.getSceneLight();
@@ -119,17 +109,17 @@ public class ZeusGame implements GameLogic {
 
     @Override
     public void render(Window window) {
-//        hud.updateSize(window);
-//        renderer.render(window, player.getCamera(), scene, hud);
+        hud.updateSize(window);
+        renderer.render(window, player.getCamera(), scene, hud);
 
-//        worldRegions.render();
+        worldRegions.render();
     }
 
     @Override
     public void cleanup() {
-        connman.kill();
-//        renderer.cleanup();
-//        scene.cleanup();
-//        hud.cleanup();
+        connMan.kill();
+        renderer.cleanup();
+        scene.cleanup();
+        hud.cleanup();
     }
 }

@@ -91,6 +91,17 @@ public class BlockManager {
         return chunk;
     }
 
+    public BlockChunk setChunk(short[] data, int x, int y, int z) {
+        return setChunk(data, x, y, z);
+    }
+
+    public synchronized BlockChunk setChunk(short[] data, Vector3i pos) {
+        BlockChunk chunk = new BlockChunk(this, pos);
+        chunk.setBlocks(data);
+        setChunk(chunk, pos);
+        return chunk;
+    }
+
     //
     // Block Functions
     //

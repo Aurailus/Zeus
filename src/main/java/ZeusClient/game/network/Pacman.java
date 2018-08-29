@@ -1,9 +1,6 @@
 package ZeusClient.game.network;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,26 +13,19 @@ public class Pacman extends Thread implements Runnable {
     private final int MAX_OUT_SIZE = 4096;
     private final int OUT_INTERVAL = 32;
 
-    private final byte[] LINE_DELIM = "\n".getBytes();
-
     private Socket socket;
     private boolean closed = false;
-    private Thread thread; //Background Packet Resolver
 
-    private BufferedReader in;
-    private BufferedOutputStream out;
-
-    private long updateInterval = 32;
-    private long lastUpdate;
+    private DataInputStream in;
+    private DataOutputStream out;
 
     private ArrayList<byte[]> pendingOutPackets;
-    private BlockingQueue<String> pendingInPackets;
+    private BlockingQueue<byte[]> pendingInPackets;
 
     private ArrayList<PacketData> clientPackets;
 
     public Pacman(Socket socket) {
         this.socket = socket;
-        lastUpdate = System.currentTimeMillis();
 
         pendingOutPackets = new ArrayList<>();
         pendingInPackets = new LinkedBlockingQueue<>();
@@ -45,14 +35,17 @@ public class Pacman extends Thread implements Runnable {
     @Override
     public void run() {
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedOutputStream(socket.getOutputStream());
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
 
-            thread = new Thread(() -> {
+            //Background Packet Resolver
+            Thread thread = new Thread(() -> {
                 try {
                     while (!closed) {
-                        var line = in.readLine();
-                        pendingInPackets.put(line);
+                        int length = in.readInt();
+                        byte[] data = new byte[length];
+                        in.readFully(data, 0, length);
+                        pendingInPackets.put(data);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -94,15 +87,14 @@ public class Pacman extends Thread implements Runnable {
     }
 
     private boolean decodePacket() throws InterruptedException {
-        String packet = (closed || pendingInPackets.isEmpty()) ? null : pendingInPackets.poll(1L, TimeUnit.MILLISECONDS);
+        byte[] packet = (closed || pendingInPackets.isEmpty()) ? null : pendingInPackets.poll(1L, TimeUnit.MILLISECONDS);
         if (packet == null) return false;
 
         PacketData p = new PacketData();
 
-        byte[] bytes = packet.getBytes();
-        p.type = PacketType.values()[Bytes.bytesToInt(Arrays.copyOfRange(bytes, 0, 4))];
-        p.time = Bytes.bytesToLong(Arrays.copyOfRange(bytes, 4, 12));
-        p.data = new String(Arrays.copyOfRange(bytes, 12, bytes.length));
+        p.type = PacketType.values()[Bytes.bytesToInt(Arrays.copyOfRange(packet, 0, 4))];
+        p.time = Bytes.bytesToLong(Arrays.copyOfRange(packet, 4, 12));
+        p.data = Arrays.copyOfRange(packet, 12, packet.length);
 
         clientPackets.add(p);
 
@@ -113,10 +105,18 @@ public class Pacman extends Thread implements Runnable {
         int size = 0;
         byte[] packet;
 
-        while (pendingOutPackets.size() > 0 && (packet = pendingOutPackets.get(0)) != null && (size += packet.length) < MAX_OUT_SIZE) {
-            out.write(packet);
-            out.write(LINE_DELIM);
-            pendingOutPackets.remove(0);
+        synchronized (this) {
+            while (pendingOutPackets.size() > 0) {
+                packet = pendingOutPackets.get(0);
+                size += packet.length;
+
+                out.writeInt(packet.length);
+                out.write(packet);
+
+                pendingOutPackets.remove(0);
+
+                if (size >= MAX_OUT_SIZE) break;
+            }
         }
         out.flush();
     }
@@ -131,7 +131,9 @@ public class Pacman extends Thread implements Runnable {
         System.arraycopy(Bytes.longToBytes(0), 0, out, 4, 8);
         System.arraycopy(data, 0, out, 12, data.length);
 
-        pendingOutPackets.add(out);
+        synchronized (this) {
+            pendingOutPackets.add(out);
+        }
     }
 
     public void kill() {

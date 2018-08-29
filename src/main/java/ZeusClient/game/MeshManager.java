@@ -15,7 +15,7 @@ public class MeshManager {
     ZeusGame game;
 
     BlockManager blockManager;
-    ChunkHandler chunkHandler;
+//    ChunkHandler chunkHandler;
 
     private List<MeshChunk> visibleChunks;
     private List<MeshChunk> dirtyChunks;
@@ -30,7 +30,7 @@ public class MeshManager {
 
         visibleChunks = new ArrayList<>();
         dirtyChunks = new ArrayList<>();
-        chunkHandler = new ChunkHandler(this);
+//        chunkHandler = new ChunkHandler(this);
 
         regions = new HashMap<>();
 
@@ -43,12 +43,12 @@ public class MeshManager {
     }
 
     public void update() {
-        loadChunks(game.player);
-        chunkHandler.update(4);
+//        loadChunks(game.player);
+//        chunkHandler.update(4);
     }
 
     public void render() {
-        chunkHandler.render();
+//        chunkHandler.render();
         updateDirtyMeshes(4);
     }
 
@@ -85,21 +85,6 @@ public class MeshManager {
         var region = new MeshRegion(pos);
         setRegion(region, pos);
         return region;
-    }
-
-    public void loadChunks(Player player) {
-        int LOAD_DISTANCE = 10;
-
-        Vector3f playerPos = player.getPosition();
-        Vector3i chunkOrigin = new Vector3i(Math.round(playerPos.x/CHUNK_SIZE), Math.round(playerPos.y/CHUNK_SIZE), Math.round(playerPos.z/CHUNK_SIZE));
-        for (var i = chunkOrigin.x - LOAD_DISTANCE; i < chunkOrigin.x + LOAD_DISTANCE; i++) {
-            for (var j = chunkOrigin.y - LOAD_DISTANCE; j < chunkOrigin.y + LOAD_DISTANCE; j++) {
-                for (var k = chunkOrigin.z - LOAD_DISTANCE; k < chunkOrigin.z + LOAD_DISTANCE; k++) {
-                    if (getChunk(new Vector3i(i, j, k)) == null)
-                        chunkHandler.loadChunk(new Vector3i(i, j, k));
-                }
-            }
-        }
     }
 
     public MeshChunk createChunk(Vector3i pos) {

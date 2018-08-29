@@ -6,12 +6,13 @@ import org.joml.Vector3i;
 
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class ConnMan {
     private Pacman pacman;
-    private HashMap<Vector3i, Consumer<short[]>> pendingChunkCallbacks;
+    private HashMap<Vector3i, BiConsumer<Vector3i, short[]>> pendingChunkCallbacks;
 
     public ConnMan(String host, int port) throws Exception {
         pendingChunkCallbacks = new HashMap<>();
@@ -23,7 +24,7 @@ public class ConnMan {
         pacman.getPackets((PacketData p) -> {
             switch (p.type) {
                 case DEBUG:
-                    System.out.println(p.data);
+                    System.out.println(new String(p.data, StandardCharsets.ISO_8859_1));
                     break;
                 case BLOCK_CHUNK:
                     handleReceivedChunk(p);
@@ -35,23 +36,27 @@ public class ConnMan {
     }
 
     private void handleReceivedChunk(PacketData p) {
-        String[] segments = p.data.split("\\|");
-        if (segments.length != 2) return;
-        var pos = VecUtils.stringToVector(segments[0]);
+        var str = new String(p.data, StandardCharsets.ISO_8859_1);
+        var index = str.indexOf("|");
+        var pos = VecUtils.stringToVector(str.substring(0, index));
         if (pos == null) return;
         var cons = pendingChunkCallbacks.get(pos);
         if (cons == null) return;
-        var chunk = ChunkSerializer.decodeChunk(segments[1].getBytes(StandardCharsets.ISO_8859_1));
-        cons.accept(chunk);
+
+        var chunk = ChunkSerializer.decodeChunk(str.substring(index + 1).getBytes(StandardCharsets.ISO_8859_1));
+        cons.accept(pos, chunk);
     }
 
-    public void requestChunk(Vector3i pos, Consumer<short[]> consumer) {
+
+
+    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, short[]> consumer) {
+        requestChunk(pos.x, pos.y, pos.z, consumer);
+    }
+
+    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, short[]> consumer) {
+        var pos = new Vector3i(x, y, z);
         pendingChunkCallbacks.put(pos, consumer);
         pacman.sendPacket(PacketType.REQUEST_CHUNK, VecUtils.vectorToString(pos));
-    }
-
-    public void requestChunk(int x, int y, int z, Consumer<short[]> consumer) {
-        requestChunk(new Vector3i(x, y, z), consumer);
     }
 
     public void kill() {
