@@ -7,23 +7,36 @@ import org.joml.Vector3i;
 import java.util.*;
 
 public class RegionManager {
+    private class PendingChunkObj {
+        Vector3i pos;
+        short[] data;
+
+        PendingChunkObj(Vector3i pos, short[] data) {
+            this.pos = pos;
+            this.data = data;
+        }
+    }
+
     private static final int CHUNK_SIZE = BlockManager.CHUNK_SIZE;
 
     private BlockManager blockMan;
     private MeshManager meshMan;
     private ConnMan connMan;
-    private ZeusGame game;
+    private Player player;
 
-    private HashMap<Vector3i, short[]> pendingChunkData;
-    private int chunksReceived = 0;
+    private ArrayList<PendingChunkObj> pendingChunkData;
+    private long lastSortTime;
+    private long lastPollTime;
 
-    public RegionManager(ZeusGame game, ConnMan connMan) {
-        this.game = game;
+    public RegionManager(Player player, ZeusGame game, ConnMan connMan) {
+        this.player = player;
         this.connMan = connMan;
         blockMan = new BlockManager();
         meshMan = new MeshManager(game, blockMan);
 
-        pendingChunkData = new HashMap<>();
+        pendingChunkData = new ArrayList<>();
+        lastSortTime = System.currentTimeMillis();
+        lastPollTime = System.currentTimeMillis();
     }
 
     public void init() {
@@ -31,26 +44,44 @@ public class RegionManager {
 
     public void update() {
         long startTime = System.nanoTime();
-        int maxTime = 1000000 * 8;
+        int maxTime = 1000000 * 4;
 
-        Iterator<Map.Entry<Vector3i, short[]>> iterator = pendingChunkData.entrySet().iterator();
+        Vector3f posFloat = player.getPosition();
+        Vector3i chunkPos = new Vector3i(Math.round(posFloat.x/CHUNK_SIZE),
+                Math.round(posFloat.y/CHUNK_SIZE), Math.round(posFloat.z/CHUNK_SIZE));
+
+        if (System.currentTimeMillis() - lastSortTime > 1*1000) {
+            pendingChunkData.sort((PendingChunkObj a, PendingChunkObj b) -> {
+                var dA = a.pos.distance(chunkPos);
+                var dB = b.pos.distance(chunkPos);
+                return (Double.compare(dA, dB));
+            });
+            lastSortTime = System.currentTimeMillis();
+        }
+        if (System.currentTimeMillis() - lastPollTime > 10*1000) {
+            System.out.println("Loading Chunks");
+            loadChunks();
+            lastPollTime = System.currentTimeMillis();
+        }
+
+        Iterator<PendingChunkObj> iterator = pendingChunkData.iterator();
         int dealt = 0;
 
         while (System.nanoTime() - startTime < maxTime && iterator.hasNext()) {
             dealt++;
 
-            Map.Entry<Vector3i, short[]> entry = iterator.next();
+            PendingChunkObj entry = iterator.next();
             iterator.remove();
 
-            blockMan.setChunk(entry.getValue(), entry.getKey());
-            MeshChunk chunk = meshMan.createChunk(entry.getKey());
+            blockMan.setChunk(entry.data, entry.pos);
+            MeshChunk chunk = meshMan.createChunk(entry.pos);
 
 
             chunk.generateMesh();
             chunk.updateMesh();
 
         }
-//        System.out.println(pendingChunkData.entrySet().size() + ", " + dealt);
+//        System.out.println(pendingChunkData.size() + ", " + dealt);
     }
 
     public void render() {
@@ -61,27 +92,29 @@ public class RegionManager {
         return meshMan.getVisibleChunks();
     }
 
-    public void loadChunks(Player player) {
-        int LOAD_DISTANCE = 15;
+    public void loadChunks() {
+        int LOAD_DISTANCE_HORI = 15;
+        int LOAD_DISTANCE_VERT = 5;
 
         Vector3f playerPos = player.getPosition();
-        Vector3i chunkOrigin = new Vector3i(Math.round(playerPos.x/CHUNK_SIZE), Math.round(playerPos.y/CHUNK_SIZE), Math.round(playerPos.z/CHUNK_SIZE));
+        Vector3i chunkOrigin = new Vector3i(Math.round(playerPos.x/CHUNK_SIZE),
+                Math.round(playerPos.y/CHUNK_SIZE), Math.round(playerPos.z/CHUNK_SIZE));
 
         Vector3i request = new Vector3i(0, 0, 0);
 
-        for (var i = chunkOrigin.x - LOAD_DISTANCE; i < chunkOrigin.x + LOAD_DISTANCE; i++) {
-            for (var j = chunkOrigin.y - LOAD_DISTANCE; j < chunkOrigin.y + LOAD_DISTANCE; j++) {
-                for (var k = chunkOrigin.z - LOAD_DISTANCE; k < chunkOrigin.z + LOAD_DISTANCE; k++) {
+        long s = System.currentTimeMillis();
+
+        for (var i = chunkOrigin.x - LOAD_DISTANCE_HORI; i < chunkOrigin.x + LOAD_DISTANCE_HORI; i++) {
+            for (var j = chunkOrigin.y - LOAD_DISTANCE_VERT; j < chunkOrigin.y + LOAD_DISTANCE_VERT; j++) {
+                for (var k = chunkOrigin.z - LOAD_DISTANCE_HORI; k < chunkOrigin.z + LOAD_DISTANCE_HORI; k++) {
                     request.set(i, j, k);
-                    if (!pendingChunkData.containsKey(request)) {
-                        connMan.requestChunk(request, ((pos, data) -> {
-                            pendingChunkData.put(pos, data);
-                            chunksReceived ++;
-                            System.out.println(chunksReceived);
-                        }));
+                    if (pendingChunkData.stream().noneMatch(c -> c.pos.equals(request)) && blockMan.getChunk(request) == null) {
+                        connMan.requestChunk(request, ((pos, data) -> pendingChunkData.add(new PendingChunkObj(pos, data))));
                     }
                 }
             }
         }
+
+        System.out.println(System.currentTimeMillis() - s);
     }
 }

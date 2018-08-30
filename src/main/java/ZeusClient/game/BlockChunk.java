@@ -1,6 +1,5 @@
 package ZeusClient.game;
 
-import ZeusClient.engine.OpenSimplexNoise;
 import org.joml.Vector3i;
 
 public class BlockChunk {
@@ -30,7 +29,7 @@ public class BlockChunk {
     }
 
     public void generate(long seed) {
-        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
+//        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
         for (var i = 0; i < CHUNK_SIZE; i++) {
             for (var j = 0; j < CHUNK_SIZE; j++) {
                 for (var k = 0; k < CHUNK_SIZE; k++) {
@@ -38,23 +37,24 @@ public class BlockChunk {
 
 //                    fill = (int)Math.round(Math.random());
 
-                    double noiseVal = noise.eval(((float)i + position.x * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION,
-                            ((float)k + position.z * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION);
-                    noiseVal = 1-((noiseVal-5)*NOISE_VERTICAL_PRECISION + (position.y * CHUNK_SIZE + j));
-                    fill = (int)Math.min(Math.max(Math.round(noiseVal),0),1);
+//                    double noiseVal = noise.eval(((float)i + position.x * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION,
+//                            ((float)k + position.z * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION);
+//                    noiseVal = 1-((noiseVal-5)*NOISE_VERTICAL_PRECISION + (position.y * CHUNK_SIZE + j));
+//                    fill = (int)Math.min(Math.max(Math.round(noiseVal),0),1);
 
-//                    fill = 1;
+                    fill = 1;
 
                     setBlock(fill, i, j, k);
                 }
             }
         }
 
-        try {
-            new RegFileManip(new Vector3i(0, 0, 0)).encodeChunk(blocks);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //TODO: Find where this code came from
+//        try {
+//            new RegFileManip(new Vector3i(0, 0, 0)).encodeChunk(blocks);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public short getBlock(Vector3i pos) {

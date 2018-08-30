@@ -35,10 +35,10 @@ public class ZeusGame implements GameLogic {
 
         connMan = new ConnMan("localhost", 30005);
 
-        worldRegions = new RegionManager(this, connMan);
+        worldRegions = new RegionManager(player, this, connMan);
         worldRegions.init();
 
-        worldRegions.loadChunks(player);
+        worldRegions.loadChunks();
         scene = new Scene(worldRegions.getVisibleChunks());
 
         hud = new Hud("DEMO");

@@ -24,7 +24,7 @@ public class Pacman extends Thread implements Runnable {
 
     private ArrayList<PacketData> clientPackets;
 
-    public Pacman(Socket socket) {
+    Pacman(Socket socket) {
         this.socket = socket;
 
         pendingOutPackets = new ArrayList<>();
@@ -74,12 +74,13 @@ public class Pacman extends Thread implements Runnable {
 
     private void update() throws Exception {
         synchronized (this) {
+            //noinspection StatementWithEmptyBody
             while (decodePacket()) {}
         }
         sendPendingOutPackets();
     }
 
-    public synchronized void getPackets(Consumer<PacketData> consumer) {
+    synchronized void getPackets(Consumer<PacketData> consumer) {
         for (PacketData packet : clientPackets) {
             consumer.accept(packet);
         }
@@ -121,11 +122,11 @@ public class Pacman extends Thread implements Runnable {
         out.flush();
     }
 
-    public void sendPacket(PacketType p, String data) {
+    void sendPacket(PacketType p, String data) {
         sendPacket(p, data.getBytes());
     }
 
-    public void sendPacket(PacketType p, byte[] data) {
+    void sendPacket(PacketType p, byte[] data) {
         byte[] out = new byte[data.length + 12];
         System.arraycopy(Bytes.intToBytes(p.ordinal()), 0, out, 0, 4);
         System.arraycopy(Bytes.longToBytes(0), 0, out, 4, 8);
@@ -136,7 +137,7 @@ public class Pacman extends Thread implements Runnable {
         }
     }
 
-    public void kill() {
+    void kill() {
         closed = true;
     }
 }
