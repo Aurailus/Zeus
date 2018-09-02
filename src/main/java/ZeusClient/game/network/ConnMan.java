@@ -55,6 +55,7 @@ public class ConnMan {
 
     public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, short[]> consumer) {
         var pos = new Vector3i(x, y, z);
+        if (pendingChunkCallbacks.containsKey(pos)) return;
         pendingChunkCallbacks.put(pos, consumer);
         pacman.sendPacket(PacketType.REQUEST_CHUNK, VecUtils.vectorToString(pos));
     }

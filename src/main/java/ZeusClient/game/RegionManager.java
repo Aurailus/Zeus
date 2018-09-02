@@ -58,8 +58,8 @@ public class RegionManager {
             });
             lastSortTime = System.currentTimeMillis();
         }
-        if (System.currentTimeMillis() - lastPollTime > 10*1000) {
-            System.out.println("Loading Chunks");
+        if (System.currentTimeMillis() - lastPollTime > 1*1000) {
+//            System.out.println("Loading Chunks");
             loadChunks();
             lastPollTime = System.currentTimeMillis();
         }
@@ -76,16 +76,15 @@ public class RegionManager {
             blockMan.setChunk(entry.data, entry.pos);
             MeshChunk chunk = meshMan.createChunk(entry.pos);
 
-
             chunk.generateMesh();
-            chunk.updateMesh();
+            chunk.updateAdjacentChunks();
 
         }
 //        System.out.println(pendingChunkData.size() + ", " + dealt);
     }
 
     public void render() {
-//        meshMan.render();
+        meshMan.render();
     }
 
     public List<MeshChunk> getVisibleChunks() {
@@ -93,8 +92,8 @@ public class RegionManager {
     }
 
     public void loadChunks() {
-        int LOAD_DISTANCE_HORI = 15;
-        int LOAD_DISTANCE_VERT = 5;
+        int LOAD_DISTANCE_HORI = 9;
+        int LOAD_DISTANCE_VERT = 7;
 
         Vector3f playerPos = player.getPosition();
         Vector3i chunkOrigin = new Vector3i(Math.round(playerPos.x/CHUNK_SIZE),
@@ -102,7 +101,7 @@ public class RegionManager {
 
         Vector3i request = new Vector3i(0, 0, 0);
 
-        long s = System.currentTimeMillis();
+//        long s = System.currentTimeMillis();
 
         for (var i = chunkOrigin.x - LOAD_DISTANCE_HORI; i < chunkOrigin.x + LOAD_DISTANCE_HORI; i++) {
             for (var j = chunkOrigin.y - LOAD_DISTANCE_VERT; j < chunkOrigin.y + LOAD_DISTANCE_VERT; j++) {
@@ -115,6 +114,6 @@ public class RegionManager {
             }
         }
 
-        System.out.println(System.currentTimeMillis() - s);
+//        System.out.println(System.currentTimeMillis() - s);
     }
 }

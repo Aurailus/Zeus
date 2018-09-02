@@ -43,12 +43,9 @@ public class MeshManager {
     }
 
     public void update() {
-//        loadChunks(game.player);
-//        chunkHandler.update(4);
     }
 
     public void render() {
-//        chunkHandler.render();
         updateDirtyMeshes(4);
     }
 

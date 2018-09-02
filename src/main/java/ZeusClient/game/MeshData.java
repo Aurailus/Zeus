@@ -45,13 +45,12 @@ public class MeshData {
     }
 
     private boolean faceShouldRender(int x, int y, int z) {
-        return getBlock(x, y, z) == 0;
+        return getBlock(x, y, z) <= 0;
     }
 
     private int getBlock(int x, int y, int z) {
         if (x < 0 || y < 0 || z < 0 || x >= blocks.length || y >= blocks.length || z >= blocks.length) {
-//            return chunk.meshManager.blockManager.getBlock(chunk.getWorldCoords(x, y, z));
-            return 0;
+            return chunk.meshManager.blockManager.getBlock(chunk.getWorldCoords(x, y, z));
         }
         return blocks[x][y][z];
     }

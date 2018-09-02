@@ -43,10 +43,16 @@ public class ZeusGame implements GameLogic {
 
         hud = new Hud("DEMO");
 
-        Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
-        mesh.setMaterial(new Material(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f), 1f));
-        RenderObj bunny = new RenderObj(mesh);
-        scene.setRenderObjects(new RenderObj[] {bunny});
+//        Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
+//        mesh.setMaterial(new Material(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f), 1f));
+//        var COUNT = 360;
+//        RenderObj[] obs = new RenderObj[COUNT];
+//        for (var i = 0; i < COUNT; i++) {
+//            RenderObj bunny = new RenderObj(mesh);
+//            bunny.setPosition(i, 0, 0);
+//            obs[i] = bunny;
+//        }
+//        scene.setRenderObjects(obs);
 
         setupLights();
     }

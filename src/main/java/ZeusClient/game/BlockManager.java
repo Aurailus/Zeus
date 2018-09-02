@@ -56,22 +56,6 @@ public class BlockManager {
         synchronized(this) {
             chunk = blockChunks.get(pos);
         }
-
-        if (chunk != null) return chunk;
-        chunk = loadChunk(pos);
-        if (chunk != null) {
-            synchronized (this) {
-                setChunk(chunk, pos);
-                return chunk;
-            }
-        }
-        synchronized (this) {
-            if (blockChunks.get(pos) == null) {
-                chunk = new BlockChunk(this, pos);
-                chunk.generate(seed);
-                setChunk(chunk, pos);
-            }
-        }
         return chunk;
     }
 
@@ -112,11 +96,9 @@ public class BlockManager {
 
     public int getBlock(Vector3i pos) {
         var chunkPos = new Vector3i((int)Math.floor((float)pos.x / CHUNK_SIZE), (int)Math.floor((float)pos.y / CHUNK_SIZE), (int)Math.floor((float)pos.z / CHUNK_SIZE));
-
         var chunk = getChunk(chunkPos);
-
+        if (chunk == null) return -1;
         var blockPos = new Vector3i(blockCoordToLocal(pos.x), blockCoordToLocal(pos.y), blockCoordToLocal(pos.z));
-
         return chunk.getBlock(blockPos);
     }
 
@@ -132,60 +114,4 @@ public class BlockManager {
 
         return chunk.setBlock(block, blockPos);
     }
-
-    private class BlockGenThread extends Thread implements Runnable {
-        BlockManager blockMan;
-        Vector3i pos;
-        Vector3i range;
-
-        private BlockGenThread(BlockManager blockMan, Vector3i pos, Vector3i range) {
-            this.blockMan = blockMan;
-            this.pos = pos;
-            this.range = range;
-        }
-
-        @Override
-        public void run() {
-            for (var i = 0; i < range.x; i++) {
-                for (var j = 0; j < range.y; j++) {
-                    for (var k = 0; k < range.z; k++) {
-                        var cPos = new Vector3i(pos.x + i, pos.y + j, pos.z + k);
-                        var chunk = setChunk(new BlockChunk(this.blockMan, cPos), cPos);
-                        chunk.generate(seed);
-                    }
-                }
-            }
-        }
-    }
-
-//    void generateWorld(Vector3i pos, Vector3i range) {
-////        if (MULTITHREADING_ENABLED) {
-////            Thread[] threads = new Thread[range.y];
-////            for (var i = 0; i < threads.length; i++) {
-////                threads[i] = new BlockGenThread(this, new Vector3i(pos.x, pos.y + i, pos.z), new Vector3i(range.x, 1, range.z));
-////                threads[i].start();
-////            }
-////            try {
-////                for (Thread thread : threads) {
-////                    thread.join();
-////                }
-////            } catch (Exception e) {
-////                System.out.println("Interrupted exception occured!");
-////                e.printStackTrace();
-////            }
-////        }
-////        else {
-//            for (var i = 0; i < range.x; i++) {
-//                for (var j = 0; j < range.y; j++) {
-//                    for (var k = 0; k < range.z; k++) {
-//                        var cPos = new Vector3i(pos.x + i, pos.y + j, pos.z + k);
-//                        getChunk(cPos);
-////                        var chunk = new BlockChunk(this, cPos);
-////                        chunk.generate();
-////                        setChunk(chunk, cPos);
-//                    }
-//                }
-//            }
-////        }
-//    }
 }

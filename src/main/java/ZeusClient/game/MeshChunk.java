@@ -65,20 +65,28 @@ public class MeshChunk extends RenderObj {
 
     public void generateMesh() {
         BlockChunk blockChunk = meshManager.blockManager.getChunk(pos);
-        meshData = new MeshData(this, blockChunk, this.getResolution());
-        meshManager.addDirtyChunk(this);
+        if (blockChunk != null) {
+            meshData = new MeshData(this, blockChunk, this.getResolution());
+            meshManager.addDirtyChunk(this);
+        }
+        else {
+            System.out.println("Block chunk is null... has been collected.");
+        }
     }
 
     public void updateMesh() {
         if (meshData != null) {
             var mesh = getChunkMesh();
             if (mesh != null) {
-                this.meshManager.removeVisibleChunk(this);
+                meshManager.removeVisibleChunk(this);
                 mesh.cleanup();
             }
             if (meshData.verts.length != 0) {
+                long start = System.nanoTime();
                 mesh = new ChunkMesh(meshData.verts, meshData.texCoords, meshData.normals, meshData.indices);
                 mesh.setMaterial(meshManager.worldMaterial);
+                System.out.println(meshData.verts.length);
+//                System.out.println((float)(System.nanoTime() - start)/1_000_000f);
                 chunkMesh = mesh;
                 this.meshManager.addVisibleChunk(this);
             } else {
@@ -87,6 +95,28 @@ public class MeshChunk extends RenderObj {
             dirty = false;
             meshData = null;
         }
+    }
+
+    public void updateAdjacentChunks() {
+        MeshChunk chunk;
+
+        chunk = meshManager.getChunk(new Vector3i(pos).add(1, 0, 0));
+        if (chunk != null) chunk.generateMesh();
+
+        chunk = meshManager.getChunk(new Vector3i(pos).add(-1, 0, 0));
+        if (chunk != null) chunk.generateMesh();
+
+        chunk = meshManager.getChunk(new Vector3i(pos).add(0, 1, 0));
+        if (chunk != null) chunk.generateMesh();
+
+        chunk = meshManager.getChunk(new Vector3i(pos).add(0, -1, 0));
+        if (chunk != null) chunk.generateMesh();
+
+        chunk = meshManager.getChunk(new Vector3i(pos).add(0, 0, 1));
+        if (chunk != null) chunk.generateMesh();
+
+        chunk = meshManager.getChunk(new Vector3i(pos).add(0, 0, -1));
+        if (chunk != null) chunk.generateMesh();
     }
 
     public ChunkMesh getChunkMesh() {
