@@ -1,4 +1,4 @@
-package ZeusClient.engine;
+package ZeusClient.engine.helpers;
 
 import org.joml.Vector3i;
 

@@ -2,13 +2,13 @@ package ZeusClient.engine.graphics;
 
 import ZeusClient.engine.HudInterface;
 import ZeusClient.engine.RenderObj;
-import ZeusClient.engine.Utils;
+import ZeusClient.engine.Scene;
+import ZeusClient.engine.helpers.Utils;
 import ZeusClient.engine.Window;
 import ZeusClient.engine.graphics.light.DirectionalLight;
 import ZeusClient.engine.graphics.light.PointLight;
 import ZeusClient.engine.graphics.light.SceneLight;
 import ZeusClient.engine.graphics.light.SpotLight;
-import ZeusClient.game.MeshChunk;
 import ZeusClient.game.objects.SkyBox;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;

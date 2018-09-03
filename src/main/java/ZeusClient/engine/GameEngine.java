@@ -1,5 +1,7 @@
 package ZeusClient.engine;
 
+import ZeusClient.engine.helpers.Timer;
+
 public class GameEngine implements Runnable {
     public static final int TARGET_FPS = 60;
     public static final int TARGET_UPS = 60;

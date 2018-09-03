@@ -1,60 +1,26 @@
 package ZeusClient.game;
 
+import ZeusClient.engine.helpers.ArrayTrans3D;
+import ZeusClient.engine.helpers.RLE;
 import org.joml.Vector3i;
 
+import java.util.ArrayList;
+
+import static ZeusClient.engine.helpers.ArrayTrans3D.CHUNK_SIZE;
+
 public class BlockChunk {
-    private static final int CHUNK_SIZE = MeshManager.CHUNK_SIZE;
+    short[] blocks;
+    boolean[] visible;
+    ArrayList<boolean[]> sidesOpaque;
 
-    private static final int NOISE_HORIZONTAL_PRECISION = 80;
-    private static final int NOISE_VERTICAL_PRECISION = 10;
+    public BlockChunk(byte[] blocks, ArrayList<byte[]> sidesOpaque) {
 
-    BlockManager blockManager;
-    private short[] blocks;
-    public final Vector3i position;
-
-    public BlockChunk(BlockManager blockManager, int cX, int cY, int cZ) {
-        this(blockManager, new Vector3i(cX, cY, cZ));
-    }
-
-    public BlockChunk(BlockManager blockManager, Vector3i pos) {
-        this.blockManager = blockManager;
-        this.position = pos;
-        blocks = new short[(int)Math.pow(CHUNK_SIZE, 3)];
-        for (var i = 0; i < blocks.length; i++) blocks[i] = 0;
-    }
-
-    public BlockChunk load(short[] data) {
-        this.blocks = data;
-        return this;
-    }
-
-    public void generate(long seed) {
-//        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
-        for (var i = 0; i < CHUNK_SIZE; i++) {
-            for (var j = 0; j < CHUNK_SIZE; j++) {
-                for (var k = 0; k < CHUNK_SIZE; k++) {
-                    int fill = 0;
-
-//                    fill = (int)Math.round(Math.random());
-
-//                    double noiseVal = noise.eval(((float)i + position.x * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION,
-//                            ((float)k + position.z * CHUNK_SIZE) / NOISE_HORIZONTAL_PRECISION);
-//                    noiseVal = 1-((noiseVal-5)*NOISE_VERTICAL_PRECISION + (position.y * CHUNK_SIZE + j));
-//                    fill = (int)Math.min(Math.max(Math.round(noiseVal),0),1);
-
-                    fill = 1;
-
-                    setBlock(fill, i, j, k);
-                }
-            }
+        this.blocks = RLE.decodeShorts(blocks);
+        this.sidesOpaque = new ArrayList<>();
+        for (var i = 0; i < 6; i++) {
+            this.sidesOpaque.set(i, RLE.decodeBools(sidesOpaque.get(i)));
         }
-
-        //TODO: Find where this code came from
-//        try {
-//            new RegFileManip(new Vector3i(0, 0, 0)).encodeChunk(blocks);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        calcVisible();
     }
 
     public short getBlock(Vector3i pos) {
@@ -62,35 +28,67 @@ public class BlockChunk {
     }
 
     public short getBlock(int x, int y, int z) {
-        return blocks[x + CHUNK_SIZE * (y + CHUNK_SIZE * z)];
+        return ArrayTrans3D.get(this.blocks, x, y, z);
     }
 
-    public int setBlock(int block, Vector3i pos) {
-        return setBlock(block, pos.x, pos.y, pos.z);
+    public boolean getVisible(Vector3i pos) {
+        return getVisible(pos.x, pos.y, pos.z);
     }
 
-    public int setBlock(int block, int x, int y, int z) {
-        blocks[x + CHUNK_SIZE * (y + CHUNK_SIZE * z)] = (short)block;
-        return block;
+    public boolean getVisible(int x, int y, int z) {
+        if (visible == null) calcVisible();
+        return ArrayTrans3D.get(this.visible, x, y, z);
     }
 
-    public Vector3i getWorldCoords(int x, int y, int z) {
-        return getWorldCoords(new Vector3i(x, y, z));
+    private void calcVisible() {
+        visible = new boolean[blocks.length];
+        Vector3i pos = new Vector3i();
+
+        for (var i = 0; i < CHUNK_SIZE; i++) {
+            for (var j = 0; j < CHUNK_SIZE; j++) {
+                for (var k = 0; k < CHUNK_SIZE; k++) {
+
+                    pos.set(i, j, k);
+                    var block = ArrayTrans3D.get(blocks, pos);
+                    var adjacent = getAdjacent(pos);
+
+                    ArrayTrans3D.set(visible, true, pos);
+                    for (var l = 0; l < 6; l++) {
+                        if (adjacent[i] == 0) {
+                            ArrayTrans3D.set(visible, true, pos);
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
-    public Vector3i getWorldCoords(Vector3i pos) {
-        return new Vector3i(position.x * CHUNK_SIZE + pos.x, position.y * CHUNK_SIZE + pos.y, position.z * CHUNK_SIZE + pos.z);
-    }
+    private short[] getAdjacent(Vector3i pos) {
+        short[] adjacent = new short[6];
 
-    public short[] getBlocks() {
-        return blocks;
-    }
+        pos.x += 1;
+        adjacent[0] = (pos.x < 16) ? ArrayTrans3D.get(blocks, pos) : 1;
 
-    public void setBlocks(short[] blocks) {
-        this.blocks = blocks;
-    }
+        pos.x -= 2;
+        adjacent[1] = (pos.x >= 0) ? ArrayTrans3D.get(blocks, pos) : 1;
 
-    public Vector3i getPosition() {
-        return position;
+        pos.x += 1;
+        pos.y += 1;
+        adjacent[2] = (pos.x < 16) ? ArrayTrans3D.get(blocks, pos) : 1;
+
+        pos.y -= 2;
+        adjacent[3] = (pos.x >= 0) ? ArrayTrans3D.get(blocks, pos) : 1;
+
+        pos.y += 1;
+        pos.z += 1;
+        adjacent[4] = (pos.x < 16) ? ArrayTrans3D.get(blocks, pos) : 1;
+
+        pos.z -= 2;
+        adjacent[5] = (pos.x >= 0) ? ArrayTrans3D.get(blocks, pos) : 1;
+        pos.z += 1;
+
+        return adjacent;
     }
 }

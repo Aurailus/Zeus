@@ -1,12 +1,11 @@
 package ZeusClient.game.network;
 
-import ZeusClient.engine.ChunkSerializer;
-import ZeusClient.engine.VecUtils;
+import ZeusClient.engine.helpers.ChunkSerializer;
+import ZeusClient.engine.helpers.VecUtils;
 import org.joml.Vector3i;
 
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 

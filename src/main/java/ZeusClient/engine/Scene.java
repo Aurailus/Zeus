@@ -1,8 +1,9 @@
-package ZeusClient.engine.graphics;
+package ZeusClient.engine;
 
 import ZeusClient.engine.RenderObj;
+import ZeusClient.engine.graphics.Mesh;
 import ZeusClient.engine.graphics.light.SceneLight;
-import ZeusClient.game.MeshChunk;
+//import ZeusClient.game.MeshChunk;
 import ZeusClient.game.objects.SkyBox;
 
 import java.util.ArrayList;
@@ -16,8 +17,7 @@ public class Scene {
     private SceneLight sceneLight;
     private List<MeshChunk> visibleChunks;
 
-    public Scene(List<MeshChunk> visibleChunks) {
-        this.visibleChunks = visibleChunks;
+    public Scene() {
         meshMap = new HashMap<>();
     }
 
@@ -33,6 +33,10 @@ public class Scene {
             List<RenderObj> list = meshMap.computeIfAbsent(mesh, k -> new ArrayList<>());
             list.add(obj);
         }
+    }
+
+    public void setVisibleChunks(ArrayList<MeshChunk> visibleChunks) {
+        this.visibleChunks = visibleChunks;
     }
 
     public void cleanup() {
@@ -57,7 +61,7 @@ public class Scene {
         this.sceneLight = sceneLight;
     }
 
-    public List<MeshChunk> getVisibleChunks() {
+    public ArrayList<MeshChunk> getVisibleChunks() {
         return visibleChunks;
     }
 }

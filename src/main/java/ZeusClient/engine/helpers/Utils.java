@@ -1,4 +1,4 @@
-package ZeusClient.engine;
+package ZeusClient.engine.helpers;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

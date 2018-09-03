@@ -1,4 +1,4 @@
-package ZeusClient.engine;
+package ZeusClient.engine.helpers;
 
 public class Timer {
     private double lastLoopTime;

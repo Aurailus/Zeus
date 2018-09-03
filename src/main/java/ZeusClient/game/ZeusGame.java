@@ -1,15 +1,14 @@
 package ZeusClient.game;
 
-import ZeusClient.engine.*;
-import ZeusClient.engine.graphics.*;
+import ZeusClient.engine.GameLogic;
+import ZeusClient.engine.MouseInput;
+import ZeusClient.engine.Window;
+import ZeusClient.engine.graphics.Renderer;
+import ZeusClient.engine.Scene;
 import ZeusClient.engine.graphics.light.DirectionalLight;
 import ZeusClient.engine.graphics.light.SceneLight;
 import ZeusClient.game.network.ConnMan;
 import org.joml.Vector3f;
-import org.joml.Vector3i;
-import org.joml.Vector4f;
-
-import java.util.Arrays;
 
 public class ZeusGame implements GameLogic {
 
@@ -17,7 +16,7 @@ public class ZeusGame implements GameLogic {
     public Scene scene;
     private Hud hud;
     Player player;
-    private RegionManager worldRegions;
+//    private RegionManager worldRegions;
     private ConnMan connMan;
 
     private float lightAngle;
@@ -35,11 +34,11 @@ public class ZeusGame implements GameLogic {
 
         connMan = new ConnMan("localhost", 30005);
 
-        worldRegions = new RegionManager(player, this, connMan);
-        worldRegions.init();
-
-        worldRegions.loadChunks();
-        scene = new Scene(worldRegions.getVisibleChunks());
+//        worldRegions = new RegionManager(player, this, connMan);
+//        worldRegions.init();
+//
+//        worldRegions.loadChunks();
+//        scene = new Scene(worldRegions.getVisibleChunks());
 
         hud = new Hud("DEMO");
 
@@ -80,7 +79,7 @@ public class ZeusGame implements GameLogic {
     public void update(float interval, MouseInput mouseInput) {
         connMan.update();
 
-        worldRegions.update();
+//        worldRegions.update();
         player.update(interval, mouseInput);
 
         hud.rotateCompass(player.getCamera().getRotation().y);
@@ -118,7 +117,7 @@ public class ZeusGame implements GameLogic {
         hud.updateSize(window);
         renderer.render(window, player.getCamera(), scene, hud);
 
-        worldRegions.render();
+//        worldRegions.render();
     }
 
     @Override
