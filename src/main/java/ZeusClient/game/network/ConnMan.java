@@ -2,6 +2,7 @@ package ZeusClient.game.network;
 
 import ZeusClient.engine.helpers.ChunkSerializer;
 import ZeusClient.engine.helpers.VecUtils;
+import ZeusClient.game.BlockChunk;
 import org.joml.Vector3i;
 
 import java.net.Socket;
@@ -11,7 +12,7 @@ import java.util.function.BiConsumer;
 
 public class ConnMan {
     private Pacman pacman;
-    private HashMap<Vector3i, BiConsumer<Vector3i, short[]>> pendingChunkCallbacks;
+    private HashMap<Vector3i, BiConsumer<Vector3i, BlockChunk>> pendingChunkCallbacks;
 
     public ConnMan(String host, int port) throws Exception {
         pendingChunkCallbacks = new HashMap<>();
@@ -48,11 +49,11 @@ public class ConnMan {
 
 
 
-    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, short[]> consumer) {
+    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, BlockChunk> consumer) {
         requestChunk(pos.x, pos.y, pos.z, consumer);
     }
 
-    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, short[]> consumer) {
+    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, BlockChunk> consumer) {
         var pos = new Vector3i(x, y, z);
         if (pendingChunkCallbacks.containsKey(pos)) return;
         pendingChunkCallbacks.put(pos, consumer);

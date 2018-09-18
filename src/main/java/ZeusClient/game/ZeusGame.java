@@ -1,14 +1,19 @@
 package ZeusClient.game;
 
-import ZeusClient.engine.GameLogic;
-import ZeusClient.engine.MouseInput;
-import ZeusClient.engine.Window;
+import ZeusClient.engine.*;
+import ZeusClient.engine.graphics.Material;
+import ZeusClient.engine.graphics.Mesh;
 import ZeusClient.engine.graphics.Renderer;
-import ZeusClient.engine.Scene;
 import ZeusClient.engine.graphics.light.DirectionalLight;
 import ZeusClient.engine.graphics.light.SceneLight;
 import ZeusClient.game.network.ConnMan;
 import org.joml.Vector3f;
+import org.joml.Vector3i;
+import org.joml.Vector4f;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.function.BiConsumer;
 
 public class ZeusGame implements GameLogic {
 
@@ -16,31 +21,30 @@ public class ZeusGame implements GameLogic {
     public Scene scene;
     private Hud hud;
     Player player;
-//    private RegionManager worldRegions;
     private ConnMan connMan;
-
-    private float lightAngle;
+    ArrayList<MeshChunk> chunks = new ArrayList<>();
 
     public ZeusGame() {
         renderer = new Renderer();
-        lightAngle = -90;
     }
 
     @Override
     public void init(Window window) throws Exception {
-
         renderer.init(window);
         player = new Player(0, 5, 0);
-
+        scene = new Scene();
+        hud = new Hud("DEMO");
         connMan = new ConnMan("localhost", 30005);
 
-//        worldRegions = new RegionManager(player, this, connMan);
-//        worldRegions.init();
-//
-//        worldRegions.loadChunks();
-//        scene = new Scene(worldRegions.getVisibleChunks());
 
-        hud = new Hud("DEMO");
+        var SIZE = 8;
+        for (var i = -SIZE; i < SIZE; i++) {
+            for (var j = -SIZE/ 2; j < SIZE/2; j++) {
+                for (var k = -SIZE; k < SIZE; k++) {
+                    loadChunk(i, j, k);
+                }
+            }
+        }
 
 //        Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
 //        mesh.setMaterial(new Material(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f), 1f));
@@ -53,7 +57,23 @@ public class ZeusGame implements GameLogic {
 //        }
 //        scene.setRenderObjects(obs);
 
+        scene.setVisibleChunks(chunks);
+
         setupLights();
+    }
+
+
+
+    private void loadChunk(int x, int y, int z) {
+        connMan.requestChunk(new Vector3i(x, y, z), (pos, blockChunk) -> {
+            long start = System.currentTimeMillis();
+
+            MeshChunk chunk = new MeshChunk(new Vector3i(pos.x, pos.y, pos.z));
+            chunk.createMesh(blockChunk);
+            if (chunk.getMesh() != null) chunks.add(chunk);
+
+            System.out.println("Average chunk gen time: " + (System.currentTimeMillis() - start) / 100f + "ms");
+        });
     }
 
     private void setupLights() {
@@ -79,45 +99,15 @@ public class ZeusGame implements GameLogic {
     public void update(float interval, MouseInput mouseInput) {
         connMan.update();
 
-//        worldRegions.update();
         player.update(interval, mouseInput);
 
         hud.rotateCompass(player.getCamera().getRotation().y);
-
-        // Update directional light direction, intensity and colour
-//        SceneLight sceneLight = scene.getSceneLight();
-//        DirectionalLight directionalLight = sceneLight.getDirectionalLight();
-//        lightAngle += 0.5f;
-//        if (lightAngle > 90) {
-//            directionalLight.setIntensity(0);
-//            if (lightAngle >= 360) {
-//                lightAngle = -90;
-//            }
-//            sceneLight.getSkyBoxLight().set(0.3f, 0.3f, 0.3f);
-//        } else if (lightAngle <= -80 || lightAngle >= 80) {
-//            float factor = 1 - (Math.abs(lightAngle) - 80) / 10.0f;
-//            sceneLight.getSkyBoxLight().set(factor, factor, factor);
-//            directionalLight.setIntensity(factor);
-//            directionalLight.getColor().y = Math.max(factor, 0.9f);
-//            directionalLight.getColor().z = Math.max(factor, 0.5f);
-//        } else {
-//            sceneLight.getSkyBoxLight().set(1.0f, 1.0f, 1.0f);
-//            directionalLight.setIntensity(1);
-//            directionalLight.getColor().x = 1;
-//            directionalLight.getColor().y = 1;
-//            directionalLight.getColor().z = 1;
-//        }
-//        double angRad = Math.toRadians(lightAngle);
-//        directionalLight.getDirection().x = (float) Math.sin(angRad);
-//        directionalLight.getDirection().y = (float) Math.cos(angRad);
     }
 
     @Override
     public void render(Window window) {
         hud.updateSize(window);
         renderer.render(window, player.getCamera(), scene, hud);
-
-//        worldRegions.render();
     }
 
     @Override

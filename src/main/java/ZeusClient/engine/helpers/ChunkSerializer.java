@@ -1,5 +1,8 @@
 package ZeusClient.engine.helpers;
 
+import ZeusClient.game.BlockChunk;
+import ZeusClient.game.EncodedBlockChunk;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,41 +10,48 @@ import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import static ZeusClient.game.network.Bytes.bytesToInt;
 import static ZeusClient.game.network.Bytes.bytesToShort;
 import static ZeusClient.game.network.Bytes.shortToBytes;
 
 public class ChunkSerializer {
-    public static short[] decodeChunk(byte[] encoded) {
-        long start = System.nanoTime();
+    public static BlockChunk decodeChunk(byte[] encoded) {
+        byte[] decoded;
 
-        byte[] rle;
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(encoded);
             GZIPInputStream gzip = new GZIPInputStream(bis);
             bis.close();
 
-            rle = gzip.readAllBytes();
+            decoded = gzip.readAllBytes();
         }
         catch (IOException e) {
             e.printStackTrace();
             return null;
         }
 
-        short[] chunk = new short[4096];
+        ByteArrayInputStream bis = new ByteArrayInputStream(decoded);
 
-        int ind = 0;
-        for (var i = 0; i < rle.length / 4; i++) {
-            int length = bytesToShort(new byte[]{rle[i * 4], rle[i * 4 + 1]});
-            int num = bytesToShort(new byte[]{rle[i * 4 + 2], rle[i * 4 + 3]});
-            for (var j = 0; j < length; j++) {
-                chunk[ind++] = (short) num;
-            }
+        byte[] buff = new byte[4];
+        bis.read(buff, 0, 4);
+        var size = bytesToInt(buff);
+
+        byte[] mainChunkRLE = new byte[size];
+        bis.read(mainChunkRLE, 0, size);
+        short[] chunk = RLE.decodeShorts(mainChunkRLE);
+
+        ArrayList<boolean[]> sides = new ArrayList<>();
+        for (var i = 0; i < 6; i++) {
+            buff = new byte[4];
+            bis.read(buff, 0, 4);
+            var size2 = bytesToInt(buff);
+
+            byte[] adjRLE = new byte[size2];
+            bis.read(adjRLE, 0, size2);
+            sides.add(RLE.decodeBools(adjRLE));
         }
 
-        long time = System.nanoTime() - start;
-//        System.out.println("Decoding chunk took " + time + "us (" + (Math.round(time / 1_000_000f * 100)/100f) + "ms)");
-
-        return chunk;
+        return new BlockChunk(chunk, sides);
     }
 
     public static byte[] encodeChunk(short[] chunk) {

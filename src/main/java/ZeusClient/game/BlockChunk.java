@@ -5,6 +5,8 @@ import ZeusClient.engine.helpers.RLE;
 import org.joml.Vector3i;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 
 import static ZeusClient.engine.helpers.ArrayTrans3D.CHUNK_SIZE;
 
@@ -13,14 +15,17 @@ public class BlockChunk {
     boolean[] visible;
     ArrayList<boolean[]> sidesOpaque;
 
-    public BlockChunk(byte[] blocks, ArrayList<byte[]> sidesOpaque) {
+    public BlockChunk(short[] blocks, ArrayList<boolean[]> sidesOpaque) {
+        this.blocks = blocks;
+        this.sidesOpaque = sidesOpaque;
+    }
 
+    public BlockChunk(byte[] blocks, ArrayList<byte[]> sidesOpaque) {
         this.blocks = RLE.decodeShorts(blocks);
         this.sidesOpaque = new ArrayList<>();
         for (var i = 0; i < 6; i++) {
-            this.sidesOpaque.set(i, RLE.decodeBools(sidesOpaque.get(i)));
+            this.sidesOpaque.add(RLE.decodeBools(sidesOpaque.get(i)));
         }
-        calcVisible();
     }
 
     public short getBlock(Vector3i pos) {
@@ -40,6 +45,11 @@ public class BlockChunk {
         return ArrayTrans3D.get(this.visible, x, y, z);
     }
 
+    public boolean[] getVisibleArray() {
+        if (visible == null) calcVisible();
+        return visible;
+    }
+
     private void calcVisible() {
         visible = new boolean[blocks.length];
         Vector3i pos = new Vector3i();
@@ -49,46 +59,76 @@ public class BlockChunk {
                 for (var k = 0; k < CHUNK_SIZE; k++) {
 
                     pos.set(i, j, k);
-                    var block = ArrayTrans3D.get(blocks, pos);
-                    var adjacent = getAdjacent(pos);
+                    ArrayTrans3D.set(visible, false, pos);
 
-                    ArrayTrans3D.set(visible, true, pos);
-                    for (var l = 0; l < 6; l++) {
-                        if (adjacent[i] == 0) {
-                            ArrayTrans3D.set(visible, true, pos);
-                            break;
+                    if (getBlock(pos) != 0) {
+                        var adjacent = getAdjacent(pos);
+                        for (short anAdjacent : adjacent) {
+                            if (anAdjacent == 0) {
+                                ArrayTrans3D.set(visible, true, pos);
+                                break;
+                            }
                         }
                     }
-
                 }
             }
         }
     }
 
-    private short[] getAdjacent(Vector3i pos) {
+    public short[] getAdjacent(Vector3i pos) {
         short[] adjacent = new short[6];
+        Vector3i checkPos = new Vector3i(pos);
 
-        pos.x += 1;
-        adjacent[0] = (pos.x < 16) ? ArrayTrans3D.get(blocks, pos) : 1;
+        checkPos.set(pos).add(1, 0, 0);
 
-        pos.x -= 2;
-        adjacent[1] = (pos.x >= 0) ? ArrayTrans3D.get(blocks, pos) : 1;
+        adjacent[0] = getBlockIncludeEdges(checkPos);
 
-        pos.x += 1;
-        pos.y += 1;
-        adjacent[2] = (pos.x < 16) ? ArrayTrans3D.get(blocks, pos) : 1;
+        checkPos.set(pos).add(-1, 0, 0);
 
-        pos.y -= 2;
-        adjacent[3] = (pos.x >= 0) ? ArrayTrans3D.get(blocks, pos) : 1;
+        adjacent[1] = getBlockIncludeEdges(checkPos);
 
-        pos.y += 1;
-        pos.z += 1;
-        adjacent[4] = (pos.x < 16) ? ArrayTrans3D.get(blocks, pos) : 1;
+        checkPos.set(pos).add(0, 1, 0);
 
-        pos.z -= 2;
-        adjacent[5] = (pos.x >= 0) ? ArrayTrans3D.get(blocks, pos) : 1;
-        pos.z += 1;
+        adjacent[2] = getBlockIncludeEdges(checkPos);
+
+        checkPos.set(pos).add(0, -1, 0);
+
+        adjacent[3] = getBlockIncludeEdges(checkPos);
+
+        checkPos.set(pos).add(0, 0, 1);
+
+        adjacent[4] = getBlockIncludeEdges(checkPos);
+
+        checkPos.set(pos).add(0, 0, -1);
+
+        adjacent[5] = getBlockIncludeEdges(checkPos);
 
         return adjacent;
+    }
+
+    private short getBlockIncludeEdges(Vector3i pos) {
+        if (pos.x >= 16 || pos.x < 0 || pos.y >= 16 || pos.y < 0 || pos.z >= 16 || pos.z < 0) {
+            try {
+                return (short)(getEdgeOpaque(pos) ? 1 : 0);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+        return getBlock(pos);
+    }
+
+    private boolean getEdgeOpaque(Vector3i pos) throws Exception {
+        if (pos.x == 16) return sidesOpaque.get(0)[pos.y * 16 + pos.z];
+        if (pos.x == -1) return sidesOpaque.get(1)[pos.y * 16 + pos.z];
+
+        if (pos.y == 16) return sidesOpaque.get(2)[pos.x * 16 + pos.z];
+        if (pos.y == -1) return sidesOpaque.get(3)[pos.x * 16 + pos.z];
+
+        if (pos.z == 16) return sidesOpaque.get(4)[pos.y * 16 + pos.x];
+        if (pos.z == -1) return sidesOpaque.get(5)[pos.y * 16 + pos.x];
+
+        throw new Exception("BAD VALUE");
     }
 }

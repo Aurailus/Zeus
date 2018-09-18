@@ -9,6 +9,7 @@ import ZeusClient.engine.graphics.light.DirectionalLight;
 import ZeusClient.engine.graphics.light.PointLight;
 import ZeusClient.engine.graphics.light.SceneLight;
 import ZeusClient.engine.graphics.light.SpotLight;
+import ZeusClient.game.MeshChunk;
 import ZeusClient.game.objects.SkyBox;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -180,11 +181,11 @@ public class Renderer {
 
         var chunks = scene.getVisibleChunks();
         for (MeshChunk chunk : chunks) {
-            var mesh = chunk.getChunkMesh();
-            Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk, viewMatrix);
+            var mesh = chunk.getMesh();
+            Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk.getObject(), viewMatrix);
             terrainShaderProgram.setUniform("material", mesh.getMaterial());
             terrainShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-            terrainShaderProgram.setUniform("repeat_scale", (float)repeatScale[chunk.getResolution()]);
+            terrainShaderProgram.setUniform("repeat_scale", (float)repeatScale[0]); //TODO: Get actual value
             mesh.render();
         }
 

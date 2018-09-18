@@ -4,6 +4,7 @@ import ZeusClient.engine.RenderObj;
 import ZeusClient.engine.graphics.Mesh;
 import ZeusClient.engine.graphics.light.SceneLight;
 //import ZeusClient.game.MeshChunk;
+import ZeusClient.game.MeshChunk;
 import ZeusClient.game.objects.SkyBox;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class Scene {
         this.sceneLight = sceneLight;
     }
 
-    public ArrayList<MeshChunk> getVisibleChunks() {
+    public List<MeshChunk> getVisibleChunks() {
         return visibleChunks;
     }
 }
