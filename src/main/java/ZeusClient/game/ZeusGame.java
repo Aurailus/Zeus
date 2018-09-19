@@ -1,28 +1,33 @@
 package ZeusClient.game;
 
 import ZeusClient.engine.*;
-import ZeusClient.engine.graphics.Material;
-import ZeusClient.engine.graphics.Mesh;
 import ZeusClient.engine.graphics.Renderer;
 import ZeusClient.engine.graphics.light.DirectionalLight;
 import ZeusClient.engine.graphics.light.SceneLight;
+import ZeusClient.game.blockmodels.BM_CubeTexLifted;
+import ZeusClient.game.blockmodels.BM_CubeTexOne;
+import ZeusClient.game.blockmodels.BM_CubeTexFour;
+import ZeusClient.game.blockmodels.BM_PlantLike;
 import ZeusClient.game.network.ConnMan;
+import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
-import org.joml.Vector4f;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.function.BiConsumer;
+import java.util.HashMap;
 
 public class ZeusGame implements GameLogic {
 
     private final Renderer renderer;
-    public Scene scene;
+    private Scene scene;
     private Hud hud;
-    Player player;
+
+    private Player player;
     private ConnMan connMan;
-    ArrayList<MeshChunk> chunks = new ArrayList<>();
+
+    private ArrayList<MeshChunk> chunks;
+    private HashMap<Vector3i, BlockChunk> chunkMap;
+    public static BlockAtlas atlas;
 
     public ZeusGame() {
         renderer = new Renderer();
@@ -36,8 +41,20 @@ public class ZeusGame implements GameLogic {
         hud = new Hud("DEMO");
         connMan = new ConnMan("localhost", 30005);
 
+        chunks = new ArrayList<>();
+        chunkMap = new HashMap<>();
+        atlas = new BlockAtlas();
 
-        var SIZE = 8;
+        atlas.create("default:grass", new BM_CubeTexLifted(new Vector2i(0, 1), new Vector2i(0, 0), new Vector2i(2, 1), new Vector2i(1, 0)), true);
+        atlas.create("default:dirt", new BM_CubeTexOne(new Vector2i(1, 0)));
+        atlas.create("default:stone", new BM_CubeTexOne(new Vector2i(1, 1)));
+        atlas.create("default:tallgrass_0", new BM_PlantLike(new Vector2i(2, 0)), false);
+        atlas.create("default:tallgrass_1", new BM_PlantLike(new Vector2i(3, 0)), false);
+        atlas.create("default:tallgrass_2", new BM_PlantLike(new Vector2i(4, 0)), false);
+        atlas.create("default:tallgrass_3", new BM_PlantLike(new Vector2i(5, 0)), false);
+        atlas.create("default:tallgrass_4", new BM_PlantLike(new Vector2i(6, 0)), false);
+
+        var SIZE = 10;
         for (var i = -SIZE; i < SIZE; i++) {
             for (var j = -SIZE/ 2; j < SIZE/2; j++) {
                 for (var k = -SIZE; k < SIZE; k++) {
@@ -63,16 +80,17 @@ public class ZeusGame implements GameLogic {
     }
 
 
-
     private void loadChunk(int x, int y, int z) {
         connMan.requestChunk(new Vector3i(x, y, z), (pos, blockChunk) -> {
-            long start = System.currentTimeMillis();
+            chunkMap.put(pos, blockChunk);
+            long start = System.nanoTime();
 
             MeshChunk chunk = new MeshChunk(new Vector3i(pos.x, pos.y, pos.z));
-            chunk.createMesh(blockChunk);
-            if (chunk.getMesh() != null) chunks.add(chunk);
-
-            System.out.println("Average chunk gen time: " + (System.currentTimeMillis() - start) / 100f + "ms");
+            chunk.createMesh(blockChunk, atlas);
+            if (chunk.getMesh() != null) {
+                chunks.add(chunk);
+                System.out.println("Chunk gen time: " + Math.round(((float)(System.nanoTime() - start)/1000000f)*100f)/100f + "ms");
+            }
         });
     }
 

@@ -96,13 +96,13 @@ public class Renderer {
         terrainShaderProgram.createUniform("repeat_scale");
         terrainShaderProgram.createUniform("atlas_scale");
         //Create uniform for material
-        terrainShaderProgram.createMaterialUniform("material");
+//        terrainShaderProgram.createMaterialUniform("material");
         //Create lighting related uniforms
-        terrainShaderProgram.createUniform("specularPower");
-        terrainShaderProgram.createUniform("ambientLight");
-        terrainShaderProgram.createPointLightListUniform("pointLights", MAX_POINT_LIGHTS);
-        terrainShaderProgram.createSpotLightListUniform("spotLights", MAX_SPOT_LIGHTS);
-        terrainShaderProgram.createDirectionalLightUniform("directionalLight");
+//        terrainShaderProgram.createUniform("specularPower");
+//        terrainShaderProgram.createUniform("ambientLight");
+//        terrainShaderProgram.createPointLightListUniform("pointLights", MAX_POINT_LIGHTS);
+//        terrainShaderProgram.createSpotLightListUniform("spotLights", MAX_SPOT_LIGHTS);
+//        terrainShaderProgram.createDirectionalLightUniform("directionalLight");
     }
 
     private void setupHudShader() throws Exception {
@@ -174,16 +174,16 @@ public class Renderer {
         Matrix4f viewMatrix = transformation.getViewMatrix();
 
         SceneLight sceneLight = scene.getSceneLight();
-        renderLights(terrainShaderProgram, viewMatrix, sceneLight);
+//        renderLights(terrainShaderProgram, viewMatrix, sceneLight);
 
         terrainShaderProgram.setUniform("texture_sampler", 0);
-        terrainShaderProgram.setUniform("atlas_scale", 0.5f);
+        terrainShaderProgram.setUniform("atlas_scale", 1/128f);
 
         var chunks = scene.getVisibleChunks();
         for (MeshChunk chunk : chunks) {
             var mesh = chunk.getMesh();
             Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk.getObject(), viewMatrix);
-            terrainShaderProgram.setUniform("material", mesh.getMaterial());
+//            terrainShaderProgram.setUniform("material", mesh.getMaterial());
             terrainShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             terrainShaderProgram.setUniform("repeat_scale", (float)repeatScale[0]); //TODO: Get actual value
             mesh.render();

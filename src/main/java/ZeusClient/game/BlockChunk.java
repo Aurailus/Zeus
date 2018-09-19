@@ -61,10 +61,10 @@ public class BlockChunk {
                     pos.set(i, j, k);
                     ArrayTrans3D.set(visible, false, pos);
 
-                    if (getBlock(pos) != 0) {
+                    if (ZeusGame.atlas.blockDefs.get(getBlock(pos)).getVisible()) {
                         var adjacent = getAdjacent(pos);
                         for (short anAdjacent : adjacent) {
-                            if (anAdjacent == 0) {
+                            if (!ZeusGame.atlas.blockDefs.get(anAdjacent).getCulls()) {
                                 ArrayTrans3D.set(visible, true, pos);
                                 break;
                             }
