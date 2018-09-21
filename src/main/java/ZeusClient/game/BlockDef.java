@@ -9,12 +9,14 @@ public class BlockDef {
     private short id;
     private boolean culls;
     private boolean visible;
+    private boolean solid;
 
-    public BlockDef(BlockAtlas atlas, String name, BlockModel model, boolean culls, boolean visible) {
+    public BlockDef(BlockAtlas atlas, String name, BlockModel model, boolean culls, boolean visible, boolean solid) {
         setName(name);
         setModel(model);
         setCulls(culls);
         setVisible(visible);
+        setSolid(solid);
     }
 
     public void setName(String name) {
@@ -38,6 +40,10 @@ public class BlockDef {
         if (!visible) this.culls = false;
     }
 
+    public void setSolid(boolean solid) {
+        this.solid = solid;
+    }
+
     public String getName() {
         return name;
     }
@@ -52,5 +58,9 @@ public class BlockDef {
 
     public boolean getVisible() {
         return visible;
+    }
+
+    public boolean getSolid() {
+        return solid;
     }
 }

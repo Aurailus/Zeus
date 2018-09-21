@@ -4,7 +4,7 @@ import org.joml.Vector2i;
 
 public class BM_CubeTexLifted extends BlockModel {
 
-    public BM_CubeTexLifted(Vector2i texPosTop, Vector2i texPosSide, Vector2i texPosFloatSide, Vector2i texPosBottom) {
+    public BM_CubeTexLifted(String texPosTop, String texPosSide, String texPosFloatSide, String texPosBottom) {
         var zPosBase = new MeshPart(
                 new float[]{
                         0, 1, 1,

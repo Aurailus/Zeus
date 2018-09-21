@@ -7,6 +7,9 @@ import ZeusClient.engine.graphics.Texture;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import static ZeusClient.engine.helpers.ArrayTrans3D.CHUNK_SIZE;
 
 public class MeshChunk {
@@ -18,7 +21,8 @@ public class MeshChunk {
 
     static {
         try {
-            meshMaterial = new Material(new Texture("/textures/texAtlas.png"));
+            var atlas = new FileInputStream(new File("atlas_0.png"));
+            meshMaterial = new Material(new Texture(atlas));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -31,8 +35,8 @@ public class MeshChunk {
         this.obj.setPosition(new Vector3f(pos.x * CHUNK_SIZE, pos.y * CHUNK_SIZE, pos.z * CHUNK_SIZE));
     }
 
-    public void createMesh(BlockChunk chunk, BlockAtlas atlas) {
-        var meshData = new ChunkMeshBuilder(chunk, atlas);
+    public void createMesh(BlockChunk chunk) {
+        var meshData = new ChunkMeshBuilder(chunk);
         if (meshData.verts.length > 0) {
             mesh = new ChunkMesh(meshData.verts, meshData.texCoords, meshData.normals, meshData.indices);
             mesh.setMaterial(MeshChunk.meshMaterial);

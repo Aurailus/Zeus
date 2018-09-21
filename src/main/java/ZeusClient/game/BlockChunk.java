@@ -5,14 +5,12 @@ import ZeusClient.engine.helpers.RLE;
 import org.joml.Vector3i;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
 
 import static ZeusClient.engine.helpers.ArrayTrans3D.CHUNK_SIZE;
 
 public class BlockChunk {
     short[] blocks;
-    boolean[] visible;
+    private boolean[] visible;
     ArrayList<boolean[]> sidesOpaque;
 
     public BlockChunk(short[] blocks, ArrayList<boolean[]> sidesOpaque) {
@@ -61,10 +59,10 @@ public class BlockChunk {
                     pos.set(i, j, k);
                     ArrayTrans3D.set(visible, false, pos);
 
-                    if (ZeusGame.atlas.blockDefs.get(getBlock(pos)).getVisible()) {
+                    if (Game.definitions.getDef(getBlock(pos)).getVisible()) {
                         var adjacent = getAdjacent(pos);
                         for (short anAdjacent : adjacent) {
-                            if (!ZeusGame.atlas.blockDefs.get(anAdjacent).getCulls()) {
+                            if (!Game.definitions.getDef(anAdjacent).getCulls()) {
                                 ArrayTrans3D.set(visible, true, pos);
                                 break;
                             }

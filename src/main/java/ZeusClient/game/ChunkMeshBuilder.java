@@ -48,7 +48,7 @@ public class ChunkMeshBuilder {
         currIndiceVal += face.positions.length/3;
     }
 
-    public ChunkMeshBuilder(BlockChunk blockChunk, BlockAtlas atlas) {
+    public ChunkMeshBuilder(BlockChunk blockChunk) {
 
         vertsList = new ArrayList<>();
         texCoordsList = new ArrayList<>();
@@ -62,33 +62,27 @@ public class ChunkMeshBuilder {
 
             if (blockChunk.getVisible(offset)) {
                 var adj = blockChunk.getAdjacent(offset);
-                var bm = atlas.blockDefs.get(blockChunk.getBlock(offset)).getModel();
+                var bm = Game.definitions.getDef(blockChunk.getBlock(offset)).getModel();
 
                 addFaces(bm.noCulledMP, offset);
 
-                if (!atlas.blockDefs.get(adj[0]).getCulls()) { //X Pos
+                if (!Game.definitions.getDef(adj[0]).getCulls()) { //X Pos
                     addFaces(bm.xPosMP, offset);
-//                    for (MeshPart p : bm.xPosMP) addFace(p, offset);
                 }
-                if (!atlas.blockDefs.get(adj[1]).getCulls()) { //X Neg
+                if (!Game.definitions.getDef(adj[1]).getCulls()) { //X Neg
                     addFaces(bm.xNegMP, offset);
-//                    for (MeshPart p : bm.xNegMP) addFace(p, offset);
                 }
-                if (!atlas.blockDefs.get(adj[2]).getCulls()) { //Y Pos
+                if (!Game.definitions.getDef(adj[2]).getCulls()) { //Y Pos
                     addFaces(bm.yPosMP, offset);
-//                    for (MeshPart p : bm.yPosMP) addFace(p, offset);
                 }
-                if (!atlas.blockDefs.get(adj[3]).getCulls()) { //Y Neg
+                if (!Game.definitions.getDef(adj[3]).getCulls()) { //Y Neg
                     addFaces(bm.yNegMP, offset);
-//                    for (MeshPart p : bm.yNegMP) addFace(p, offset);
                 }
-                if (!atlas.blockDefs.get(adj[4]).getCulls()) { //Z Pos
+                if (!Game.definitions.getDef(adj[4]).getCulls()) { //Z Pos
                     addFaces(bm.zPosMP, offset);
-//                    for (MeshPart p : bm.zPosMP) addFace(p, offset);
                 }
-                if (!atlas.blockDefs.get(adj[5]).getCulls()) { //Z Neg
+                if (!Game.definitions.getDef(adj[5]).getCulls()) { //Z Neg
                     addFaces(bm.zNegMP, offset);
-//                    for (MeshPart p : bm.zNegMP) addFace(p, offset);
                 }
             }
         }

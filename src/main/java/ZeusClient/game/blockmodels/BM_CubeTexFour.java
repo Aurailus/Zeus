@@ -4,7 +4,7 @@ import org.joml.Vector2i;
 
 public class BM_CubeTexFour extends BlockModel {
 
-    public BM_CubeTexFour(Vector2i texPosTop, Vector2i texPosSide, Vector2i texPosBottom) {
+    public BM_CubeTexFour(String texPosTop, String texPosSide, String texPosBottom) {
         zPosMP = new MeshPart[] {new MeshPart(
             new float[] {
                 0, 1, 1,

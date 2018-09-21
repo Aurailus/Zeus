@@ -1,8 +1,10 @@
 package ZeusClient.game;
 
+import ZeusClient.engine.Entity;
 import ZeusClient.engine.MouseInput;
 import ZeusClient.engine.Window;
 import ZeusClient.engine.graphics.Camera;
+import ZeusClient.engine.helpers.Utils;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -10,23 +12,28 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
-public class Player {
+public class Player extends Entity {
     private static final float MOUSE_SENSITIVITY = 0.2f;
-    private static final float CAMERA_SPEED = 3f;
-    private static final float CAMERA_POS_STEP = 1f;
-    private static final float CAMERA_DRAG = 0.005f;
 
-    final Camera camera;
+    private static final float MAX_VERTICAL_SPEED = 0.9f;
 
-    Vector3f velocity;
+    private static final float GROUND_DRAG = 0.8f;
+    private static final float SKY_DRAG = 0.85f;
+
+    private static final float FALL_SPEED = 0.02f;
+
+    private static final float JUMP_VELOCITY = 0.1f;
+    private static final float GROUNDED_SPEED = 0.02f;
+
+    private final Camera camera;
 
     private boolean[] keysDown = {false, false, false, false, false, false};
+    private boolean flying = false;
+    private boolean fDown = false;
 
     Player(int x, int y, int z) {
+        super(new Vector3f(x, y, z));
         camera = new Camera();
-        camera.setPosition(x, y, z);
-
-        velocity = new Vector3f(0, 0, 0);
     }
 
     public void input(Window window, MouseInput mouseInput) {
@@ -36,34 +43,87 @@ public class Player {
         keysDown[3] = window.isKeyPressed(GLFW_KEY_A);
         keysDown[4] = window.isKeyPressed(GLFW_KEY_SPACE);
         keysDown[5] = window.isKeyPressed(GLFW_KEY_LEFT_SHIFT);
+
+        if (window.isKeyPressed(GLFW_KEY_F) && !fDown) {
+            flying = !flying;
+        }
+        else if (fDown) {
+            fDown = false;
+        }
     }
 
     public void update(float interval, MouseInput mouseInput) {
-        if (keysDown[2] && velocity.z < 1) velocity.z = Math.min(velocity.z + CAMERA_DRAG * CAMERA_SPEED, CAMERA_SPEED);
-        else if (!keysDown[2] && velocity.z > 0) velocity.z = Math.max(velocity.z - CAMERA_DRAG * CAMERA_SPEED, 0);
+        if (flying) {
+            move();
+            walkControls();
+        }
+        else {
+            flyControls();
+        }
 
-        if (keysDown[0] && velocity.z > -1) velocity.z = Math.max(velocity.z - CAMERA_DRAG * CAMERA_SPEED, -CAMERA_SPEED);
-        else if (!keysDown[0] && velocity.z < 0) velocity.z = Math.min(velocity.z + CAMERA_DRAG * CAMERA_SPEED, 0);
-
-        if (keysDown[1] && velocity.x < 1) velocity.x = Math.min(velocity.x + CAMERA_DRAG * CAMERA_SPEED, CAMERA_SPEED);
-        else if (!keysDown[1] && velocity.x > 0) velocity.x = Math.max(velocity.x - CAMERA_DRAG * CAMERA_SPEED, 0);
-
-        if (keysDown[3] && velocity.x > -1) velocity.x = Math.max(velocity.x - CAMERA_DRAG * CAMERA_SPEED, -CAMERA_SPEED);
-        else if (!keysDown[3] && velocity.x < 0) velocity.x = Math.min(velocity.x + CAMERA_DRAG * CAMERA_SPEED, 0);
-
-        if (keysDown[4] && velocity.y < 1) velocity.y = Math.min(velocity.y + CAMERA_DRAG * CAMERA_SPEED, CAMERA_SPEED);
-        else if (!keysDown[4] && velocity.y > 0) velocity.y = Math.max(velocity.y - CAMERA_DRAG * CAMERA_SPEED, 0);
-
-        if (keysDown[5] && velocity.y > -1) velocity.y = Math.max(velocity.y - CAMERA_DRAG * CAMERA_SPEED, -CAMERA_SPEED);
-        else if (!keysDown[5] && velocity.y < 0) velocity.y = Math.min(velocity.y + CAMERA_DRAG * CAMERA_SPEED, 0);
-
-        camera.movePosition(velocity.x * CAMERA_POS_STEP, velocity.y * CAMERA_POS_STEP, velocity.z * CAMERA_POS_STEP);
+        super.update();
 
         // Update camera based on mouse
         if (mouseInput.isRightButtonPressed()) {
             Vector2f rotVec = mouseInput.getDisplayVec();
             camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
         }
+
+        camera.setPosition(getPosition());
+    }
+
+    private void walkControls() {
+
+        float drag = SKY_DRAG;
+        if (grounded) drag = GROUND_DRAG;
+
+        if (grounded) {
+            if (velocity.y < 0) velocity.y = 0;
+        }
+        else {
+            velocity.y = Math.max(-MAX_VERTICAL_SPEED, velocity.y - FALL_SPEED);
+        }
+
+        Vector3f velocity = getVelocity();
+
+        velocity.x = Math.max(0, Math.abs(velocity.x) * drag) * Utils.sign(velocity.x);
+        velocity.z = Math.max(0, Math.abs(velocity.z) * drag) * Utils.sign(velocity.z);
+
+        Vector3f vel = new Vector3f();
+
+        if (keysDown[2]) vel.z = GROUNDED_SPEED;
+
+        if (keysDown[0]) vel.z = -GROUNDED_SPEED;
+
+        if (keysDown[1]) vel.x = GROUNDED_SPEED;
+
+        if (keysDown[3]) vel.x = -GROUNDED_SPEED;
+
+        if (keysDown[4] && grounded) vel.y = JUMP_VELOCITY;
+
+        Vector3f finishedVel = getVelocity().add(camera.getAbsoluteOffsets(vel), new Vector3f());
+        finishedVel.x = Math.abs(finishedVel.x) * Utils.sign(finishedVel.x);
+        finishedVel.z = Math.abs(finishedVel.z) * Utils.sign(finishedVel.z);
+
+        setVelocity(finishedVel);
+    }
+
+    private void flyControls() {
+        Vector3f vel = new Vector3f();
+
+        if (keysDown[2]) vel.z = 1;
+
+        if (keysDown[0]) vel.z = -1;
+
+        if (keysDown[1]) vel.x = 1;
+
+        if (keysDown[3]) vel.x = -1;
+
+        if (keysDown[4]) vel.y = 1;
+
+        if (keysDown[5]) vel.y = -1;
+
+        setPosition(getPosition().add(camera.getAbsoluteOffsets(vel), new Vector3f()));
     }
 
     public Camera getCamera() {
@@ -72,9 +132,5 @@ public class Player {
 
     public Vector3f getRotation() {
         return getCamera().getRotation();
-    }
-
-    public Vector3f getPosition() {
-        return getCamera().getPosition();
     }
 }

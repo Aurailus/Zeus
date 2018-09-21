@@ -4,28 +4,28 @@ import org.joml.Vector2i;
 
 public class BM_PlantLike extends BlockModel {
 
-    public BM_PlantLike(Vector2i texPos) {
+    public BM_PlantLike(String texPos) {
         noCulledMP = new MeshPart[] {new MeshPart(
             new float[] {
-                    0.05f, 1, 0.05f,
-                    0.05f, 0, 0.05f,
-                    0.95f, 0, 0.95f,
-                    0.95f, 1, 0.95f,
+                    0.10f, 1, 0.10f,
+                    0.10f, 0, 0.10f,
+                    0.90f, 0, 0.90f,
+                    0.90f, 1, 0.90f,
 
-                    0.05f, 1, 0.05f,
-                    0.05f, 0, 0.05f,
-                    0.95f, 0, 0.95f,
-                    0.95f, 1, 0.95f,
+                    0.10f, 1, 0.10f,
+                    0.10f, 0, 0.10f,
+                    0.90f, 0, 0.90f,
+                    0.90f, 1, 0.90f,
 
-                    0.05f, 1, 0.95f,
-                    0.05f, 0, 0.95f,
-                    0.95f, 0, 0.05f,
-                    0.95f, 1, 0.05f,
+                    0.10f, 1, 0.90f,
+                    0.10f, 0, 0.90f,
+                    0.90f, 0, 0.10f,
+                    0.90f, 1, 0.10f,
 
-                    0.05f, 1, 0.95f,
-                    0.05f, 0, 0.95f,
-                    0.95f, 0, 0.05f,
-                    0.95f, 1, 0.05f,
+                    0.10f, 1, 0.90f,
+                    0.10f, 0, 0.90f,
+                    0.90f, 0, 0.10f,
+                    0.90f, 1, 0.10f,
             },
             new int[] {
                     0, 1, 3, 3, 1, 2,

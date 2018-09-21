@@ -93,8 +93,8 @@ public class Renderer {
         terrainShaderProgram.createUniform("modelViewMatrix");
         terrainShaderProgram.createUniform("texture_sampler");
         //Set texture atlas uniforms
-        terrainShaderProgram.createUniform("repeat_scale");
-        terrainShaderProgram.createUniform("atlas_scale");
+//        terrainShaderProgram.createUniform("repeat_scale");
+//        terrainShaderProgram.createUniform("atlas_scale");
         //Create uniform for material
 //        terrainShaderProgram.createMaterialUniform("material");
         //Create lighting related uniforms
@@ -132,9 +132,9 @@ public class Renderer {
         transformation.updateProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
         transformation.updateViewMatrix(camera);
 
-        renderScene(window, camera, scene);
-
         renderSkyBox(window, camera, scene);
+
+        renderScene(window, camera, scene);
 
         renderHud(window, hud);
     }
@@ -177,7 +177,7 @@ public class Renderer {
 //        renderLights(terrainShaderProgram, viewMatrix, sceneLight);
 
         terrainShaderProgram.setUniform("texture_sampler", 0);
-        terrainShaderProgram.setUniform("atlas_scale", 1/128f);
+//        terrainShaderProgram.setUniform("atlas_scale", 1/(512f/16f));
 
         var chunks = scene.getVisibleChunks();
         for (MeshChunk chunk : chunks) {
@@ -185,7 +185,7 @@ public class Renderer {
             Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk.getObject(), viewMatrix);
 //            terrainShaderProgram.setUniform("material", mesh.getMaterial());
             terrainShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-            terrainShaderProgram.setUniform("repeat_scale", (float)repeatScale[0]); //TODO: Get actual value
+//            terrainShaderProgram.setUniform("repeat_scale", (float)repeatScale[0]);
             mesh.render();
         }
 

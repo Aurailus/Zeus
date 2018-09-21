@@ -37,4 +37,8 @@ public class Utils {
         }
         return floatArr;
     }
+
+    public static int sign(float in) {
+        return (in > 0 ? 1 : in < 0 ? -1 : 0);
+    }
 }

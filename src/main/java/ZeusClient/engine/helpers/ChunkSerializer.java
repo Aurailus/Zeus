@@ -1,15 +1,12 @@
 package ZeusClient.engine.helpers;
 
 import ZeusClient.game.BlockChunk;
-import ZeusClient.game.EncodedBlockChunk;
-import ZeusClient.game.ZeusGame;
+import ZeusClient.game.Game;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import static ZeusClient.game.network.Bytes.*;
 
@@ -51,7 +48,7 @@ public class ChunkSerializer {
             var shorts = RLE.decodeShorts(adjRLE);
             var bools = new boolean[shorts.length];
             for (var j = 0; j < shorts.length; j++) {
-                bools[j] = ZeusGame.atlas.blockDefs.get(shorts[j]).getCulls();
+                bools[j] = Game.definitions.getDef(shorts[j]).getCulls();
             }
             sides.add(bools);
         }

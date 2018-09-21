@@ -12,7 +12,7 @@ import java.util.function.BiConsumer;
 
 public class ConnMan {
     private Pacman pacman;
-    private HashMap<Vector3i, BiConsumer<Vector3i, BlockChunk>> pendingChunkCallbacks;
+    private HashMap<Vector3i, BiConsumer<Vector3i, byte[]>> pendingChunkCallbacks;
 
     public ConnMan(String host, int port) throws Exception {
         pendingChunkCallbacks = new HashMap<>();
@@ -43,17 +43,16 @@ public class ConnMan {
         var cons = pendingChunkCallbacks.get(pos);
         if (cons == null) return;
 
-        var chunk = ChunkSerializer.decodeChunk(str.substring(index + 1).getBytes(StandardCharsets.ISO_8859_1));
-        cons.accept(pos, chunk);
+        cons.accept(pos, str.substring(index + 1).getBytes(StandardCharsets.ISO_8859_1));
     }
 
 
 
-    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, BlockChunk> consumer) {
+    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, byte[]> consumer) {
         requestChunk(pos.x, pos.y, pos.z, consumer);
     }
 
-    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, BlockChunk> consumer) {
+    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, byte[]> consumer) {
         var pos = new Vector3i(x, y, z);
         if (pendingChunkCallbacks.containsKey(pos)) return;
         pendingChunkCallbacks.put(pos, consumer);

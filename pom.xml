@@ -383,6 +383,11 @@
             <artifactId>pngdecoder</artifactId>
             <version>${pngdecoder.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.keypoint</groupId>
+            <artifactId>png-encoder</artifactId>
+            <version>1.5</version>
+        </dependency>
     </dependencies>
 
     <build>

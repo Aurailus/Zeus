@@ -1,8 +1,8 @@
 package ZeusClient.game.blockmodels;
 
-import org.joml.Vector2i;
+import ZeusClient.game.Game;
 import org.joml.Vector3f;
-import org.joml.Vector3i;
+import org.joml.Vector4f;
 
 public class MeshPart {
     public float[] positions;
@@ -10,7 +10,7 @@ public class MeshPart {
     public float[] normals;
     public int[]   indices;
 
-    public MeshPart(float[] positions, int[] indices, float[] texCoords, Vector2i tex) {
+    public MeshPart(float[] positions, int[] indices, float[] texCoords, String texName) {
         this.positions = positions;
         this.indices = indices;
 
@@ -56,11 +56,22 @@ public class MeshPart {
 
         texData = new float[texCoords.length*2];
 
+//        for (var i = 0; i < texCoords.length/2; i++) {
+//            texData[i*4  ] = (float)(tex.x) / 128;
+//            texData[i*4+1] = (float)(tex.y) / 128;
+//            texData[i*4+2] = texCoords[i*2];
+//            texData[i*4+3] = texCoords[i*2+1];
+//        }
+
+        Vector4f texUVs = Game.assets.getTexUV(texName);
+
         for (var i = 0; i < texCoords.length/2; i++) {
-            texData[i*4  ] = (float)(tex.x) / 128;
-            texData[i*4+1] = (float)(tex.y) / 128;
-            texData[i*4+2] = texCoords[i*2];
-            texData[i*4+3] = texCoords[i*2+1];
+//            texData[i*4  ] = texUVs.x;
+//            texData[i*4+1] = texUVs.y;
+            texData[i*4  ] = texUVs.x + (texUVs.z - texUVs.x) * texCoords[i*2];
+            texData[i*4+1] = texUVs.y + (texUVs.w - texUVs.y) * texCoords[i*2+1];
+            texData[i*4+2] = 0;
+            texData[i*4+3] = 0;
         }
     }
 }
