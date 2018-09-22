@@ -51,16 +51,20 @@ public class ChunkAtlas {
         Iterator<Map.Entry<Vector3i, byte[]>> it = pendingGenChunks.entrySet().iterator();
 
         while (it.hasNext() && System.currentTimeMillis() - startLoop < maxTime) {
-            System.out.println(System.currentTimeMillis() - startLoop);
-            long start = System.nanoTime();
-
             Map.Entry<Vector3i, byte[]> entry = it.next();
 
+
+            long start = System.nanoTime();
             var blockChunk = ChunkSerializer.decodeChunk(entry.getValue());
+//            System.out.println(System.nanoTime() - start + " ns. Decoding");
 
             MeshChunk chunk = new MeshChunk(new Vector3i(entry.getKey().x, entry.getKey().y, entry.getKey().z));
+
+            start = System.nanoTime();
             chunk.createMesh(blockChunk);
+
             if (chunk.getMesh() != null) {
+//                System.out.println(System.nanoTime() - start + " ns. creatingMesh");
                 meshChunks.add(chunk);
                 activeChunkMap.put(entry.getKey(), blockChunk);
 //                System.out.println("Chunk gen time: " + Math.round(((float) (System.nanoTime() - start) / 1000000f) * 100f) / 100f + "ms");

@@ -36,10 +36,14 @@ public class MeshChunk {
     }
 
     public void createMesh(BlockChunk chunk) {
+//        long start = System.nanoTime();
         var meshData = new ChunkMeshBuilder(chunk);
+//        System.out.println("Building: " + (System.nanoTime() - start));
+        long start = System.nanoTime();
         if (meshData.verts.length > 0) {
             mesh = new ChunkMesh(meshData.verts, meshData.texCoords, meshData.normals, meshData.indices);
             mesh.setMaterial(MeshChunk.meshMaterial);
+//            if (System.nanoTime() - start > 1000000) System.out.println("Initializing: " + (System.nanoTime() - start));
         }
     }
 

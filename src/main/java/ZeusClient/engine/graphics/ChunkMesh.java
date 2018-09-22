@@ -44,11 +44,23 @@ public class ChunkMesh {
             vaoID = glGenVertexArrays();
             glBindVertexArray(vaoID);
 
+
+            long buffTime = System.nanoTime();
+            posBuffer = MemoryUtil.memAllocFloat(positions.length);
+            posBuffer.put(positions).flip();
+            texCoordsBuffer = MemoryUtil.memAllocFloat(texCoords.length);
+            texCoordsBuffer.put(texCoords).flip();
+            normalsBuffer = MemoryUtil.memAllocFloat(normals.length);
+            normalsBuffer.put(normals).flip();
+            indicesBuffer = MemoryUtil.memAllocInt(indices.length);
+            indicesBuffer.put(indices).flip();
+
+            buffTime = System.nanoTime() - buffTime;
+
+            long allocTime = System.nanoTime();
             //Position VBO
             int vboID = glGenBuffers();
             vboIDList.add(vboID);
-            posBuffer = MemoryUtil.memAllocFloat(positions.length);
-            posBuffer.put(positions).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboID);
             glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
@@ -56,8 +68,6 @@ public class ChunkMesh {
             //TexCoord VBO
             vboID = glGenBuffers();
             vboIDList.add(vboID);
-            texCoordsBuffer = MemoryUtil.memAllocFloat(texCoords.length);
-            texCoordsBuffer.put(texCoords).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboID);
             glBufferData(GL_ARRAY_BUFFER, texCoordsBuffer, GL_STATIC_DRAW);
             glVertexAttribPointer(1, 4, GL_FLOAT, false, 0, 0);
@@ -65,8 +75,6 @@ public class ChunkMesh {
             //Vertex Normals VBO
             vboID = glGenBuffers();
             vboIDList.add(vboID);
-            normalsBuffer = MemoryUtil.memAllocFloat(normals.length);
-            normalsBuffer.put(normals).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboID);
             glBufferData(GL_ARRAY_BUFFER, normalsBuffer, GL_STATIC_DRAW);
             glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
@@ -74,13 +82,14 @@ public class ChunkMesh {
             //Index VBO
             vboID = glGenBuffers();
             vboIDList.add(vboID);
-            indicesBuffer = MemoryUtil.memAllocInt(indices.length);
-            indicesBuffer.put(indices).flip();
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
 
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
+            allocTime = System.nanoTime() - allocTime;
+
+            System.out.println(buffTime + " | " + allocTime);
         }
         finally {
             //Release the memory allocated for the mesh after creating it.

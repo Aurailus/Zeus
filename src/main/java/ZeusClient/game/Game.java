@@ -24,6 +24,8 @@ public class Game implements GameLogic {
     public static BlockAtlas definitions;
     public static TextureAtlas assets;
 
+    private int tick = 0;
+
     public Game() {
         renderer = new Renderer();
     }
@@ -102,11 +104,13 @@ public class Game implements GameLogic {
 
     @Override
     public void update(float interval, MouseInput mouseInput) {
+        tick++;
+
         connection.update();
 
         player.update(interval, mouseInput);
 
-        world.loadChunksAroundPos(player.getPosition(), 10);
+        if (tick % 30 == 0) world.loadChunksAroundPos(player.getPosition(), 10);
         world.update();
 
         hud.rotateCompass(player.getCamera().getRotation().y);
