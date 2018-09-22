@@ -15,6 +15,8 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.util.List;
+
 import static org.lwjgl.opengl.GL11.*;
 
 public class Renderer {
@@ -179,14 +181,18 @@ public class Renderer {
         terrainShaderProgram.setUniform("texture_sampler", 0);
 //        terrainShaderProgram.setUniform("atlas_scale", 1/(512f/16f));
 
-        var chunks = scene.getVisibleChunks();
-        for (MeshChunk chunk : chunks) {
-            var mesh = chunk.getMesh();
-            Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk.getObject(), viewMatrix);
-//            terrainShaderProgram.setUniform("material", mesh.getMaterial());
-            terrainShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-//            terrainShaderProgram.setUniform("repeat_scale", (float)repeatScale[0]);
-            mesh.render();
+        List<MeshChunk> chunks = scene.getVisibleChunks();
+        if (chunks.size() > 0) {
+            chunks.get(0).getMesh().initChunksRender();
+
+            for (MeshChunk chunk : chunks) {
+                var mesh = chunk.getMesh();
+                Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(chunk.getObject(), viewMatrix);
+                terrainShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+                mesh.render();
+            }
+
+            chunks.get(0).getMesh().endChunksRender();
         }
 
         terrainShaderProgram.unbind();

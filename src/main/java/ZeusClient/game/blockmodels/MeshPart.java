@@ -54,7 +54,7 @@ public class MeshPart {
             this.normals[ind*3+2] = normal.z;
         }
 
-        texData = new float[texCoords.length*2];
+        texData = new float[texCoords.length];
 
 //        for (var i = 0; i < texCoords.length/2; i++) {
 //            texData[i*4  ] = (float)(tex.x) / 128;
@@ -66,12 +66,8 @@ public class MeshPart {
         Vector4f texUVs = Game.assets.getTexUV(texName);
 
         for (var i = 0; i < texCoords.length/2; i++) {
-//            texData[i*4  ] = texUVs.x;
-//            texData[i*4+1] = texUVs.y;
-            texData[i*4  ] = texUVs.x + (texUVs.z - texUVs.x) * texCoords[i*2];
-            texData[i*4+1] = texUVs.y + (texUVs.w - texUVs.y) * texCoords[i*2+1];
-            texData[i*4+2] = 0;
-            texData[i*4+3] = 0;
+            texData[i*2  ] = texUVs.x + (texUVs.z - texUVs.x) * texCoords[i*2];
+            texData[i*2+1] = texUVs.y + (texUVs.w - texUVs.y) * texCoords[i*2+1];
         }
     }
 }

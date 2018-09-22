@@ -17,7 +17,7 @@ public class MeshChunk {
     private RenderObj obj;
     private Vector3i pos;
 
-    private static Material meshMaterial;
+    public static Material meshMaterial;
 
     static {
         try {
@@ -42,7 +42,7 @@ public class MeshChunk {
         long start = System.nanoTime();
         if (meshData.verts.length > 0) {
             mesh = new ChunkMesh(meshData.verts, meshData.texCoords, meshData.normals, meshData.indices);
-            mesh.setMaterial(MeshChunk.meshMaterial);
+            mesh.material = meshMaterial;
 //            if (System.nanoTime() - start > 1000000) System.out.println("Initializing: " + (System.nanoTime() - start));
         }
     }
