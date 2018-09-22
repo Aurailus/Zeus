@@ -125,6 +125,7 @@ public class Game implements GameLogic {
 
     @Override
     public void cleanup() {
+        world.cleanup();
         connection.kill();
         renderer.cleanup();
         scene.cleanup();

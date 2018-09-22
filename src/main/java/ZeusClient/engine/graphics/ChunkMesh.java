@@ -16,86 +16,86 @@ import static org.lwjgl.opengl.GL30.*;
 
 
 public class ChunkMesh {
-    private final int vaoID;
-    private final List<Integer> vboIDList;
-    private final int vertexCount;
+    private int vaoID;
+    private List<Integer> vboIDList;
+    private int vertexCount;
     public Material material;
 
+//    private FloatBuffer interleavedBuffer; //Todo: Somehow check if this is causing occasional core dumps
+//    private IntBuffer indicesBuffer;
+
+    private float[] interleaved;
+    private int[] indices;
+
     public ChunkMesh(float[] positions, float[] texCoords, float[] normals, int[] indices) {
-        FloatBuffer interleavedBuffer = null;
-        IntBuffer indicesBuffer = null;
+        vertexCount = indices.length;
+        vboIDList = new ArrayList<>();
 
-        try {
-            vertexCount = indices.length;
-            vboIDList = new ArrayList<>();
+        this.indices = indices;
 
-            vaoID = glGenVertexArrays();
-            glBindVertexArray(vaoID);
+        long buffTime = System.nanoTime();
 
-            long buffTime = System.nanoTime();
+        interleaved = new float[positions.length + texCoords.length + normals.length];
+        int ind = 0;
 
-            interleavedBuffer = MemoryUtil.memAllocFloat(positions.length + texCoords.length + normals.length);
+        for (var i = 0; i < positions.length / 3; i++) {
+            interleaved[ind++] = positions[i*3];
+            interleaved[ind++] = positions[i*3+1];
+            interleaved[ind++] = positions[i*3+2];
 
-            indicesBuffer = MemoryUtil.memAllocInt(indices.length).put(indices).flip();
+            interleaved[ind++] = normals[i*3];
+            interleaved[ind++] = normals[i*3+1];
+            interleaved[ind++] = normals[i*3+2];
 
-            for (var i = 0; i < positions.length / 3; i++) {
-                interleavedBuffer.put(positions[i*3]);
-                interleavedBuffer.put(positions[i*3 + 1]);
-                interleavedBuffer.put(positions[i*3 + 2]);
-
-                interleavedBuffer.put(normals[i*3]);
-                interleavedBuffer.put(normals[i*3 + 1]);
-                interleavedBuffer.put(normals[i*3 + 2]);
-
-                interleavedBuffer.put(texCoords[i*2]);
-                interleavedBuffer.put(texCoords[i*2 + 1]);
-            }
-
-            interleavedBuffer.flip();
-
-            buffTime = System.nanoTime() - buffTime;
-
-            long allocTime = System.nanoTime();
-
-            int vboID = glGenBuffers();
-            vboIDList.add(vboID);
-
-            glBindBuffer(GL_ARRAY_BUFFER, vboID);
-            glBufferData(GL_ARRAY_BUFFER, interleavedBuffer, GL_STATIC_DRAW);
-
-            int stride = (3 + 3 + 2) * 4;
-
-            //Position VBO
-            glVertexAttribPointer(0, 3, GL_FLOAT, false, stride, 0);
-
-            //Normals VBO
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, stride, 3 * 4);
-
-            //TexCoord VBO
-            glVertexAttribPointer(2, 2, GL_FLOAT, false, stride, 6 * 4);
-
-            //Index VBO
-            vboID = glGenBuffers();
-            vboIDList.add(vboID);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-
-            allocTime = System.nanoTime() - allocTime;
-
-            System.out.println(buffTime + " | " + allocTime);
+            interleaved[ind++] = texCoords[i*2];
+            interleaved[ind++] = texCoords[i*2+1];
         }
-        finally {
-            //Release the memory allocated for the mesh after creating it.
-            if (interleavedBuffer != null) {
-                MemoryUtil.memFree(interleavedBuffer);
-            }
-            if (indicesBuffer != null) {
-                MemoryUtil.memFree(indicesBuffer);
-            }
-        }
+
+        buffTime = System.nanoTime() - buffTime;
+    }
+
+    public void init() {
+        long allocTime = System.nanoTime();
+
+        FloatBuffer interleavedBuffer = MemoryUtil.memAllocFloat(interleaved.length).put(interleaved).flip();
+        interleaved = null;
+        IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length).put(indices).flip();
+        indices = null;
+
+        vaoID = glGenVertexArrays();
+        glBindVertexArray(vaoID);
+
+        int vboID = glGenBuffers();
+        vboIDList.add(vboID);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferData(GL_ARRAY_BUFFER, interleavedBuffer, GL_STATIC_DRAW);
+
+        int stride = (3 + 3 + 2) * 4;
+
+        //Position VBO
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, stride, 0);
+
+        //Normals VBO
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, stride, 3 * 4);
+
+        //TexCoord VBO
+        glVertexAttribPointer(2, 2, GL_FLOAT, false, stride, 6 * 4);
+
+        //Index VBO
+        vboID = glGenBuffers();
+        vboIDList.add(vboID);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        allocTime = System.nanoTime() - allocTime;
+//        System.out.println((float)allocTime / 1_000_000);
+
+        MemoryUtil.memFree(interleavedBuffer);
+        MemoryUtil.memFree(indicesBuffer);
     }
 
     public int getVaoID() {

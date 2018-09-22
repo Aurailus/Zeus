@@ -1,21 +1,26 @@
 package ZeusClient.game;
 
+import ZeusClient.engine.graphics.Material;
+import ZeusClient.engine.graphics.Texture;
 import ZeusClient.engine.helpers.ChunkSerializer;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.*;
+import java.util.concurrent.*;
 
 import static ZeusClient.engine.helpers.ArrayTrans3D.CHUNK_SIZE;
 
 public class ChunkAtlas {
 
     private ArrayList<MeshChunk> meshChunks;
-    private ArrayList<Vector3i> netWaitingChunks;
-    private HashMap<Vector3i, byte[]> pendingGenChunks;
+    private HashSet<Vector3i> loadingChunks;
+
+    private ThreadPoolExecutor meshGenPool;
+    private ArrayList<Future> meshGenFutures;
+
 
     private ArrayList<BlockChunk> activeChunks;
     private HashMap<Vector3i, BlockChunk> activeChunkMap;
@@ -25,9 +30,23 @@ public class ChunkAtlas {
     private HashMap<Vector3i, EncodedBlockChunk> cachedChunkMap;
 
     public ChunkAtlas() {
+
+        try {
+            var atlas = new FileInputStream(new File("atlas_0.png"));
+            MeshChunk.meshMaterial = new Material(new Texture(atlas));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         meshChunks = new ArrayList<>();
-        netWaitingChunks = new ArrayList<>();
-        pendingGenChunks = new HashMap<>();
+        loadingChunks = new HashSet<>();
+
+        meshGenPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(16);
+        meshGenPool.setMaximumPoolSize(48);
+        meshGenPool.setKeepAliveTime(32, TimeUnit.SECONDS);
+
+        meshGenFutures = new ArrayList<>();
 
         activeChunks = new ArrayList<>();
         activeChunkMap = new HashMap<>();
@@ -41,36 +60,38 @@ public class ChunkAtlas {
     }
 
     public void update() {
-        loadMeshes();
+        try {
+            loadMeshes();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public synchronized void loadMeshes() {
-        int maxTime = 6;
+    public synchronized void loadMeshes() throws ExecutionException, InterruptedException {
+        int maxTime = 4;
+        long start = System.currentTimeMillis();
 
-        long startLoop = System.currentTimeMillis();
-        Iterator<Map.Entry<Vector3i, byte[]>> it = pendingGenChunks.entrySet().iterator();
+        Iterator<Future> it = meshGenFutures.iterator();
 
-        while (it.hasNext() && System.currentTimeMillis() - startLoop < maxTime) {
-            Map.Entry<Vector3i, byte[]> entry = it.next();
+        while (it.hasNext() && System.currentTimeMillis() - start < maxTime) {
+            Future f = it.next();
+            if (f.isDone()) {
+                GenChunkTask.ThreadRet ret = (GenChunkTask.ThreadRet) f.get();
+                if (ret != null) {
+                    it.remove();
 
+                    activeChunkMap.put(ret.position, ret.blockChunk);
+                    loadingChunks.remove(ret.position);
 
-            long start = System.nanoTime();
-            var blockChunk = ChunkSerializer.decodeChunk(entry.getValue());
-//            System.out.println(System.nanoTime() - start + " ns. Decoding");
+                    if (ret.meshChunk != null && ret.meshChunk.getMesh() != null) {
+                        ret.meshChunk.getMesh().init();
 
-            MeshChunk chunk = new MeshChunk(new Vector3i(entry.getKey().x, entry.getKey().y, entry.getKey().z));
-
-            start = System.nanoTime();
-            chunk.createMesh(blockChunk);
-
-            if (chunk.getMesh() != null) {
-//                System.out.println(System.nanoTime() - start + " ns. creatingMesh");
-                meshChunks.add(chunk);
-                activeChunkMap.put(entry.getKey(), blockChunk);
-//                System.out.println("Chunk gen time: " + Math.round(((float) (System.nanoTime() - start) / 1000000f) * 100f) / 100f + "ms");
+                        if (ret.meshChunk.getMesh().getVertexCount() != 0) {
+                            meshChunks.add(ret.meshChunk);
+                        }
+                    }
+                }
             }
-
-            it.remove();
         }
     }
 
@@ -89,9 +110,11 @@ public class ChunkAtlas {
     public synchronized void loadChunk(int x, int y, int z) {
         Vector3i reqPos = new Vector3i(x, y, z);
 
-        if (!netWaitingChunks.contains(reqPos) && !activeChunkMap.containsKey(reqPos) && !pendingGenChunks.containsKey(reqPos)) {
-            Game.connection.requestChunk(new Vector3i(x, y, z), (pos, chunk) -> {
-                pendingGenChunks.put(pos, chunk);
+        if (!loadingChunks.contains(reqPos) && !activeChunkMap.containsKey(reqPos)) {
+            loadingChunks.add(reqPos);
+            Game.connection.requestChunk(reqPos, (pos, chunk) -> {
+                var task = new GenChunkTask(pos, chunk);
+                meshGenFutures.add(meshGenPool.submit(task));
             });
         }
     }
@@ -118,5 +141,39 @@ public class ChunkAtlas {
 
     private int coordToLocal(int num) {
         return (num >= 0) ? (num % CHUNK_SIZE) : ((CHUNK_SIZE - 1) - Math.abs(num + 1) % CHUNK_SIZE);
+    }
+
+    private class GenChunkTask implements Callable<GenChunkTask.ThreadRet> {
+        Vector3i pos;
+        byte[] chunk;
+
+        public GenChunkTask(Vector3i pos, byte[] chunk) {
+            this.pos = pos;
+            this.chunk = chunk;
+        }
+
+        private class ThreadRet {
+            public BlockChunk blockChunk;
+            public MeshChunk meshChunk;
+            public Vector3i position;
+        }
+
+        @Override
+        public ThreadRet call() {
+            BlockChunk blockChunk = ChunkSerializer.decodeChunk(chunk);
+            MeshChunk meshChunk = new MeshChunk(pos);
+            meshChunk.createMesh(blockChunk);
+
+            ThreadRet r = new ThreadRet();
+            r.blockChunk = blockChunk;
+            r.meshChunk = meshChunk;
+            r.position = pos;
+
+            return r;
+        }
+    }
+
+    public void cleanup() {
+        meshGenPool.shutdown();
     }
 }
