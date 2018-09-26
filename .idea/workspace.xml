@@ -6,229 +6,79 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47a85fc8-6de5-4c32-9694-f51947b17d86" name="Default Changelist" comment="Zeus 0.0.51 - Fixed Segfault on ChunkMeshes">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/ZeusServer_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Zeus_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/aurailus.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Helpers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/LWJGL.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/LWJGL_Natives_Linux.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_keypoint_png_encoder_1_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_joml_joml_1_9_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_assimp_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_assimp_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_bgfx_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_bgfx_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_egl_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_glfw_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_glfw_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_jawt_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_jemalloc_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_jemalloc_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lmdb_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lmdb_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lz4_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lz4_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nanovg_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nanovg_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nfd_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nfd_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nuklear_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nuklear_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_odbc_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openal_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openal_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opencl_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opengl_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opengl_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opengles_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opengles_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openvr_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openvr_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_ovr_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_ovr_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_par_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_par_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_remotery_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_remotery_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_rpmalloc_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_rpmalloc_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_sse_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_sse_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_stb_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_stb_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyexr_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyexr_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyfd_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyfd_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tootle_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tootle_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_vma_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_vma_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_vulkan_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_vulkan_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_xxhash_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_xxhash_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_yoga_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_yoga_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_zstd_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_zstd_natives_windows_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__com_google_code_findbugs_jsr305_1_3_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__com_google_guava_guava_10_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_joml_joml_1_9_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_l33tlabs_twl_pngdecoder_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_assimp_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_assimp_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_bgfx_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_bgfx_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_egl_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_glfw_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_glfw_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_jawt_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_jemalloc_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_jemalloc_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_lmdb_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_lmdb_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_lz4_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_lz4_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_nanovg_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_nanovg_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_nfd_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_nfd_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_nuklear_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_nuklear_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_odbc_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_openal_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_openal_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_opencl_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_opengl_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_opengl_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_openvr_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_openvr_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_ovr_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_ovr_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_par_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_par_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_remotery_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_remotery_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_rpmalloc_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_rpmalloc_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_sse_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_sse_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_stb_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_stb_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyexr_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyexr_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyfd_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyfd_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_tootle_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_tootle_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_vulkan_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_xxhash_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_xxhash_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_yoga_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_yoga_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_zstd_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/libraries/Maven__org_lwjgl_lwjgl_zstd_natives_linux_3_1_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ZeusClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_1_3_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_10_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_joml_joml_1_9_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_l33tlabs_twl_pngdecoder_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_l33tlabs_twl_pngdecoder_1_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_assimp_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_assimp_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_bgfx_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_bgfx_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_egl_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_glfw_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_glfw_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_jawt_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_jemalloc_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_jemalloc_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lmdb_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lmdb_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lz4_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_lz4_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nanovg_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nanovg_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nfd_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nfd_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nuklear_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_nuklear_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_odbc_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openal_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openal_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opencl_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opengl_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_opengl_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openvr_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_openvr_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_ovr_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_ovr_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_par_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_par_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_remotery_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_remotery_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_rpmalloc_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_rpmalloc_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_sse_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_sse_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_stb_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_stb_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyexr_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyexr_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyfd_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tinyfd_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tootle_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_tootle_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_vulkan_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_xxhash_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_xxhash_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_yoga_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_yoga_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_zstd_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_lwjgl_lwjgl_zstd_natives_linux_3_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/API_PLACEHOLDER/BaseHeightmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/API_PLACEHOLDER/BaseHeightmap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Api/IBlockDecors.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IBlockDecors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Api/IMapHeightmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IMapHeightmap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/ArrayTrans3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/ArrayTrans3D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/Bytes.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/Bytes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/ChunkSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/ChunkSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/OpenSimplexNoise.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/OpenSimplexNoise.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/PacketData.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/PacketData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/PacketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/PacketType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/RLE.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/RLE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/VecUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/VecUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Networking/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/ClientThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Networking/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/Pacman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Server/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/GameServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Server/MapGen.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/MapGen.java" afterDir="false" />
+    <list default="true" id="47a85fc8-6de5-4c32-9694-f51947b17d86" name="Default Changelist" comment="Zeus 0.0.54 - Move al">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/GameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/HudInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/HudInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/MouseInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/OBJLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/OBJLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/RenderObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/RenderObj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/ChunkMesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/ChunkMesh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Mesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Mesh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Transformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Transformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/light/DirectionalLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/light/DirectionalLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/light/PointLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/light/PointLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/light/SceneLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/light/SceneLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/light/SpotLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/light/SpotLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/ArrayTrans3D.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/ChunkSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/FastAccessMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/FastAccessSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/RLE.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/TextureAtlas.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/TextureAtlas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/Timer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Timer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/VecUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockAtlas.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockAtlas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockChunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockChunk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockDef.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockDef.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/ChunkAtlas.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkAtlas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/ChunkMeshBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkMeshBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/EncodedBlockChunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/EncodedBlockChunk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Hud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/MeshChunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/MeshChunk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/RegFileManip.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/RegFileManip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexFour.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexFour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexLifted.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexLifted.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexOne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexPoof.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexPoof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_PlantLike.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_PlantLike.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BlockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BlockModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/MeshPart.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/MeshPart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/network/Bytes.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/Bytes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/network/ConnMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/ConnMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/network/PacketData.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/PacketData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/network/PacketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/PacketType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/network/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/Pacman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/objects/SkyBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/objects/SkyBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/API_PLACEHOLDER/BaseHeightmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/baseApi/BaseHeightmap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IBlockDecors.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/api/IBlockDecors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IMapHeightmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/api/IMapHeightmap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/ArrayTrans3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/ArrayTrans3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/Bytes.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/Bytes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/ChunkSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/ChunkSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/OpenSimplexNoise.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/OpenSimplexNoise.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/PacketData.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/PacketData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/PacketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/PacketType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/RLE.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/RLE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/VecUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/VecUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/networking/ClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/networking/Pacman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/server/GameServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/server/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/MapGen.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZeusClient/src/main/java/server/server/MapGen.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/../ZeusClient/target/" />
@@ -265,7 +115,7 @@
           <entry key="fs" value="9" />
           <entry key="groovy" value="2" />
           <entry key="iml" value="6" />
-          <entry key="java" value="370" />
+          <entry key="java" value="381" />
           <entry key="png" value="6" />
           <entry key="vs" value="6" />
           <entry key="xml" value="2" />
@@ -278,7 +128,7 @@
           <entry key="Groovy" value="2" />
           <entry key="IDEA_MODULE" value="6" />
           <entry key="Image" value="6" />
-          <entry key="JAVA" value="370" />
+          <entry key="JAVA" value="381" />
           <entry key="Manifest" value="2" />
           <entry key="XML" value="2" />
         </counts>
@@ -289,8 +139,8 @@
           <entry key="dummy" value="62" />
           <entry key="fs" value="768" />
           <entry key="iml" value="46" />
-          <entry key="java" value="74586" />
-          <entry key="txt" value="2542" />
+          <entry key="java" value="74600" />
+          <entry key="txt" value="2601" />
           <entry key="vs" value="374" />
           <entry key="xml" value="42" />
         </counts>
@@ -300,9 +150,9 @@
           <entry key="Android RenderScript" value="768" />
           <entry key="C++" value="374" />
           <entry key="IDEA_MODULE" value="46" />
-          <entry key="JAVA" value="74585" />
+          <entry key="JAVA" value="74599" />
           <entry key="Manifest" value="1" />
-          <entry key="PLAIN_TEXT" value="2604" />
+          <entry key="PLAIN_TEXT" value="2663" />
           <entry key="RegExp" value="1" />
           <entry key="XML" value="42" />
         </counts>
@@ -315,19 +165,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Game.java">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/TextureAtlas.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="65" column="116" selection-start-line="65" selection-start-column="116" selection-end-line="65" selection-end-column="116" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/ClientThread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+            <state relative-caret-position="270">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -336,10 +177,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/MapGen.java">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="21" column="36" selection-start-line="21" selection-end-line="22" />
+            <state relative-caret-position="60">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Timer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/MeshChunk.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkAtlas.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="162" column="36" selection-start-line="162" selection-start-column="36" selection-end-line="162" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -348,28 +216,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IBlockDecors.java">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/helpers/ChunkSerializer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="23" selection-start-column="23" selection-end-column="23" />
+            <state relative-caret-position="1515">
+              <caret line="111" column="27" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkMeshBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/ChunkAtlas.java">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/EncodedBlockChunk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="43">
-              <caret line="9" column="31" lean-forward="true" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            <state relative-caret-position="2">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -378,10 +249,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/MeshChunk.java">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/ConnMan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="28" column="25" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="25" />
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -390,19 +261,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/ChunkMesh.java">
+        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockChunk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="750">
-              <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+            <state relative-caret-position="-554">
+              <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -461,14 +326,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/ArrayTrans3D.java" />
-        <option value="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/RLE.java" />
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Face.java" />
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockModel.java" />
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/MeshPart.java" />
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/MeshData.java" />
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockModelCube.java" />
-        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeVertical.java" />
         <option value="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Helpers/ChunkSerializer.java" />
         <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BlockModel.java" />
         <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Texture.java" />
@@ -512,6 +369,14 @@
         <option value="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Networking/ClientThread.java" />
         <option value="$PROJECT_DIR$/ZeusServer/src/main/java/ZeusServer/Server/MapGen.java" />
         <option value="$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/ChunkAtlas.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Timer.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/MeshChunk.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/ConnMan.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockChunk.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkAtlas.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/helpers/ChunkSerializer.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkMeshBuilder.java" />
+        <option value="$PROJECT_DIR$/ZeusClient/src/main/java/client/game/EncodedBlockChunk.java" />
       </list>
     </option>
   </component>
@@ -566,6 +431,59 @@
             <path>
               <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="client" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="client" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="game" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="client" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="game" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="network" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Zeus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="Zeus" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="helpers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -702,7 +620,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="henlo dog&#9;null&#9;null" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537938852500" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537939781195" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Groovy JUnit" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/ZeusClient/src/main/java" />
@@ -716,12 +634,17 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="ZeusClient.game" />
     </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ZeusClient.game" />
+      <recent name="ZeusClient.engine.helpers" />
+      <recent name="ZeusServer" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="helpers" />
       <recent name="ZeusClient.game.blockmodels" />
       <recent name="ZeusClient.engine" />
       <recent name="ZeusClient.engine.Utils" />
       <recent name="ZeusClient.game.Utils" />
-      <recent name="ZeusServer.Helpers" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="ZeusServer.Helpers" />
@@ -732,11 +655,6 @@
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="groovy.util.GroovyTestCase" />
-    </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="ZeusClient.game" />
-      <recent name="ZeusClient.engine.helpers" />
-      <recent name="ZeusServer" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -754,8 +672,8 @@
   <component name="RunManager" selected="Compound.Run Game">
     <configuration name="1. Run Server" type="Application" factoryName="Application">
       <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
-      <option name="MAIN_CLASS_NAME" value="ZeusServer.Server.Main" />
-      <module name="ZeusServer" />
+      <option name="MAIN_CLASS_NAME" value="server.server.Main" />
+      <module name="Zeus" />
       <option name="PROGRAM_PARAMETERS" value="30005" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -764,7 +682,7 @@
     <configuration name="2. Run Client" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="10" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="ZeusClient.game.Main" />
+      <option name="MAIN_CLASS_NAME" value="client.game.Main" />
       <module name="Zeus" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ZeusClient" />
       <method v="2">
@@ -775,7 +693,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="10" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
-      <option name="MAIN_CLASS_NAME" value="ZeusClient.game.Main" />
+      <option name="MAIN_CLASS_NAME" value="client.game.Main" />
       <module name="Zeus" />
       <option name="VM_PARAMETERS" value="-Dorg.lwjgl.util.Debug=true" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ZeusClient" />
@@ -792,7 +710,7 @@
       <module name="Zeus" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ZeusClient.game.*" />
+          <option name="PATTERN" value="client.game.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -913,7 +831,14 @@
       <option name="project" value="LOCAL" />
       <updated>1537938584901</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Zeus 0.0.53 - Combine Modules into 1 module">
+      <created>1537939119930</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1537939119930</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -934,7 +859,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Favorites" order="4" sideWeight="0.40868455" side_tool="true" weight="0.16915688" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.59131545" visible="true" weight="0.17395945" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.59131545" visible="true" weight="0.17395945" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3296582" />
       <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.49893278" weight="0.39801544" />
@@ -947,7 +872,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.3296582" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49839914" weight="0.18302095" />
       <window_info anchor="bottom" id="Statistic" order="11" weight="0.3296582" />
-      <window_info anchor="bottom" x="3197" y="0" width="1922" height="1033" id="Run" order="12" sideWeight="0.4941302" visible="true" weight="0.22932746" />
+      <window_info active="true" anchor="bottom" x="3197" y="0" width="1922" height="1033" id="Run" order="12" sideWeight="0.4941302" visible="true" weight="0.22932746" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.2497332" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2497332" />
@@ -991,38 +916,22 @@
     <MESSAGE value="Zeus 0.0.5 - Rendering performance improvements&#10;&#10;Interleaved buffers in chunkmesh&#10;Only bind texture once on chunk render" />
     <MESSAGE value="Zeus 0.0.51 - Fixed Segfault on ChunkMeshes" />
     <MESSAGE value="Zeus 0.0.52 - Merge Repositories, Server has really tall trunks." />
-    <option name="LAST_COMMIT_MESSAGE" value="Zeus 0.0.52 - Merge Repositories, Server has really tall trunks." />
+    <MESSAGE value="Zeus 0.0.53 - Combine Modules into 1 module" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zeus 0.0.53 - Combine Modules into 1 module" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/RenderObj.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="70" column="16" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="389" column="21" selection-start-line="389" selection-start-column="21" selection-end-line="389" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusServer/ZeusServer.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Material.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Material.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Mesh.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Mesh.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
@@ -1032,14 +941,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexFour.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexFour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-540">
           <caret line="6" column="69" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexOne.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexOne.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
@@ -1060,107 +969,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/Window.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Window.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="93" column="28" selection-start-line="93" selection-start-column="28" selection-end-line="93" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="41" column="46" selection-start-line="41" selection-start-column="46" selection-end-line="41" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Camera.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Camera.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-110">
           <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockDef.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockDef.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2">
           <caret column="21" selection-start-column="21" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexPoof.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexPoof.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="319">
           <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_PlantLike.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_PlantLike.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="589">
           <caret line="58" column="21" selection-start-line="7" selection-start-column="8" selection-end-line="58" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/BM_CubeTexLifted.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/BM_CubeTexLifted.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="6" column="95" selection-start-line="6" selection-start-column="95" selection-end-line="6" selection-end-column="95" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockAtlas.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockAtlas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="27" lean-forward="true" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/ChunkSerializer.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/helpers/ChunkSerializer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="31" column="16" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/BlockChunk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/TextureAtlas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="166" column="26" selection-start-line="166" selection-start-column="26" selection-end-line="166" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#795#796#0" expanded="true" />
-            <element signature="e#828#829#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/RLE.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/helpers/RLE.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/VecUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ZeusClient/src/test/java/ZeusClient/game/GameTest.groovy" />
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/Entity.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="344">
           <caret line="95" column="46" selection-start-line="95" selection-start-column="46" selection-end-line="95" selection-end-column="46" />
@@ -1174,14 +1047,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Player.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="62" selection-start-line="62" selection-end-line="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/Pacman.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/networking/Pacman.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="467">
           <caret line="129" column="9" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
@@ -1192,21 +1065,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/network/ConnMan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/FastAccessSet.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/helpers/FastAccessSet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/helpers/FastAccessMap.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/helpers/FastAccessMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="35" selection-start-line="35" selection-end-line="35" />
@@ -1234,7 +1100,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/blockmodels/MeshPart.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/blockmodels/MeshPart.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="69" column="23" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
@@ -1244,7 +1110,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Renderer.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="194" column="43" lean-forward="true" selection-start-line="194" selection-start-column="43" selection-end-line="194" selection-end-column="43" />
@@ -1254,7 +1120,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/Scene.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Scene.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="568">
           <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
@@ -1266,16 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/ChunkMeshBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/resources/shaders/terrain_vertex.vs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1283,14 +1139,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/Texture.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/Texture.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
           <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/GameServer.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/server/GameServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
@@ -1301,19 +1157,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Helpers/ArrayTrans3D.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/helpers/ArrayTrans3D.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-161" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IMapHeightmap.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/api/IMapHeightmap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/API_PLACEHOLDER/BaseHeightmap.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/baseApi/BaseHeightmap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
           <caret line="51" column="77" selection-start-line="51" selection-start-column="77" selection-end-line="51" selection-end-column="77" />
@@ -1325,14 +1181,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Game.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
           <caret line="65" column="116" selection-start-line="65" selection-start-column="116" selection-end-line="65" selection-end-column="116" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/Main.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
@@ -1342,31 +1198,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/MeshChunk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="28" column="25" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/engine/graphics/ChunkMesh.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Networking/ClientThread.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/networking/ClientThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
@@ -1376,7 +1208,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Server/MapGen.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/server/MapGen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="21" column="36" selection-start-line="21" selection-end-line="22" />
@@ -1386,17 +1218,119 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusServer/Api/IBlockDecors.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/api/IBlockDecors.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="23" selection-start-column="23" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/ZeusClient/game/ChunkAtlas.java">
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/server/server/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="9" column="31" lean-forward="true" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+        <state relative-caret-position="135">
+          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/graphics/ChunkMesh.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/TextureAtlas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Timer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/helpers/VecUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/engine/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/MeshChunk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/network/ConnMan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/BlockChunk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-554">
+          <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkAtlas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="162" column="36" selection-start-line="162" selection-start-column="36" selection-end-line="162" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/helpers/ChunkSerializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="111" column="27" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/ChunkMeshBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZeusClient/src/main/java/client/game/EncodedBlockChunk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
