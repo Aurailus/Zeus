@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="LWJGL-Natives-Linux">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Documents/ZeusLibraries/Natives-linux" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$USER_HOME$/Documents/ZeusLibraries/Natives-linux" recursive="false" />
+  </library>
+</component>

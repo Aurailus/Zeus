@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZeusClient/Zeus.iml" filepath="$PROJECT_DIR$/ZeusClient/Zeus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZeusClient.iml" filepath="$PROJECT_DIR$/ZeusClient.iml" />
     </modules>
   </component>
 </project>

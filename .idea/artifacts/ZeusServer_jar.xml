@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ZeusServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ZeusServer_jar</output-path>
+    <root id="archive" name="ZeusServer.jar">
+      <element id="module-output" name="ZeusServer" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/ZeusLibraries/Helpers/PNGDecoder.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/ZeusLibraries/Helpers/joml-1.9.11.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

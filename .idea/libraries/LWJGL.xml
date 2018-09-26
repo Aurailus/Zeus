@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="LWJGL">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Documents/ZeusLibraries/LWJGL" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Documents/ZeusLibraries/LWJGL" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Documents/ZeusLibraries/LWJGL" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Documents/ZeusLibraries/LWJGL" recursive="false" type="SOURCES" />
+  </library>
+</component>
