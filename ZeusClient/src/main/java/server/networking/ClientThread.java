@@ -7,7 +7,10 @@ import helpers.VecUtils;
 import server.baseApi.BaseHeightmap;
 import server.server.MapGen;
 import org.joml.Vector3i;
+import server.server.world.Chunk;
+import server.server.world.World;
 
+import java.lang.annotation.Retention;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -15,11 +18,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static helpers.ArrayTrans3D.CHUNK_SIZE;
+
 public class ClientThread extends Thread implements Runnable {
     private Socket socket;
     private Pacman pacman;
     private boolean alive;
-    private MapGen mapGen;
+    private World world;
 
     private ThreadPoolExecutor mapGenPool;
 
@@ -28,11 +33,8 @@ public class ClientThread extends Thread implements Runnable {
     }
 
     private void init() {
-//        long seed = Math.round(Math.random()*1000000);
-        long seed = 0;
-
-        this.pacman = new Pacman(socket);
-        mapGen = new MapGen(seed, new BaseHeightmap(seed));
+        pacman = new Pacman(socket);
+        world = new World();
 
         pacman.start();
         alive = true;
@@ -68,7 +70,7 @@ public class ClientThread extends Thread implements Runnable {
 
             System.out.println("Generating chunk at position " + position);
 
-            var bytes = ChunkSerializer.encodeChunk(mapGen.generateChunk(position), generateSides(position));
+            var bytes = ChunkSerializer.encodeChunk(world.getChunk(position).getBlockArray(), generateSides(position));
             if (bytes == null) return;
 
             s.append(new String(bytes, StandardCharsets.ISO_8859_1));
@@ -79,54 +81,75 @@ public class ClientThread extends Thread implements Runnable {
 
     private ArrayList<short[]> generateSides(Vector3i pos) {
         ArrayList<short[]> sides = new ArrayList<>();
+        Vector3i surrogate = new Vector3i();
 
-        var array = new short[256];
-        sides.add(array);
-        sides.add(array);
-        sides.add(array);
-        sides.add(array);
-        sides.add(array);
-        sides.add(array);
+        var empty = new short[256];
+        Chunk chunk;
 
-//        var array = new short[256];
-//        for (var i = 0; i < 256; i++) {
-//            array[i] = mapGen.getBlock(pos.x*CHUNK_SIZE + 16, pos.y*CHUNK_SIZE + i/16, pos.z*CHUNK_SIZE + i%16);
-//        }
-//        sides.add(array);
-//
-//        array = new short[256];
-//        for (var i = 0; i < 256; i++) {
-//            array[i] = mapGen.getBlock(pos.x*CHUNK_SIZE - 1, pos.y*CHUNK_SIZE + i/16, pos.z*CHUNK_SIZE + i%16);
-//        }
-//        sides.add(array);
-//
-//        array = new short[256];
-//        for (var i = 0; i < 256; i++) {
-//            array[i] = mapGen.getBlock(pos.x*CHUNK_SIZE + i/16, pos.y*CHUNK_SIZE + 16, pos.z*CHUNK_SIZE + i%16);
-//        }
-//        sides.add(array);
-//
-//        array = new short[256];
-//        for (var i = 0; i < 256; i++) {
-//            array[i] = mapGen.getBlock(pos.x*CHUNK_SIZE + i/16, pos.y*CHUNK_SIZE - 1, pos.z*CHUNK_SIZE + i%16);
-//        }
-//        sides.add(array);
-//
-//        array = new short[256];
-//        for (var i = 0; i < 256; i++) {
-//            array[i] = mapGen.getBlock(pos.x*CHUNK_SIZE + i%16, pos.y*CHUNK_SIZE + i/16, pos.z*CHUNK_SIZE + 16);
-//        }
-//        sides.add(array);
-//
-//        array = new short[256];
-//        for (var i = 0; i < 256; i++) {
-//            array[i] = mapGen.getBlock(pos.x*CHUNK_SIZE + i%16, pos.y*CHUNK_SIZE + i/16, pos.z*CHUNK_SIZE - 1);
-//        }
-//        sides.add(array);
+
+        chunk = world.getChunkRaw(surrogate.set(pos).add(1, 0, 0));
+        if (chunk == null) sides.add(empty);
+        else {
+            var array = new short[256];
+            for (var i = 0; i < 256; i++) {
+                array[i] = chunk.getBlock(0, i / 16, i % 16);
+            }
+            sides.add(array);
+        }
+
+        chunk = world.getChunkRaw(surrogate.set(pos).add(-1, 0, 0));
+        if (chunk == null) sides.add(empty);
+        else {
+            var array = new short[256];
+            for (var i = 0; i < 256; i++) {
+                array[i] = chunk.getBlock(15, i / 16, i % 16);
+            }
+            sides.add(array);
+        }
+
+        chunk = world.getChunkRaw(surrogate.set(pos).add(0, 1, 0));
+        if (chunk == null) sides.add(empty);
+        else {
+            var array = new short[256];
+            for (var i = 0; i < 256; i++) {
+                array[i] = chunk.getBlock(i / 16, 0, i % 16);
+            }
+            sides.add(array);
+        }
+
+        chunk = world.getChunkRaw(surrogate.set(pos).add(0, -1, 0));
+        if (chunk == null) sides.add(empty);
+        else {
+            var array = new short[256];
+            for (var i = 0; i < 256; i++) {
+                array[i] = chunk.getBlock(i / 16, 15, i % 16);
+            }
+            sides.add(array);
+        }
+
+        chunk = world.getChunkRaw(surrogate.set(pos).add(0, 0, 1));
+        if (chunk == null) sides.add(empty);
+        else {
+            var array = new short[256];
+            for (var i = 0; i < 256; i++) {
+                array[i] = chunk.getBlock(i % 16, i / 16, 0);
+            }
+            sides.add(array);
+        }
+
+        chunk = world.getChunkRaw(surrogate.set(pos).add(0, 0, -1));
+        if (chunk == null) sides.add(empty);
+        else {
+            var array = new short[256];
+            for (var i = 0; i < 256; i++) {
+                array[i] = chunk.getBlock(i % 16, i / 16, 15);
+            }
+            sides.add(array);
+        }
 
         return sides;
     }
-
+    
     @Override
     public void run() {
         init();

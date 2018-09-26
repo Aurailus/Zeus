@@ -10,18 +10,18 @@ import static helpers.ArrayTrans3D.CHUNK_SIZE;
 public class BlockChunk {
     short[] blocks;
     private boolean[] visible;
-    ArrayList<boolean[]> sidesOpaque;
+    ArrayList<short[]> sides;
 
-    public BlockChunk(short[] blocks, ArrayList<boolean[]> sidesOpaque) {
+    public BlockChunk(short[] blocks, ArrayList<short[]> sides) {
         this.blocks = blocks;
-        this.sidesOpaque = sidesOpaque;
+        this.sides = sides;
     }
 
     public BlockChunk(byte[] blocks, ArrayList<byte[]> sidesOpaque) {
         this.blocks = RLE.decodeShorts(blocks);
-        this.sidesOpaque = new ArrayList<>();
+        this.sides = new ArrayList<>();
         for (var i = 0; i < 6; i++) {
-            this.sidesOpaque.add(RLE.decodeBools(sidesOpaque.get(i)));
+            this.sides.add(RLE.decodeShorts(sidesOpaque.get(i)));
         }
     }
 
@@ -106,7 +106,7 @@ public class BlockChunk {
     private short getBlockIncludeEdges(Vector3i pos) {
         if (pos.x >= 16 || pos.x < 0 || pos.y >= 16 || pos.y < 0 || pos.z >= 16 || pos.z < 0) {
             try {
-                return (short)(getEdgeOpaque(pos) ? 1 : 0);
+                return getEdgeBlock(pos);
             }
             catch(Exception e) {
                 e.printStackTrace();
@@ -116,15 +116,15 @@ public class BlockChunk {
         return getBlock(pos);
     }
 
-    private boolean getEdgeOpaque(Vector3i pos) throws Exception {
-        if (pos.x == 16) return sidesOpaque.get(0)[pos.y * 16 + pos.z];
-        if (pos.x == -1) return sidesOpaque.get(1)[pos.y * 16 + pos.z];
+    private short getEdgeBlock(Vector3i pos) throws Exception {
+        if (pos.x == 16) return sides.get(0)[pos.y * 16 + pos.z];
+        if (pos.x == -1) return sides.get(1)[pos.y * 16 + pos.z];
 
-        if (pos.y == 16) return sidesOpaque.get(2)[pos.x * 16 + pos.z];
-        if (pos.y == -1) return sidesOpaque.get(3)[pos.x * 16 + pos.z];
+        if (pos.y == 16) return sides.get(2)[pos.x * 16 + pos.z];
+        if (pos.y == -1) return sides.get(3)[pos.x * 16 + pos.z];
 
-        if (pos.z == 16) return sidesOpaque.get(4)[pos.y * 16 + pos.x];
-        if (pos.z == -1) return sidesOpaque.get(5)[pos.y * 16 + pos.x];
+        if (pos.z == 16) return sides.get(4)[pos.y * 16 + pos.x];
+        if (pos.z == -1) return sides.get(5)[pos.y * 16 + pos.x];
 
         throw new Exception("BAD VALUE");
     }

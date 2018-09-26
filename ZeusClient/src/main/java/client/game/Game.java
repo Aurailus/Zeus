@@ -112,7 +112,7 @@ public class Game implements GameLogic {
 
         player.update(interval, mouseInput);
 
-        if (tick % 30 == 0) world.loadChunksAroundPos(player.getPosition(), 4);
+        if (tick % 30 == 0) world.loadChunksAroundPos(player.getPosition(), 5);
         world.update();
 
         hud.rotateCompass(player.getCamera().getRotation().y);

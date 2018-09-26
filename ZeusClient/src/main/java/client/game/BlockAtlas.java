@@ -9,6 +9,7 @@ public class BlockAtlas {
 
     public BlockAtlas() {
         blockDefs = new ArrayList<>();
+        create("_:unloaded", null, true, false, false);
         create("_:air", null, false, false, false);
     }
 

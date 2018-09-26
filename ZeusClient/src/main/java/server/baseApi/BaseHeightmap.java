@@ -3,7 +3,7 @@ package server.baseApi;
 import server.api.IMapHeightmap;
 import helpers.OpenSimplexNoise;
 
-import static server.server.MapGen.CHUNK_SIZE;
+import static helpers.ArrayTrans3D.CHUNK_SIZE;
 
 public class BaseHeightmap implements IMapHeightmap {
     long seed;

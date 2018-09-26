@@ -97,7 +97,7 @@ public class ChunkSerializer {
         bis.read(mainChunkRLE, 0, size);
         short[] chunk = RLE.decodeShorts(mainChunkRLE);
 
-        ArrayList<boolean[]> sides = new ArrayList<>();
+        ArrayList<short[]> sides = new ArrayList<>();
 
         for (var i = 0; i < 6; i++) {
             buff = new byte[4];
@@ -107,11 +107,7 @@ public class ChunkSerializer {
             byte[] adjRLE = new byte[size2];
             bis.read(adjRLE, 0, size2);
             var shorts = RLE.decodeShorts(adjRLE);
-            var bools = new boolean[shorts.length];
-            for (var j = 0; j < shorts.length; j++) {
-                bools[j] = Game.definitions.getDef(shorts[j]).getCulls();
-            }
-            sides.add(bools);
+            sides.add(shorts);
         }
 
         return new BlockChunk(chunk, sides);

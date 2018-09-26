@@ -37,7 +37,6 @@ public class BlockDef {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
-        if (!visible) this.culls = false;
     }
 
     public void setSolid(boolean solid) {

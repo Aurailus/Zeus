@@ -6,22 +6,22 @@ import java.util.ArrayList;
 
 public class EncodedBlockChunk {
     private byte[] blocks;
-    private ArrayList<byte[]> sidesOpaque;
+    private ArrayList<byte[]> sides;
 
     public EncodedBlockChunk(BlockChunk blockChunk) {
         this.blocks = RLE.encode(blockChunk.blocks);
-        this.sidesOpaque = new ArrayList<>();
-        this.sidesOpaque.add(RLE.encode(blockChunk.sidesOpaque.get(0)));
-        this.sidesOpaque.add(RLE.encode(blockChunk.sidesOpaque.get(1)));
-        this.sidesOpaque.add(RLE.encode(blockChunk.sidesOpaque.get(2)));
-        this.sidesOpaque.add(RLE.encode(blockChunk.sidesOpaque.get(3)));
-        this.sidesOpaque.add(RLE.encode(blockChunk.sidesOpaque.get(4)));
-        this.sidesOpaque.add(RLE.encode(blockChunk.sidesOpaque.get(5)));
+        this.sides = new ArrayList<>();
+        this.sides.add(RLE.encode(blockChunk.sides.get(0)));
+        this.sides.add(RLE.encode(blockChunk.sides.get(1)));
+        this.sides.add(RLE.encode(blockChunk.sides.get(2)));
+        this.sides.add(RLE.encode(blockChunk.sides.get(3)));
+        this.sides.add(RLE.encode(blockChunk.sides.get(4)));
+        this.sides.add(RLE.encode(blockChunk.sides.get(5)));
     }
 
-    public EncodedBlockChunk(byte[] blocks, ArrayList<byte[]> sidesOpaque) {
+    public EncodedBlockChunk(byte[] blocks, ArrayList<byte[]> sides) {
         this.blocks = blocks;
-        this.sidesOpaque = sidesOpaque;
+        this.sides = sides;
     }
 
     public EncodedBlockChunk(short[] blocks,
@@ -30,26 +30,26 @@ public class EncodedBlockChunk {
         boolean[] zPosOpaque, boolean[] zNegOpaque) {
 
         this.blocks = RLE.encode(blocks);
-        this.sidesOpaque = new ArrayList<>();
-        this.sidesOpaque.add(RLE.encode(xPosOpaque));
-        this.sidesOpaque.add(RLE.encode(xNegOpaque));
-        this.sidesOpaque.add(RLE.encode(yPosOpaque));
-        this.sidesOpaque.add(RLE.encode(yNegOpaque));
-        this.sidesOpaque.add(RLE.encode(zPosOpaque));
-        this.sidesOpaque.add(RLE.encode(zNegOpaque));
+        this.sides = new ArrayList<>();
+        this.sides.add(RLE.encode(xPosOpaque));
+        this.sides.add(RLE.encode(xNegOpaque));
+        this.sides.add(RLE.encode(yPosOpaque));
+        this.sides.add(RLE.encode(yNegOpaque));
+        this.sides.add(RLE.encode(zPosOpaque));
+        this.sides.add(RLE.encode(zNegOpaque));
     }
 
     public BlockChunk decode() {
-        return new BlockChunk(blocks, sidesOpaque);
+        return new BlockChunk(blocks, sides);
     }
 
     public void encode(BlockChunk blockChunk) {
         this.blocks = RLE.encode(blockChunk.blocks);
-        this.sidesOpaque.set(0, RLE.encode(blockChunk.sidesOpaque.get(0)));
-        this.sidesOpaque.set(1, RLE.encode(blockChunk.sidesOpaque.get(1)));
-        this.sidesOpaque.set(2, RLE.encode(blockChunk.sidesOpaque.get(2)));
-        this.sidesOpaque.set(3, RLE.encode(blockChunk.sidesOpaque.get(3)));
-        this.sidesOpaque.set(4, RLE.encode(blockChunk.sidesOpaque.get(4)));
-        this.sidesOpaque.set(6, RLE.encode(blockChunk.sidesOpaque.get(5)));
+        this.sides.set(0, RLE.encode(blockChunk.sides.get(0)));
+        this.sides.set(1, RLE.encode(blockChunk.sides.get(1)));
+        this.sides.set(2, RLE.encode(blockChunk.sides.get(2)));
+        this.sides.set(3, RLE.encode(blockChunk.sides.get(3)));
+        this.sides.set(4, RLE.encode(blockChunk.sides.get(4)));
+        this.sides.set(6, RLE.encode(blockChunk.sides.get(5)));
     }
 }
