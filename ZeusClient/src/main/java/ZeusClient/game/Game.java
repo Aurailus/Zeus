@@ -63,7 +63,7 @@ public class Game implements GameLogic {
         definitions.create("default:tallgrass_4", new BM_PlantLike("default_tallgrass_5"), false, true, false);
         definitions.create("default:stone_brick", new BM_CubeTexOne("default_stone_bricks"), true, true, true);
         definitions.create("default:stone_block", new BM_CubeTexOne("default_stone_block"), true, true, true);
-        definitions.create("default:log", new BM_CubeTexFour("default_log_top", "default_log_side", "default_log_bottom"), true, true, true);
+        definitions.create("default:log", new BM_CubeTexFour("default_log_top", "default_log_side", "default_log_top"), true, true, true);
         definitions.create("default:leaves", new BM_CubeTexPoof("default_leaves", "default_leaves_puff"), false, true, true);
 
 //        Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
@@ -79,6 +79,8 @@ public class Game implements GameLogic {
 
 
         scene.setVisibleChunks(world.getVisibleChunks());
+
+//        world.loadChunksAroundPos(player.getPosition(), 3);
 
         setupLights();
     }
@@ -110,7 +112,7 @@ public class Game implements GameLogic {
 
         player.update(interval, mouseInput);
 
-        if (tick % 30 == 0) world.loadChunksAroundPos(player.getPosition(), 10);
+        if (tick % 30 == 0) world.loadChunksAroundPos(player.getPosition(), 4);
         world.update();
 
         hud.rotateCompass(player.getCamera().getRotation().y);
