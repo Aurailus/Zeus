@@ -14,7 +14,7 @@ import static helpers.Bytes.*;
 
 public class ChunkSerializer {
 
-    public static byte[] encodeChunk(short[] chunk, ArrayList<short[]> sides) {
+    public static byte[] encodeChunk(short[] chunk) {
         ArrayList<Byte> list = new ArrayList<>();
         byte[] rleArray = RLE.encode(chunk);
         byte[] size = intToBytes(rleArray.length);
@@ -26,9 +26,9 @@ public class ChunkSerializer {
         ByteArrayInputStream rleStream = new ByteArrayInputStream(rleArray);
         while (rleStream.available() > 0) list.add((byte)rleStream.read());
 
-        for (short[] shorts : sides) {
-            addAdjacent(list, shorts);
-        }
+//        for (short[] shorts : sides) {
+//            addAdjacent(list, shorts);
+//        }
 
         byte[] array = new byte[list.size()];
         for (var i = 0; i < list.size(); i++) {
@@ -60,17 +60,17 @@ public class ChunkSerializer {
         return compressed;
     }
 
-    private static void addAdjacent(ArrayList<Byte> list, short[] adj) {
-        byte[] rleArray = RLE.encode(adj);
-        byte[] size = intToBytes(rleArray.length);
-        list.add(size[0]);
-        list.add(size[1]);
-        list.add(size[2]);
-        list.add(size[3]);
-
-        ByteArrayInputStream rleStream = new ByteArrayInputStream(rleArray);
-        while (rleStream.available() > 0) list.add((byte)rleStream.read());
-    }
+//    private static void addAdjacent(ArrayList<Byte> list, short[] adj) {
+//        byte[] rleArray = RLE.encode(adj);
+//        byte[] size = intToBytes(rleArray.length);
+//        list.add(size[0]);
+//        list.add(size[1]);
+//        list.add(size[2]);
+//        list.add(size[3]);
+//
+//        ByteArrayInputStream rleStream = new ByteArrayInputStream(rleArray);
+//        while (rleStream.available() > 0) list.add((byte)rleStream.read());
+//    }
 
     public static BlockChunk decodeChunk(byte[] encoded) {
         byte[] decoded;
@@ -97,19 +97,19 @@ public class ChunkSerializer {
         bis.read(mainChunkRLE, 0, size);
         short[] chunk = RLE.decodeShorts(mainChunkRLE);
 
-        ArrayList<short[]> sides = new ArrayList<>();
+//        ArrayList<short[]> sides = new ArrayList<>();
+//
+//        for (var i = 0; i < 6; i++) {
+//            buff = new byte[4];
+//            bis.read(buff, 0, 4);
+//            var size2 = bytesToInt(buff);
+//
+//            byte[] adjRLE = new byte[size2];
+//            bis.read(adjRLE, 0, size2);
+//            var shorts = RLE.decodeShorts(adjRLE);
+//            sides.add(shorts);
+//        }
 
-        for (var i = 0; i < 6; i++) {
-            buff = new byte[4];
-            bis.read(buff, 0, 4);
-            var size2 = bytesToInt(buff);
-
-            byte[] adjRLE = new byte[size2];
-            bis.read(adjRLE, 0, size2);
-            var shorts = RLE.decodeShorts(adjRLE);
-            sides.add(shorts);
-        }
-
-        return new BlockChunk(chunk, sides);
+        return new BlockChunk(chunk);
     }
 }

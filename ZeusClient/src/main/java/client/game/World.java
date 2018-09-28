@@ -13,14 +13,16 @@ import java.util.concurrent.*;
 
 import static helpers.ArrayTrans3D.CHUNK_SIZE;
 
-public class ChunkAtlas {
+public class World {
 
     private ArrayList<MeshChunk> meshChunks;
-    private HashSet<Vector3i> loadingChunks;
+    private HashMap<Vector3i, MeshChunk> meshChunkMap;
+
+//    private HashSet<Vector3i> loadingChunks;
 
     private ThreadPoolExecutor meshGenPool;
     private ArrayList<Future> meshGenFutures;
-
+    private ArrayList<Vector3i> adjacentChunkUpdates;
 
     private ArrayList<BlockChunk> activeChunks;
     private HashMap<Vector3i, BlockChunk> activeChunkMap;
@@ -29,7 +31,7 @@ public class ChunkAtlas {
     private ArrayList<EncodedBlockChunk> cachedChunks;
     private HashMap<Vector3i, EncodedBlockChunk> cachedChunkMap;
 
-    public ChunkAtlas() {
+    public World() {
 
         try {
             var atlas = new FileInputStream(new File("atlas_0.png"));
@@ -40,13 +42,16 @@ public class ChunkAtlas {
         }
 
         meshChunks = new ArrayList<>();
-        loadingChunks = new HashSet<>();
+        meshChunkMap = new HashMap<>();
+
+//        loadingChunks = new HashSet<>();
 
         meshGenPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(16);
         meshGenPool.setMaximumPoolSize(48);
         meshGenPool.setKeepAliveTime(32, TimeUnit.SECONDS);
 
         meshGenFutures = new ArrayList<>();
+        adjacentChunkUpdates = new ArrayList<>();
 
         activeChunks = new ArrayList<>();
         activeChunkMap = new HashMap<>();
@@ -55,7 +60,7 @@ public class ChunkAtlas {
         cachedChunkMap = new HashMap<>();
     }
 
-    public ArrayList<MeshChunk> getVisibleChunks() {
+    ArrayList<MeshChunk> getVisibleChunks() {
         return meshChunks;
     }
 
@@ -67,7 +72,7 @@ public class ChunkAtlas {
         }
     }
 
-    public synchronized void loadMeshes() throws ExecutionException, InterruptedException {
+    private synchronized void loadMeshes() throws ExecutionException, InterruptedException {
         int maxTime = 4;
         long start = System.currentTimeMillis();
 
@@ -81,45 +86,91 @@ public class ChunkAtlas {
                     it.remove();
 
                     activeChunkMap.put(ret.position, ret.blockChunk);
-                    loadingChunks.remove(ret.position);
+//                    loadingChunks.remove(ret.position);
+
+                    var eChunk = meshChunkMap.get(ret.position);
+                    if (eChunk != null) {
+                        meshChunkMap.remove(ret.position);
+                        meshChunks.remove(eChunk);
+                    }
 
                     if (ret.meshChunk != null && ret.meshChunk.getMesh() != null) {
                         ret.meshChunk.getMesh().init();
 
                         if (ret.meshChunk.getMesh().getVertexCount() != 0) {
+                            meshChunkMap.put(ret.position, ret.meshChunk);
                             meshChunks.add(ret.meshChunk);
                         }
                     }
                 }
             }
         }
+
+        adjacentChunkUpdates.forEach(this::updateChunksAround);
+        adjacentChunkUpdates.clear();
     }
 
-    public synchronized void loadChunksAroundPos(Vector3f pos, int range) {
-        var cOffset = coordsToChunk(pos);
+    private synchronized void updateChunksAround(Vector3i pos) {
+        Vector3i modPos;
 
-        for (var i = -range; i < range; i++) {
-            for (var j = -range; j < range; j++) {
-                for (var k = -range; k < range; k++) {
-                    loadChunk(i + cOffset.x, j + cOffset.y, k + cOffset.z);
-                }
-            }
+        modPos = new Vector3i(pos).add(1, 0, 0);
+        BlockChunk chunk = activeChunkMap.get(modPos);
+        if (chunk != null) {
+            updateChunk(modPos, chunk);
+        }
+
+        modPos = new Vector3i(pos).add(-1, 0, 0);
+        chunk = activeChunkMap.get(modPos);
+        if (chunk != null) {
+            updateChunk(modPos, chunk);
+        }
+
+        modPos = new Vector3i(pos).add(0, 0, 1);
+        chunk = activeChunkMap.get(modPos);
+        if (chunk != null) {
+            updateChunk(modPos, chunk);
+        }
+
+        modPos = new Vector3i(pos).add(0, 0, -1);
+        chunk = activeChunkMap.get(modPos);
+        if (chunk != null) {
+            updateChunk(modPos, chunk);
+        }
+
+        modPos = new Vector3i(pos).add(0, 1, 0);
+        chunk = activeChunkMap.get(modPos);
+        if (chunk != null) {
+            updateChunk(modPos, chunk);
+        }
+
+        modPos = new Vector3i(pos).add(0, -1, 0);
+        chunk = activeChunkMap.get(modPos);
+        if (chunk != null) {
+            updateChunk(modPos, chunk);
         }
     }
 
-    public synchronized void loadChunk(int x, int y, int z) {
-        Vector3i reqPos = new Vector3i(x, y, z);
-
-        if (!loadingChunks.contains(reqPos) && !activeChunkMap.containsKey(reqPos)) {
-            loadingChunks.add(reqPos);
-            Game.connection.requestChunk(reqPos, (pos, chunk) -> {
-                var task = new GenChunkTask(pos, chunk);
-                meshGenFutures.add(meshGenPool.submit(task));
-            });
-        }
+    synchronized boolean hasChunk(Vector3i pos) {
+        return activeChunkMap.containsKey(pos) || cachedChunkMap.containsKey(pos);
     }
 
-    public synchronized BlockChunk getChunk(Vector3i pos) {
+    synchronized void addChunk(Vector3i pos, byte[] data) {
+        adjacentChunkUpdates.add(pos);
+        var task = new GenChunkTask(pos, data);
+        meshGenFutures.add(meshGenPool.submit(task));
+    }
+
+    synchronized void updateChunk(Vector3i pos, BlockChunk chunk) {
+        var task = new GenChunkTask(pos, chunk);
+        meshGenFutures.add(meshGenPool.submit(task));
+    }
+
+//    synchronized void addChunk(Vector3i pos, byte[] data) {
+//        var task = new GenChunkTask(pos, data);
+//        meshGenFutures.add(meshGenPool.submit(task));
+//    }
+
+    synchronized BlockChunk getChunk(Vector3i pos) {
         return activeChunkMap.get(pos);
     }
 
@@ -145,27 +196,34 @@ public class ChunkAtlas {
 
     private class GenChunkTask implements Callable<GenChunkTask.ThreadRet> {
         Vector3i pos;
-        byte[] chunk;
+        byte[] chunkData;
+        BlockChunk chunk;
 
-        public GenChunkTask(Vector3i pos, byte[] chunk) {
+        GenChunkTask(Vector3i pos, byte[] chunkData) {
+            this.pos = pos;
+            this.chunkData = chunkData;
+        }
+
+        GenChunkTask(Vector3i pos, BlockChunk chunk) {
             this.pos = pos;
             this.chunk = chunk;
         }
 
         private class ThreadRet {
-            public BlockChunk blockChunk;
-            public MeshChunk meshChunk;
-            public Vector3i position;
+            BlockChunk blockChunk;
+            MeshChunk meshChunk;
+            Vector3i position;
         }
 
         @Override
         public ThreadRet call() {
-            BlockChunk blockChunk = ChunkSerializer.decodeChunk(chunk);
+            if (chunk == null) chunk = ChunkSerializer.decodeChunk(chunkData);
+
             MeshChunk meshChunk = new MeshChunk(pos);
-            meshChunk.createMesh(blockChunk);
+            meshChunk.createMesh(chunk);
 
             ThreadRet r = new ThreadRet();
-            r.blockChunk = blockChunk;
+            r.blockChunk = chunk;
             r.meshChunk = meshChunk;
             r.position = pos;
 

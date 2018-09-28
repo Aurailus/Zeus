@@ -20,7 +20,8 @@ public class Game implements GameLogic {
     private Player player;
 
     public static ConnMan connection;
-    public static ChunkAtlas world;
+    public static ChunkLoader worldbridge;
+    public static World world;
     public static BlockAtlas definitions;
     public static TextureAtlas assets;
 
@@ -36,7 +37,7 @@ public class Game implements GameLogic {
         renderer.init(window);
 
         assets = new TextureAtlas(2048);
-        world = new ChunkAtlas();
+        world = new World();
         definitions = new BlockAtlas();
 
         assets.loadTexturesFolder();
@@ -45,13 +46,6 @@ public class Game implements GameLogic {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        connection = new ConnMan("localhost", 30005);
-
-        scene = new Scene();
-        hud = new Hud("DEMO");
-
-        player = new Player(-5, 8, 6);
 
         definitions.create("default:grass", new BM_CubeTexLifted("default_grass_top", "default_grass_side", "default_grass_float", "default_dirt"), true, true, true);
         definitions.create("default:dirt", new BM_CubeTexOne("default_dirt"), true, true, true);
@@ -66,6 +60,15 @@ public class Game implements GameLogic {
         definitions.create("default:log", new BM_CubeTexFour("default_log_top", "default_log_side", "default_log_top"), true, true, true);
         definitions.create("default:leaves", new BM_CubeTexPoof("default_leaves", "default_leaves_puff"), false, true, true);
 
+        player = new Player(-5, 8, 6);
+        worldbridge = new ChunkLoader(world, player);
+        connection = new ConnMan("localhost", 30005, worldbridge);
+        worldbridge.setConnection(connection);
+
+        scene = new Scene();
+        hud = new Hud("DEMO");
+
+
 //        Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
 //        mesh.setMaterial(new Material(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f), 1f));
 //        var COUNT = 360;
@@ -76,7 +79,6 @@ public class Game implements GameLogic {
 //            obs[i] = bunny;
 //        }
 //        scene.setRenderObjects(obs);
-
 
         scene.setVisibleChunks(world.getVisibleChunks());
 
@@ -112,7 +114,8 @@ public class Game implements GameLogic {
 
         player.update(interval, mouseInput);
 
-        if (tick % 30 == 0) world.loadChunksAroundPos(player.getPosition(), 5);
+        worldbridge.update();
+
         world.update();
 
         hud.rotateCompass(player.getCamera().getRotation().y);

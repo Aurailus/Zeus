@@ -61,27 +61,27 @@ public class ChunkMeshBuilder {
             ArrayTrans3D.indToVec(i, offset); //Set offset
 
             if (blockChunk.getVisible(offset)) {
-                var adj = blockChunk.getAdjacent(offset);
+                var adj = blockChunk.getAdjacentOpaque(offset);
                 var bm = Game.definitions.getDef(blockChunk.getBlock(offset)).getModel();
 
                 addFaces(bm.noCulledMP, offset);
 
-                if (!Game.definitions.getDef(adj[0]).getCulls()) { //X Pos
+                if (!adj[0]) { //X Pos
                     addFaces(bm.xPosMP, offset);
                 }
-                if (!Game.definitions.getDef(adj[1]).getCulls()) { //X Neg
+                if (!adj[1]) { //X Neg
                     addFaces(bm.xNegMP, offset);
                 }
-                if (!Game.definitions.getDef(adj[2]).getCulls()) { //Y Pos
+                if (!adj[2]) { //Y Pos
                     addFaces(bm.yPosMP, offset);
                 }
-                if (!Game.definitions.getDef(adj[3]).getCulls()) { //Y Neg
+                if (!adj[3]) { //Y Neg
                     addFaces(bm.yNegMP, offset);
                 }
-                if (!Game.definitions.getDef(adj[4]).getCulls()) { //Z Pos
+                if (!adj[4]) { //Z Pos
                     addFaces(bm.zPosMP, offset);
                 }
-                if (!Game.definitions.getDef(adj[5]).getCulls()) { //Z Neg
+                if (!adj[5]) { //Z Neg
                     addFaces(bm.zNegMP, offset);
                 }
             }
