@@ -85,6 +85,7 @@ public class World {
                 if (ret != null) {
                     it.remove();
 
+                    if (activeChunkMap.get(ret.position) == null) adjacentChunkUpdates.add(ret.position);
                     activeChunkMap.put(ret.position, ret.blockChunk);
 //                    loadingChunks.remove(ret.position);
 
@@ -155,7 +156,6 @@ public class World {
     }
 
     synchronized void addChunk(Vector3i pos, byte[] data) {
-        adjacentChunkUpdates.add(pos);
         var task = new GenChunkTask(pos, data);
         meshGenFutures.add(meshGenPool.submit(task));
     }
@@ -219,7 +219,7 @@ public class World {
         public ThreadRet call() {
             if (chunk == null) chunk = ChunkSerializer.decodeChunk(chunkData);
 
-            MeshChunk meshChunk = new MeshChunk(pos);
+            MeshChunk meshChunk = new MeshChunk(pos, Game.world);
             meshChunk.createMesh(chunk);
 
             ThreadRet r = new ThreadRet();

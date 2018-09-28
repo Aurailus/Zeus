@@ -48,7 +48,7 @@ public class ChunkMeshBuilder {
         currIndiceVal += face.positions.length/3;
     }
 
-    public ChunkMeshBuilder(BlockChunk blockChunk) {
+    public ChunkMeshBuilder(BlockChunk blockChunk, BlockChunk[] adjacent) {
 
         vertsList = new ArrayList<>();
         texCoordsList = new ArrayList<>();
@@ -57,11 +57,13 @@ public class ChunkMeshBuilder {
 
         Vector3i offset = new Vector3i(0, 0, 0);
 
-        for (var i = 0; i < blockChunk.getVisibleArray().length; i++) {
+        boolean[] visible = blockChunk.calcVisible(adjacent);
+
+        for (var i = 0; i < visible.length; i++) {
             ArrayTrans3D.indToVec(i, offset); //Set offset
 
-            if (blockChunk.getVisible(offset)) {
-                var adj = blockChunk.getAdjacentOpaque(offset);
+            if (visible[i]) {
+                var adj = blockChunk.getAdjacentOpaque(offset, adjacent);
                 var bm = Game.definitions.getDef(blockChunk.getBlock(offset)).getModel();
 
                 addFaces(bm.noCulledMP, offset);

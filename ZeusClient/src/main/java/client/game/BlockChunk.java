@@ -9,25 +9,9 @@ import static helpers.ArrayTrans3D.CHUNK_SIZE;
 
 public class BlockChunk {
     short[] blocks;
-    private boolean visibleDirty;
-    private boolean[] visible;
-    ArrayList<boolean[]> sidesOpaque;
-
-    public BlockChunk(short[] blocks, ArrayList<boolean[]> sidesOpaque) {
-        this.blocks = blocks;
-        this.sidesOpaque = sidesOpaque;
-        this.visibleDirty = true;
-    }
 
     public BlockChunk(short[] blocks) {
         this.blocks = blocks;
-        this.sidesOpaque = new ArrayList<>();
-        this.visibleDirty = true;
-
-        //Add dummy opaque values
-        boolean[] opaque = new boolean[256];
-        for (var i = 0; i < opaque.length; i++) opaque[i] = true;
-        for (var i = 0; i < 6; i++) this.sidesOpaque.add(opaque);
     }
 
     public short getBlock(Vector3i pos) {
@@ -38,22 +22,8 @@ public class BlockChunk {
         return ArrayTrans3D.get(this.blocks, x, y, z);
     }
 
-    public boolean getVisible(Vector3i pos) {
-        return getVisible(pos.x, pos.y, pos.z);
-    }
-
-    public boolean getVisible(int x, int y, int z) {
-        if (visible == null) calcVisible();
-        return ArrayTrans3D.get(this.visible, x, y, z);
-    }
-
-    public boolean[] getVisibleArray() {
-        if (visibleDirty) calcVisible();
-        return visible;
-    }
-
-    private void calcVisible() {
-        visible = new boolean[blocks.length];
+    public boolean[] calcVisible(BlockChunk[] adjacentChunks) {
+        boolean[] visible = new boolean[blocks.length];
         Vector3i pos = new Vector3i();
 
         for (var i = 0; i < CHUNK_SIZE; i++) {
@@ -64,7 +34,7 @@ public class BlockChunk {
                     ArrayTrans3D.set(visible, false, pos);
 
                     if (Game.definitions.getDef(getBlock(pos)).getVisible()) {
-                        var adjacent = getAdjacentOpaque(pos);
+                        var adjacent = getAdjacentOpaque(pos, adjacentChunks);
                         for (boolean opaque : adjacent) {
                             if (!opaque) {
                                 ArrayTrans3D.set(visible, true, pos);
@@ -76,44 +46,43 @@ public class BlockChunk {
             }
         }
 
-        visibleDirty = false;
+        return visible;
     }
 
-    public boolean[] getAdjacentOpaque(Vector3i pos) {
+    public boolean[] getAdjacentOpaque(Vector3i pos, BlockChunk[] adjacentChunks) {
         boolean[] adjacent = new boolean[6];
-        Vector3i checkPos = new Vector3i(pos);
 
-        checkPos.set(pos).add(1, 0, 0);
+        Vector3i checkPos = new Vector3i(pos).add(1, 0, 0);
 
-        adjacent[0] = getOpaqueIncludeEdges(checkPos);
+        adjacent[0] = getOpaqueIncludeEdges(checkPos, adjacentChunks);
 
-        checkPos.set(pos).add(-1, 0, 0);
+        checkPos = new Vector3i(pos).add(-1, 0, 0);
 
-        adjacent[1] = getOpaqueIncludeEdges(checkPos);
+        adjacent[1] = getOpaqueIncludeEdges(checkPos, adjacentChunks);
 
-        checkPos.set(pos).add(0, 1, 0);
+        checkPos = new Vector3i(pos).add(0, 1, 0);
 
-        adjacent[2] = getOpaqueIncludeEdges(checkPos);
+        adjacent[2] = getOpaqueIncludeEdges(checkPos, adjacentChunks);
 
-        checkPos.set(pos).add(0, -1, 0);
+        checkPos = new Vector3i(pos).add(0, -1, 0);
 
-        adjacent[3] = getOpaqueIncludeEdges(checkPos);
+        adjacent[3] = getOpaqueIncludeEdges(checkPos, adjacentChunks);
 
-        checkPos.set(pos).add(0, 0, 1);
+        checkPos = new Vector3i(pos).add(0, 0, 1);
 
-        adjacent[4] = getOpaqueIncludeEdges(checkPos);
+        adjacent[4] = getOpaqueIncludeEdges(checkPos, adjacentChunks);
 
-        checkPos.set(pos).add(0, 0, -1);
+        checkPos = new Vector3i(pos).add(0, 0, -1);
 
-        adjacent[5] = getOpaqueIncludeEdges(checkPos);
+        adjacent[5] = getOpaqueIncludeEdges(checkPos, adjacentChunks);
 
         return adjacent;
     }
 
-    private boolean getOpaqueIncludeEdges(Vector3i pos) {
+    private boolean getOpaqueIncludeEdges(Vector3i pos, BlockChunk[] adjacentChunks) {
         if (pos.x >= 16 || pos.x < 0 || pos.y >= 16 || pos.y < 0 || pos.z >= 16 || pos.z < 0) {
             try {
-                return getEdgeOpaque(pos);
+                return Game.definitions.getDef(getEdgeBlock(pos, adjacentChunks)).getCulls();
             }
             catch(Exception e) {
                 e.printStackTrace();
@@ -123,30 +92,34 @@ public class BlockChunk {
         return Game.definitions.getDef(getBlock(pos)).getCulls();
     }
 
-    private boolean getEdgeOpaque(Vector3i pos) throws Exception {
-        if (pos.x == 16) return sidesOpaque.get(0)[pos.y * 16 + pos.z];
-        if (pos.x == -1) return sidesOpaque.get(1)[pos.y * 16 + pos.z];
-
-        if (pos.y == 16) return sidesOpaque.get(2)[pos.x * 16 + pos.z];
-        if (pos.y == -1) return sidesOpaque.get(3)[pos.x * 16 + pos.z];
-
-        if (pos.z == 16) return sidesOpaque.get(4)[pos.y * 16 + pos.x];
-        if (pos.z == -1) return sidesOpaque.get(5)[pos.y * 16 + pos.x];
-
-        throw new Exception("BAD VALUE");
-    }
-
-    public void setSideOpaque(int ind, boolean[] opaque) {
-        sidesOpaque.set(ind, opaque);
-        visibleDirty = true;
-    }
-
-    public void setSideOpaque(int ind, short[] blocks) {
-        var opaque = new boolean[256];
-        for (var i = 0; i < blocks.length; i++) {
-            opaque[i] = Game.definitions.getDef(blocks[i]).getCulls();
+    private short getEdgeBlock(Vector3i pos, BlockChunk[] adjacentChunks) throws Exception {
+        if (pos.x == 16) {
+            if (adjacentChunks[0] == null) return 0;
+            return adjacentChunks[0].getBlock(0, pos.y, pos.z);
+        }
+        if (pos.x == -1) {
+            if (adjacentChunks[1] == null) return 0;
+            return adjacentChunks[1].getBlock(15, pos.y, pos.z);
         }
 
-        setSideOpaque(ind, opaque);
+        if (pos.y == 16) {
+            if (adjacentChunks[2] == null) return 0;
+            return adjacentChunks[2].getBlock(pos.x, 0, pos.z);
+        }
+        if (pos.y == -1) {
+            if (adjacentChunks[3] == null) return 0;
+            return adjacentChunks[3].getBlock(pos.x, 15, pos.z);
+        }
+
+        if (pos.z == 16) {
+            if (adjacentChunks[4] == null) return 0;
+            return adjacentChunks[4].getBlock(pos.x, pos.y, 0);
+        }
+        if (pos.z == -1) {
+            if (adjacentChunks[5] == null) return 0;
+            return adjacentChunks[5].getBlock(pos.x, pos.y, 15);
+        }
+
+        throw new Exception("BAD VALUE");
     }
 }

@@ -22,6 +22,8 @@ public class ClientThread extends Thread implements Runnable {
 
     private Vector3i position;
 
+    private final int RANGE = 8;
+
     public ClientThread(Socket socket) {
         this.socket = socket;
     }
@@ -72,10 +74,10 @@ public class ClientThread extends Thread implements Runnable {
     }
 
     private void updatePlayer(Vector3i oldPosition, Vector3i newPosition) {
-        ArrayList<Vector3i> chunks = getChunksInRange(newPosition, 8);
+        ArrayList<Vector3i> chunks = getChunksInRange(newPosition, RANGE);
 
         if (oldPosition != null) {
-            ArrayList<Vector3i> oldChunks = getChunksInRange(oldPosition, 8);
+            ArrayList<Vector3i> oldChunks = getChunksInRange(oldPosition, RANGE);
             chunks.removeAll(oldChunks);
         }
 
