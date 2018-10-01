@@ -1,5 +1,6 @@
 package client.game;
 
+import client.game.blockmodels.MeshInfo;
 import client.game.blockmodels.MeshPart;
 import helpers.ArrayTrans3D;
 import org.joml.Vector3i;
@@ -13,6 +14,7 @@ public class ChunkMeshBuilder {
     public float[] normals;
     public int[] indices;
 
+    MeshInfo m;
 
     private List<Float> vertsList;
     private List<Float> texCoordsList;
@@ -27,28 +29,31 @@ public class ChunkMeshBuilder {
     }
 
     private void addFace(MeshPart face, Vector3i offset) {
-        for (var i = 0; i < face.positions.length/3; i++) {
-            vertsList.add(face.positions[i*3] + offset.x);
-            vertsList.add(face.positions[i*3+1] + offset.y);
-            vertsList.add(face.positions[i*3+2] + offset.z);
+        face.getMeshData(m);
+
+        for (var i = 0; i < m.positions.length/3; i++) {
+            vertsList.add(m.positions[i*3] + offset.x);
+            vertsList.add(m.positions[i*3+1] + offset.y);
+            vertsList.add(m.positions[i*3+2] + offset.z);
         }
 
-        for (var i = 0; i < face.normals.length; i++) {
-            normalsList.add(face.normals[i]);
+        for (var i = 0; i < m.normals.length; i++) {
+            normalsList.add(m.normals[i]);
         }
 
-        for (var i = 0; i < face.texData.length; i++) {
-            texCoordsList.add(face.texData[i]);
+        for (var i = 0; i < m.texData.length; i++) {
+            texCoordsList.add(m.texData[i]);
         }
 
-        for (var i = 0; i < face.indices.length; i++) {
-            var indiceVal = currIndiceVal + face.indices[i];
+        for (var i = 0; i < m.indices.length; i++) {
+            var indiceVal = currIndiceVal + m.indices[i];
             indicesList.add(indiceVal);
         }
-        currIndiceVal += face.positions.length/3;
+        currIndiceVal += m.positions.length/3;
     }
 
     public ChunkMeshBuilder(BlockChunk blockChunk, BlockChunk[] adjacent) {
+        m = new MeshInfo();
 
         vertsList = new ArrayList<>();
         texCoordsList = new ArrayList<>();

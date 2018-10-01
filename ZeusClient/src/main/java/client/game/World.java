@@ -1,5 +1,6 @@
 package client.game;
 
+import client.engine.Utils;
 import client.engine.graphics.Material;
 import client.engine.graphics.Texture;
 import helpers.ChunkSerializer;
@@ -18,8 +19,6 @@ public class World {
     private ArrayList<MeshChunk> meshChunks;
     private HashMap<Vector3i, MeshChunk> meshChunkMap;
 
-//    private HashSet<Vector3i> loadingChunks;
-
     private ThreadPoolExecutor meshGenPool;
     private ArrayList<Future> meshGenFutures;
     private ArrayList<Vector3i> adjacentChunkUpdates;
@@ -30,6 +29,8 @@ public class World {
 
     private ArrayList<EncodedBlockChunk> cachedChunks;
     private HashMap<Vector3i, EncodedBlockChunk> cachedChunkMap;
+
+    private int mapGenTick = 0;
 
     public World() {
 
@@ -44,10 +45,8 @@ public class World {
         meshChunks = new ArrayList<>();
         meshChunkMap = new HashMap<>();
 
-//        loadingChunks = new HashSet<>();
-
-        meshGenPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(16);
-        meshGenPool.setMaximumPoolSize(48);
+        meshGenPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(32);
+        meshGenPool.setMaximumPoolSize(64);
         meshGenPool.setKeepAliveTime(32, TimeUnit.SECONDS);
 
         meshGenFutures = new ArrayList<>();
@@ -73,21 +72,26 @@ public class World {
     }
 
     private synchronized void loadMeshes() throws ExecutionException, InterruptedException {
-        int maxTime = 4;
-        long start = System.currentTimeMillis();
+        int maxNanos = 6_000_000;
+        long start = System.nanoTime();
+
+        int count = meshGenFutures.size();
+        int processed = 0;
+        boolean hadToStop = true;
 
         Iterator<Future> it = meshGenFutures.iterator();
 
-        while (it.hasNext() && System.currentTimeMillis() - start < maxTime) {
+        while (it.hasNext() && System.nanoTime() - start < maxNanos) {
             Future f = it.next();
             if (f.isDone()) {
+                processed ++;
+
                 GenChunkTask.ThreadRet ret = (GenChunkTask.ThreadRet) f.get();
                 if (ret != null) {
                     it.remove();
 
                     if (activeChunkMap.get(ret.position) == null) adjacentChunkUpdates.add(ret.position);
                     activeChunkMap.put(ret.position, ret.blockChunk);
-//                    loadingChunks.remove(ret.position);
 
                     var eChunk = meshChunkMap.get(ret.position);
                     if (eChunk != null) {
@@ -106,6 +110,13 @@ public class World {
                 }
             }
         }
+        if (!it.hasNext()) hadToStop = false;
+
+        if (count > 0) System.out.println(
+                "Built " + Utils.pad(((float)processed/(float)count*100f), 8) +
+                "% of " + Utils.pad(count, 6) + " chunks. " +
+                "Tick: " + Utils.pad(mapGenTick++, 8) +
+                (hadToStop ? ". Had to stop." : "."));
 
         adjacentChunkUpdates.forEach(this::updateChunksAround);
         adjacentChunkUpdates.clear();
@@ -164,11 +175,6 @@ public class World {
         var task = new GenChunkTask(pos, chunk);
         meshGenFutures.add(meshGenPool.submit(task));
     }
-
-//    synchronized void addChunk(Vector3i pos, byte[] data) {
-//        var task = new GenChunkTask(pos, data);
-//        meshGenFutures.add(meshGenPool.submit(task));
-//    }
 
     synchronized BlockChunk getChunk(Vector3i pos) {
         return activeChunkMap.get(pos);

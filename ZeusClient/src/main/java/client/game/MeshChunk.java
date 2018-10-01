@@ -23,6 +23,7 @@ public class MeshChunk {
         this.obj.setPosition(new Vector3f(pos.x * CHUNK_SIZE, pos.y * CHUNK_SIZE, pos.z * CHUNK_SIZE));
     }
 
+    //This method is usually called from a GenChunkTask, don't do any OGL methods here.
     public void createMesh(BlockChunk chunk) {
         BlockChunk[] adjacent = new BlockChunk[6];
         adjacent[0] = world.getChunk(new Vector3i(pos.x + 1, pos.y, pos.z));

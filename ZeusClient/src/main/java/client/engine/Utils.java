@@ -41,4 +41,13 @@ public class Utils {
     public static int sign(float in) {
         return (in > 0 ? 1 : in < 0 ? -1 : 0);
     }
+
+    public static String pad(double number, int pad) {
+        String num = Double.toString(Math.round(number*100D)/100D);
+        StringBuilder s = new StringBuilder(pad);
+        s.append(num);
+        for (var i = num.length(); i < pad; i++) s.insert(0, " ");
+        return s.toString();
+    }
+
 }

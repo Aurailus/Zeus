@@ -35,6 +35,7 @@ public class ConnMan {
     }
 
     private void handleReceivedChunk(PacketData p) {
+
         var str = new String(p.data, StandardCharsets.ISO_8859_1);
         var index = str.indexOf("|");
         var pos = VecUtils.stringToVector(str.substring(0, index));
@@ -43,16 +44,14 @@ public class ConnMan {
         worldbridge.newChunk(pos, str.substring(index + 1).getBytes(StandardCharsets.ISO_8859_1));
     }
 
+//    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, byte[]> consumer) {
+//        requestChunk(pos.x, pos.y, pos.z, consumer);
+//    }
 
-
-    public void requestChunk(Vector3i pos, BiConsumer<Vector3i, byte[]> consumer) {
-        requestChunk(pos.x, pos.y, pos.z, consumer);
-    }
-
-    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, byte[]> consumer) {
-        var pos = new Vector3i(x, y, z);
-        pacman.sendPacket(PacketType.REQUEST_CHUNK, VecUtils.vectorToString(pos));
-    }
+//    public void requestChunk(int x, int y, int z, BiConsumer<Vector3i, byte[]> consumer) {
+//        var pos = new Vector3i(x, y, z);
+//        pacman.sendPacket(PacketType.REQUEST_CHUNK, VecUtils.vectorToString(pos));
+//    }
 
     public void sendPosition(Vector3i pos) {
         pacman.sendPacket(PacketType.PLAYER_POSITION, VecUtils.vectorToString(pos));

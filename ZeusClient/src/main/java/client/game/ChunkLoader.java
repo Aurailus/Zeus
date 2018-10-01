@@ -27,14 +27,8 @@ public class ChunkLoader {
     }
 
     public void newChunk(Vector3i pos, byte[] data) {
-        System.out.println("Got chunk for " + pos);
+//        System.out.println("Got chunk for " + pos);
 
-//        if (world.hasChunk(pos)) {
-//            world.updateChunk(pos, data);
-//        }
-//        else {
-//            world.addChunk(pos, data);
-//        }
         world.addChunk(pos, data);
     }
 }

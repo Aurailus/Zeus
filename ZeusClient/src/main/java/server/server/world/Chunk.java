@@ -5,24 +5,25 @@ import helpers.RLE;
 import org.joml.Vector3i;
 
 public class Chunk {
-    short[] blocks;
-    boolean generated = false;
+    public short[] blocks;
+    boolean generated;
+    Vector3i pos;
 
-    public Chunk(short[] blocks) {
+    public Chunk(byte[] blocks, Vector3i pos) {
+        this(blocks, false, pos);
+    }
+
+    public Chunk(short[] blocks, Vector3i pos) {
+        this(blocks, false, pos);
+    }
+
+    public Chunk(byte[] blocks, boolean generated, Vector3i pos) {
+        this(RLE.decodeShorts(blocks), generated, pos);
+    }
+
+    public Chunk(short[] blocks, boolean generated, Vector3i pos) {
+        this.pos = pos;
         this.blocks = blocks;
-    }
-
-    public Chunk(short[] blocks, boolean generated) {
-        this.blocks = blocks;
-        this.generated = generated;
-    }
-
-    public Chunk(byte[] blocks) {
-        this.blocks = RLE.decodeShorts(blocks);
-    }
-
-    public Chunk(byte[] blocks, boolean generated) {
-        this.blocks = RLE.decodeShorts(blocks);
         this.generated = generated;
     }
 
@@ -44,5 +45,9 @@ public class Chunk {
 
     public void setGenerated(boolean generated) {
         this.generated = generated;
+    }
+
+    public Vector3i getPos() {
+        return pos;
     }
 }

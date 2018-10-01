@@ -54,6 +54,6 @@ public class BM_PlantLike extends BlockModel {
                     1.0f, 1.0f,
                     1.0f, 0.0f,
             },
-            texPos)};
+            texPos, MeshMod.SHIFT, 0.15f)};
     }
 }
