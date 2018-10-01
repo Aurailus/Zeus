@@ -34,7 +34,7 @@ void main()
 
     if (color.a < 0.5) discard;
 
-    float maxRenderDist = (16*12)*1000 - 8;
+    float maxRenderDist = (16*12) - 8;
 
     float dist_mult = pow(min(1, max(0, fragDist/maxRenderDist)), 2);
 

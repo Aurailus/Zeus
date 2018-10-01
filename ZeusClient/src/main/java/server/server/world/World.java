@@ -1,7 +1,6 @@
 package server.server.world;
 
 import org.joml.Vector3i;
-import server.server.MapGen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +53,21 @@ public class World {
     // Then remove pending chunks from Jobs and call callbacks if applicable
     //
     private void mergeChunks(HashMap<Vector3i, Chunk> newChunks) {
-        chunks.putAll(newChunks);
+
+        for (Chunk newChunk : newChunks.values()) {
+            Chunk existingChunk = getChunk(newChunk.getPos());
+            if (existingChunk == null) chunks.put(newChunk.pos, newChunk);
+            else {
+                try {
+                    existingChunk.mergeChunk(newChunk);
+                    //TODO: When this happens, some chunks already in the client could be changed, need to push updates!
+                }
+                catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        }
+
         for (Vector3i p : newChunks.keySet()) {
 
             Iterator<GenJob> i = genJobs.iterator();
@@ -93,7 +106,7 @@ public class World {
         if (positions.size() > 0) {
             GenJob j = new GenJob(positions, chunks);
             for (Vector3i p : positions) {
-                if (getChunk(p) != null) j.acceptChunk(p);
+                if (getChunk(p) != null && getChunk(p).generated) j.acceptChunk(p);
 
                 else {
                     GenChunkTask t = new GenChunkTask(p, mapGen);
@@ -107,6 +120,6 @@ public class World {
                 genJobs.add(j);
             }
         }
-//        else System.out.println("Empty job requested.");
+        else System.err.println("Empty job requested.");
     }
 }

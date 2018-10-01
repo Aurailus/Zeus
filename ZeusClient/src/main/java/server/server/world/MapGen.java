@@ -1,4 +1,4 @@
-package server.server;
+package server.server.world;
 
 import server.api.IBlockDecors;
 import server.api.IMapHeightmap;
@@ -8,6 +8,8 @@ import server.baseApi.BaseDecorations;
 import server.baseApi.BaseHeightmap;
 import server.server.world.Chunk;
 import server.server.world.World;
+
+import java.util.HashMap;
 
 import static helpers.ArrayTrans3D.CHUNK_SIZE;
 
@@ -23,8 +25,11 @@ public class MapGen {
         this.blockdecors = new BaseDecorations(seed, world);
     }
 
-    public Chunk generate(Vector3i chunkPos) {
+    //Modifies Chunks so doesn't need to return a value
+    public void generate(Vector3i chunkPos, HashMap<Vector3i, Chunk> chunks) {
         Chunk c = new Chunk(new short[4096], true, chunkPos);
+        chunks.put(chunkPos, c);
+
         Vector3i globalPos = new Vector3i(chunkPos);
 
         int[][] heightMap = heightmap.getChunkHeightmap(chunkPos.x, chunkPos.z);
@@ -42,11 +47,9 @@ public class MapGen {
                 int decor = blockdecors.getDecorBlock(globalPos.x, globalPos.z, depth);
                 if (decor != -1) c.blocks[i] = (short) decor;
 
-                if (depth == -1) blockdecors.genTree(globalPos, c);
+                blockdecors.genStructs(globalPos, chunkPos, chunks, depth);
             }
         }
-
-        return c;
     }
 
     private short getBlockFromDepth(int depth) {

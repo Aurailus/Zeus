@@ -83,7 +83,9 @@ public class ClientThread extends Thread implements Runnable {
             positions.removeAll(oldChunks);
         }
 
-        world.getChunks(positions, this::sendChunkArray);
+        if (positions.size() > 0) {
+            world.getChunks(positions, this::sendChunkArray);
+        }
     }
 
     private void sendChunkArray(Chunk[] chunks) {

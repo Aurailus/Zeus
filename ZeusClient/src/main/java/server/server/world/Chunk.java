@@ -50,4 +50,34 @@ public class Chunk {
     public Vector3i getPos() {
         return pos;
     }
+
+    public Chunk mergeChunk(Chunk newChunk) throws Exception {
+        if (generated) {
+            if (newChunk.generated) {
+                throw new Exception("Two Existing Chunks should never be merged!");
+            }
+            else {
+                for (var i = 0; i < newChunk.blocks.length; i++) {
+                    if (newChunk.blocks[i] != 0) blocks[i] = newChunk.blocks[i];
+                    generated = true;
+                }
+            }
+        }
+        else {
+            if (newChunk.generated) {
+                for (var i = 0; i < newChunk.blocks.length; i++) {
+                    if (blocks[i] == 0) blocks[i] = newChunk.blocks[i];
+                    generated = true;
+                }
+            }
+            else {
+                for (var i = 0; i < newChunk.blocks.length; i++) {
+                    if (newChunk.blocks[i] != 0) blocks[i] = newChunk.blocks[i];
+                    generated = false;
+                }
+            }
+        }
+
+        return this;
+    }
 }
